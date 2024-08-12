@@ -30,6 +30,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.21.4"
+		"pocketbase": "^0.21.4",
+		"stats.js": "^0.17.0",
+		"three": "^0.167.1"
 	}
 }

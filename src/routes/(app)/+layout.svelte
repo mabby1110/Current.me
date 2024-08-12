@@ -1,7 +1,11 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
+    import Background from "$lib/components/SphereVoidBackground.svelte";
 </script>
 
+<div class="bg">
+    <Background mode={true} release={0}/>
+</div>
 <nav>
     <Navbar/>
 </nav>
@@ -10,11 +14,18 @@
 </main>
 
 <style>
-    main {
-        background-color: black;
+    main, .bg {
         height: 95vh;
         width: 100%;
-        display: flex;
+    }
+    .bg {
+        position: fixed;
+        top: 5vh;
+        bottom: 0;
+        left: 0;
+        z-index: -999;
+        width: 100%;
+        background-color: rgb(0, 0, 0);
     }
     nav {
         background-color: black;
