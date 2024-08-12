@@ -1,16 +1,18 @@
-node_modules
+# Node modules
+node_modules/
 
 # Output
 .output
 .vercel
 /.svelte-kit
 /build
+dist/
 
-# OS
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Env
+# Environment variables
 .env
 .env.*
 !.env.example
@@ -19,3 +21,17 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# PocketBase generated files
+pb_data/
+pb_migrations/
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
