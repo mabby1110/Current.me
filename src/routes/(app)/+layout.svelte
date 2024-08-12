@@ -1,10 +1,11 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
     import Background from "$lib/components/SphereVoidBackground.svelte";
+    import { release } from "$lib/writables";
 </script>
 
 <div class="bg">
-    <Background mode={true} release={0}/>
+    <Background mode={true} release={$release}/>
 </div>
 <nav>
     <Navbar/>

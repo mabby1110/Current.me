@@ -173,6 +173,8 @@
                     sphere.position.x += (targetX - sphere.position.x) * 0.01; // Ajusta el factor de interpolación según sea necesario
                     sphere.position.y += (targetY - sphere.position.y) * 0.01;
                 }
+            } else {
+                camera.position.lerp(targetPosition0, 0.05);
             }
             
             renderer.render(scene, camera);

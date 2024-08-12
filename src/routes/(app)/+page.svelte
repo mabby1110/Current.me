@@ -1,4 +1,9 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+    import { release } from "$lib/writables";
+    onMount(()=>{
+        release.set(0)
+    })
 </script>
 
 <div class="content-1">
