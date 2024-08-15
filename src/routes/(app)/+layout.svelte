@@ -5,7 +5,7 @@
 </script>
 
 <div class="bg">
-    <Background mode={true} release={$release}/>
+    <Background release={$release}/>
 </div>
 <nav>
     <Navbar/>
@@ -24,7 +24,7 @@
         top: 5vh;
         bottom: 0;
         left: 0;
-        z-index: -999;
+        z-index: 999;
         width: 100%;
         background-color: rgb(0, 0, 0);
     }

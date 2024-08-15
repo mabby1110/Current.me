@@ -7,18 +7,83 @@
     import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'; // Import FontLoader
     import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'; // Import TextGeometry
 
+    export let release;
     let container;
-    export let mode: boolean;
-    export let release: number = 0; // New prop for rotation
     
-    let camera, scene, renderer, windowHalfX, windowHalfY, light;
+    let camera, scene, renderer, windowHalfX, windowHalfY;
+    const lights = [];
+    const lightHelpers = [];
     
-    let targetPosition0 = new THREE.Vector3(.5, .5, 0);
-    let targetPosition1 = new THREE.Vector3(0, 0, 0);
-    let targetPosition2 = new THREE.Vector3(0, 0, 5);
-    let targetPosition3 = new THREE.Vector3(0, 2, 5);
-    
+    let homePosition = new THREE.Vector3(0, 0, 0);
+    let workPosition = new THREE.Vector3(0, 2, 8);
+    let aboutPosition = new THREE.Vector3(0, 0, 5);
+    let bulbLight, bulbMat, hemiLight;
+
+    // Agregamos las referencias para las potencias luminosas y las irradiancias
+    const bulbLuminousPowers = {
+        '110000 lm (1000W)': 110000,
+        '3500 lm (300W)': 3500,
+        '1700 lm (100W)': 1700,
+        '800 lm (60W)': 800,
+        '400 lm (40W)': 400,
+        '180 lm (25W)': 180,
+        '20 lm (4W)': 20,
+        'Off': 0
+    };
+
+    const hemiLuminousIrradiances = {
+        '0.0001 lx (Moonless Night)': 0.0001,
+        '0.002 lx (Night Airglow)': 0.002,
+        '0.5 lx (Full Moon)': 0.5,
+        '3.4 lx (City Twilight)': 3.4,
+        '50 lx (Living Room)': 50,
+        '100 lx (Very Overcast)': 100,
+        '350 lx (Office Room)': 350,
+        '400 lx (Sunrise/Sunset)': 400,
+        '1000 lx (Overcast)': 1000,
+        '18000 lx (Daylight)': 18000,
+        '50000 lx (Direct Sun)': 50000
+    };
+
+    const params = {
+        shadows: true,
+        exposure: 0.68,
+        bulbPower: Object.keys(bulbLuminousPowers)[4],
+        hemiIrradiance: Object.keys(hemiLuminousIrradiances)[0]
+    };
+
+    function createLight(color, intensity, distance, position, lightHelper = false) {
+        const light = new THREE.PointLight(color, intensity, distance);
+        light.position.set(position.x, position.y, position.z);
+        scene.add(light);
+        
+        if (lightHelper) {
+            const lightHelper = new THREE.PointLightHelper(light);
+            scene.add(lightHelper);
+        }
+        return light;
+    }
+    class BulbLight {
+        constructor(position = { x: 0, y: 0, z: 0 }, color = 0xffffff, intensity = 1, distance = 100, decay = 2) {
+            const bulbGeometry = new THREE.SphereGeometry(0.02, 16, 8);
+            const bulbMat = new THREE.MeshStandardMaterial({
+                emissive: 0xffffee,
+                emissiveIntensity: 1,
+                color: 0x000000
+            });
+            this.light = new THREE.PointLight(color, intensity, distance, decay);
+            this.light.add(new THREE.Mesh(bulbGeometry, bulbMat));
+            this.light.position.set(position.x, position.y, position.z);
+            this.light.castShadow = true;
+        }
+
+        addToScene(scene) {
+            scene.add(this.light);
+        }
+    }
+
     const spheres = [];
+
     onMount(() => {
         let effect, stats;
         
@@ -35,19 +100,25 @@
 
         function init() {
             scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-            camera.position.x = .5;
-            camera.position.y = .5;
-            camera.position.z = 0;
+            camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
 
-            // light
-            light = new THREE.PointLight(0x500fbf, 10, 100);
-            light.position.set(1, 1, -3);
-            scene.add(light);
+            // iluminacion home
+            lights[0] = new BulbLight({ x: 0, y: 0, z: 0 }, 0x500EFE, 1);
+            lights[0].addToScene(scene);
+
+            // iluminacion work
+            lights[1] = new BulbLight({ x: 2, y: 2, z: 13 }, 0xffffff, 3);
+            lights[1].addToScene(scene);
+            lights[2] = new BulbLight({ x: 2, y: -2, z: 13 }, 0xffffff, 3);
+            lights[2].addToScene(scene);
+            lights[3] = new BulbLight({ x: -2, y: 2, z: 13 }, 0xffffff, 3);
+            lights[3].addToScene(scene);
+            lights[4] = new BulbLight({ x: -2, y: -2, z: 13 }, 0xffffff, 3);
+            lights[4].addToScene(scene);
 
             // Cubo de esferas
-            const geometry = new THREE.SphereGeometry(0.1, 32, 16);
-            const material = new THREE.MeshPhysicalMaterial({ color: 0xffffff});
+            const cubeGeometry = new THREE.SphereGeometry(0.1, 32, 16);
+            const cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff});
 
             const sphereCountPerAxis = Math.cbrt(500);
             const offset = 3.5
@@ -55,7 +126,7 @@
             for (let x = 0; x < sphereCountPerAxis; x++) {
                 for (let y = 0; y < sphereCountPerAxis; y++) {
                     for (let z = 0; z < sphereCountPerAxis; z++) {
-                        const mesh = new THREE.Mesh(geometry, material);
+                        const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
                         // Calcular la posición de cada esfera con el espacio deseado entre ellas
                         mesh.position.x = x-offset;
@@ -70,6 +141,34 @@
                     }
                 }
             }
+
+            // habitacion
+            // Crear geometría y material para las paredes de la habitación
+            const roomGeometry = new THREE.BoxGeometry(10, 10, 0.1);
+            const roomMaterial = new THREE.MeshPhysicalMaterial({ color: 0x808080, side: THREE.DoubleSide });
+
+            const center = { x: 0, y: -5, z: 10 };
+            const sizeX = 10; // Tamaño en la dirección X
+            const sizeY = 10; // Tamaño en la dirección Y
+            const sizeZ = 10; // Tamaño en la dirección Z
+
+            const positions = [
+                // { x: center.x, y: center.y + sizeY / 2, z: center.z - sizeZ / 2 }, // Pared frontal
+                { x: center.x, y: center.y + sizeY / 2, z: center.z + sizeZ / 2 }, // Pared trasera
+                { x: center.x - sizeX / 2, y: center.y + sizeY / 2, z: center.z, rotationY: Math.PI / 2 }, // Pared izquierda
+                { x: center.x + sizeX / 2, y: center.y + sizeY / 2, z: center.z, rotationY: Math.PI / 2 }, // Pared derecha
+                { x: center.x, y: center.y, z: center.z, rotationX: Math.PI / 2 }, // Piso
+                { x: center.x, y: center.y + sizeY, z: center.z, rotationX: Math.PI / 2 } // Techo
+            ];
+
+            positions.forEach(pos => {
+                const mesh = new THREE.Mesh(roomGeometry, roomMaterial);
+                mesh.position.set(pos.x, pos.y, pos.z);
+                if (pos.rotationY) mesh.rotation.y = pos.rotationY;
+                if (pos.rotationX) mesh.rotation.x = pos.rotationX;
+                scene.add(mesh);
+            });
+
             // render & helpers
             const gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 );
             gridHelper.position.y = 0;
@@ -79,37 +178,12 @@
             
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(window.innerWidth, window.innerHeight);            renderer.shadowMap.enabled = true;
+            renderer.toneMapping = THREE.ReinhardToneMapping;
             container.appendChild(renderer.domElement);
             
             const width = window.innerWidth || 2;
             const height = window.innerHeight || 2;
-            
-            // // skybox
-            // let format;
-            // let path;
-            // if(mode){
-            //     format = '.jpg';
-            //     path = '/src/lib/textures/skyboxsun25deg/';
-            // }else {
-            //     format = '.png';
-            //     path = '/src/lib/textures/nasaNightSky180deg/';
-            // }
-            // const urls = [
-            //     path + 'px' + format, path + 'nx' + format,
-            //     path + 'py' + format, path + 'ny' + format,
-            //     path + 'pz' + format, path + 'nz' + format
-            // ];
-            // const textureCube = new THREE.CubeTextureLoader().load(urls);
-    
-            // scene.background = textureCube;
-            
-            // const light = new THREE.HemisphereLight(0xffffff, 0x888888, 3);
-            // light.position.set(0, 0, 0);
-            // scene.add(light);
-
-            // effect = new AnaglyphEffect(renderer);
-            // effect.setSize(width, height);
             
             stats = new Stats();
             container.appendChild(stats.dom);
@@ -138,20 +212,8 @@
             mouseY = (event.clientY - windowHalfY) / 100;
         }
 
-        function updateLightPosition() {
-            const radius = 1; // distance from the camera
-            const angle = performance.now() / 2000; // adjust speed of rotation
-
-                light.position.set(
-                    camera.position.x + radius * Math.cos(angle),
-                    camera.position.y + radius * Math.sin(angle),
-                    camera.position.z
-                );
-            };
-
         function animate() {
             requestAnimationFrame(animate);
-            updateLightPosition();
             render();
             stats.update();
         }
@@ -159,11 +221,12 @@
         function render() {
             const timer = 0.0001 * Date.now();
             if (release == 1){
-                camera.position.lerp(targetPosition1, 0.05);
+                camera.position.lerp(workPosition, 0.01);
+                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
+                camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, Math.PI, 0.03);
             } else if (release == 2) {
-                camera.position.lerp(targetPosition2, 0.02);
+                camera.position.lerp(aboutPosition, 0.02);
             } else if (release == 3) {
-                camera.position.lerp(targetPosition3, 0.01);
                 for (let i = 0; i < spheres.length; i++) {
                     const sphere = spheres[i];
                     const targetX = 5 * Math.cos(timer + i);
@@ -174,7 +237,9 @@
                     sphere.position.y += (targetY - sphere.position.y) * 0.01;
                 }
             } else {
-                camera.position.lerp(targetPosition0, 0.05);
+                camera.position.lerp(homePosition, 0.05);
+                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
+                camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, 0, 0.03);
             }
             
             renderer.render(scene, camera);
