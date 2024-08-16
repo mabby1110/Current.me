@@ -1,92 +1,30 @@
 <script lang="ts">
+    // Importaciones necesarias
     import { onMount, onDestroy } from 'svelte';
     import * as THREE from 'three';
     import Stats from 'stats.js';
-    import { AnaglyphEffect } from 'three/addons/effects/AnaglyphEffect.js';
+    import { BulbLight } from '$lib/threeUtils';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-    import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'; // Import FontLoader
-    import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'; // Import TextGeometry
+    import { FlyControls } from 'three/addons/controls/FlyControls.js';
 
+    // Variables y configuraciones iniciales
     export let release;
+    const clock = new THREE.Clock();
     let container;
-    
-    let camera, scene, renderer, windowHalfX, windowHalfY;
+    let camera, scene, renderer, windowHalfX, windowHalfY, controls;
     const lights = [];
     const lightHelpers = [];
-    
     let homePosition = new THREE.Vector3(0, 0, 0);
     let workPosition = new THREE.Vector3(0, 2, 8);
     let aboutPosition = new THREE.Vector3(0, 0, 5);
     let bulbLight, bulbMat, hemiLight;
 
-    // Agregamos las referencias para las potencias luminosas y las irradiancias
-    const bulbLuminousPowers = {
-        '110000 lm (1000W)': 110000,
-        '3500 lm (300W)': 3500,
-        '1700 lm (100W)': 1700,
-        '800 lm (60W)': 800,
-        '400 lm (40W)': 400,
-        '180 lm (25W)': 180,
-        '20 lm (4W)': 20,
-        'Off': 0
-    };
-
-    const hemiLuminousIrradiances = {
-        '0.0001 lx (Moonless Night)': 0.0001,
-        '0.002 lx (Night Airglow)': 0.002,
-        '0.5 lx (Full Moon)': 0.5,
-        '3.4 lx (City Twilight)': 3.4,
-        '50 lx (Living Room)': 50,
-        '100 lx (Very Overcast)': 100,
-        '350 lx (Office Room)': 350,
-        '400 lx (Sunrise/Sunset)': 400,
-        '1000 lx (Overcast)': 1000,
-        '18000 lx (Daylight)': 18000,
-        '50000 lx (Direct Sun)': 50000
-    };
-
-    const params = {
-        shadows: true,
-        exposure: 0.68,
-        bulbPower: Object.keys(bulbLuminousPowers)[4],
-        hemiIrradiance: Object.keys(hemiLuminousIrradiances)[0]
-    };
-
-    function createLight(color, intensity, distance, position, lightHelper = false) {
-        const light = new THREE.PointLight(color, intensity, distance);
-        light.position.set(position.x, position.y, position.z);
-        scene.add(light);
-        
-        if (lightHelper) {
-            const lightHelper = new THREE.PointLightHelper(light);
-            scene.add(lightHelper);
-        }
-        return light;
-    }
-    class BulbLight {
-        constructor(position = { x: 0, y: 0, z: 0 }, color = 0xffffff, intensity = 1, distance = 100, decay = 2) {
-            const bulbGeometry = new THREE.SphereGeometry(0.02, 16, 8);
-            const bulbMat = new THREE.MeshStandardMaterial({
-                emissive: 0xffffee,
-                emissiveIntensity: 1,
-                color: 0x000000
-            });
-            this.light = new THREE.PointLight(color, intensity, distance, decay);
-            this.light.add(new THREE.Mesh(bulbGeometry, bulbMat));
-            this.light.position.set(position.x, position.y, position.z);
-            this.light.castShadow = true;
-        }
-
-        addToScene(scene) {
-            scene.add(this.light);
-        }
-    }
-
+    // Configuraciones de iluminación
     const spheres = [];
 
+    // configuracion y animacion principal
     onMount(() => {
-        let effect, stats;
-        
+        let stats;    
         let mouseX = 0, mouseY = 0;
 
         windowHalfX = window.innerWidth / 2;
@@ -94,9 +32,6 @@
 
         document.addEventListener('mousemove', onDocumentMouseMove);
         window.addEventListener('resize', onWindowResize);
-
-        init();
-        animate();
 
         function init() {
             scene = new THREE.Scene();
@@ -107,14 +42,8 @@
             lights[0].addToScene(scene);
 
             // iluminacion work
-            lights[1] = new BulbLight({ x: 2, y: 2, z: 13 }, 0xffffff, 3);
+            lights[1] = new BulbLight({ x: 0, y: 8, z: 8 }, 0xffffff, 30);
             lights[1].addToScene(scene);
-            lights[2] = new BulbLight({ x: 2, y: -2, z: 13 }, 0xffffff, 3);
-            lights[2].addToScene(scene);
-            lights[3] = new BulbLight({ x: -2, y: 2, z: 13 }, 0xffffff, 3);
-            lights[3].addToScene(scene);
-            lights[4] = new BulbLight({ x: -2, y: -2, z: 13 }, 0xffffff, 3);
-            lights[4].addToScene(scene);
 
             // Cubo de esferas
             const cubeGeometry = new THREE.SphereGeometry(0.1, 32, 16);
@@ -143,14 +72,13 @@
             }
 
             // habitacion
-            // Crear geometría y material para las paredes de la habitación
             const roomGeometry = new THREE.BoxGeometry(10, 10, 0.1);
             const roomMaterial = new THREE.MeshPhysicalMaterial({ color: 0x808080, side: THREE.DoubleSide });
 
             const center = { x: 0, y: -5, z: 10 };
-            const sizeX = 10; // Tamaño en la dirección X
-            const sizeY = 10; // Tamaño en la dirección Y
-            const sizeZ = 10; // Tamaño en la dirección Z
+            const sizeX = 5; // Tamaño en la dirección X
+            const sizeY = 5; // Tamaño en la dirección Y
+            const sizeZ = 5; // Tamaño en la dirección Z
 
             const positions = [
                 // { x: center.x, y: center.y + sizeY / 2, z: center.z - sizeZ / 2 }, // Pared frontal
@@ -169,32 +97,29 @@
                 scene.add(mesh);
             });
 
-            // render & helpers
-            const gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 );
-            gridHelper.position.y = 0;
-            gridHelper.position.x = 0;
-            scene.add( gridHelper );
-
-            
+            // helpers y renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);            renderer.shadowMap.enabled = true;
             renderer.toneMapping = THREE.ReinhardToneMapping;
             container.appendChild(renderer.domElement);
             
-            const width = window.innerWidth || 2;
-            const height = window.innerHeight || 2;
+            // controls = new FlyControls( camera, renderer.domElement );
+
+            // controls.movementSpeed = 2;
+            // controls.domElement = container;
+            // controls.rollSpeed = Math.PI / 6;
+            // controls.autoForward = false;
+            // controls.dragToLook = false;
+
+
+            const gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 );
+            gridHelper.position.y = 0;
+            gridHelper.position.x = 0;
+            scene.add( gridHelper );
             
             stats = new Stats();
             container.appendChild(stats.dom);
-            
-            // Asumiendo que ya tienes una instancia de cámara y escena configuradas
-            // const controls = new OrbitControls(camera, renderer.domElement);
-            // controls.enableDamping = true; // Habilita el amortiguamiento
-            // controls.dampingFactor = 0.25; // Factor de amortiguamiento
-            // controls.enableZoom = true;   // Permite hacer zoom
-            // controls.enablePan = true;    // Permite mover la vista lateralmente
-            // controls.enableRotate = true; // Permite rotar la vista
         }
 
         function onWindowResize() {
@@ -203,8 +128,6 @@
 
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            
-            effect.setSize(window.innerWidth, window.innerHeight);
         }
 
         function onDocumentMouseMove(event) {
@@ -241,20 +164,29 @@
                 camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, 0, 0.03);
             }
-            
+
+            // ver al rededor de un punto
+            camera.position.x += ( mouseX - camera.position.x ) * 0.008;
+			camera.position.y += ( - ( mouseY ) - camera.position.y ) * 0.008;
+
+			// camera.lookAt( workPosition);
             renderer.render(scene, camera);
         }
+
+        init();
+        animate();
     });
 </script>
 
-<style>
-.container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>
-
 <div bind:this={container} class="container"></div>
+
+<style>
+    .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+    
