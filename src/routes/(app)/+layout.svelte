@@ -9,7 +9,6 @@
 </div>
 <nav>
     <Navbar/>
-    fly with WASD/RF/QE + mouse
 </nav>
 <main>
     <slot/>

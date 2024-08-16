@@ -1,30 +1,30 @@
 <script lang="ts">
     // Importaciones necesarias
-    import { onMount, onDestroy } from 'svelte';
+    import { onMount } from 'svelte';
     import * as THREE from 'three';
     import Stats from 'stats.js';
     import { BulbLight } from '$lib/threeUtils';
-    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-    import { FlyControls } from 'three/addons/controls/FlyControls.js';
 
     // Variables y configuraciones iniciales
     export let release;
-    const clock = new THREE.Clock();
     let container;
-    let camera, scene, renderer, windowHalfX, windowHalfY, controls;
+    let camera, scene, renderer, windowHalfX, windowHalfY;
     const lights = [];
-    const lightHelpers = [];
+
+    const jailSize = 14
+    const roomNumberX = jailSize/3
+    const roomNumberY = jailSize/3
+
     let homePosition = new THREE.Vector3(0, 0, 0);
-    let workPosition = new THREE.Vector3(0, 2, 8);
-    let aboutPosition = new THREE.Vector3(0, 0, 5);
-    let bulbLight, bulbMat, hemiLight;
+    let workPosition = new THREE.Vector3(0, 0, 6);
+    let aboutPosition = new THREE.Vector3(0, 0, 0);
 
     // Configuraciones de iluminación
     const spheres = [];
 
     // configuracion y animacion principal
     onMount(() => {
-        let stats;    
+        let stats;
         let mouseX = 0, mouseY = 0;
 
         windowHalfX = window.innerWidth / 2;
@@ -42,7 +42,7 @@
             lights[0].addToScene(scene);
 
             // iluminacion work
-            lights[1] = new BulbLight({ x: 0, y: 8, z: 8 }, 0xffffff, 30);
+            lights[1] = new BulbLight({ x: 0, y: -4, z: 8 }, 0xffffff, 30);
             lights[1].addToScene(scene);
 
             // Cubo de esferas
@@ -62,7 +62,7 @@
                         mesh.position.y = y-offset;
                         mesh.position.z = z-offset;
 
-                        // mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+                        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
                         mesh.scale.x = mesh.scale.y = mesh.scale.z = 3 + 1;
 
                         scene.add(mesh);
@@ -72,52 +72,44 @@
             }
 
             // habitacion
-            const roomGeometry = new THREE.BoxGeometry(10, 10, 0.1);
-            const roomMaterial = new THREE.MeshPhysicalMaterial({ color: 0x808080, side: THREE.DoubleSide });
+            const wallGeometry = new THREE.BoxGeometry(jailSize, jailSize, 0.1);
+            const roomGeometryX = new THREE.BoxGeometry(roomNumberX, jailSize, 0.1);
+            const roomGeometryY = new THREE.BoxGeometry(jailSize, roomNumberY, 0.1);
+            const wallMaterial = new THREE.MeshPhysicalMaterial({ color: 0x808080, side: THREE.DoubleSide });
 
-            const center = { x: 0, y: -5, z: 10 };
-            const sizeX = 5; // Tamaño en la dirección X
-            const sizeY = 5; // Tamaño en la dirección Y
-            const sizeZ = 5; // Tamaño en la dirección Z
+            const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
+            backWall.position.set(0, 0, 12);
+            scene.add(backWall);
 
-            const positions = [
-                // { x: center.x, y: center.y + sizeY / 2, z: center.z - sizeZ / 2 }, // Pared frontal
-                { x: center.x, y: center.y + sizeY / 2, z: center.z + sizeZ / 2 }, // Pared trasera
-                { x: center.x - sizeX / 2, y: center.y + sizeY / 2, z: center.z, rotationY: Math.PI / 2 }, // Pared izquierda
-                { x: center.x + sizeX / 2, y: center.y + sizeY / 2, z: center.z, rotationY: Math.PI / 2 }, // Pared derecha
-                { x: center.x, y: center.y, z: center.z, rotationX: Math.PI / 2 }, // Piso
-                { x: center.x, y: center.y + sizeY, z: center.z, rotationX: Math.PI / 2 } // Techo
-            ];
-
-            positions.forEach(pos => {
-                const mesh = new THREE.Mesh(roomGeometry, roomMaterial);
-                mesh.position.set(pos.x, pos.y, pos.z);
-                if (pos.rotationY) mesh.rotation.y = pos.rotationY;
-                if (pos.rotationX) mesh.rotation.x = pos.rotationX;
-                scene.add(mesh);
-            });
+            // paredes horizontales
+            for (let n = 0; n < roomNumberX-1; n++) {
+                const roomWall = new THREE.Mesh(roomGeometryX, wallMaterial);
+                roomWall.position.set(-(jailSize/2) + (n*roomNumberX), 0, 10)
+                roomWall.rotation.y = Math.PI / 2
+                scene.add(roomWall);
+            }
+            // paredes vertical
+            for (let n = 0; n < roomNumberY-1; n++) {
+                const roomWall = new THREE.Mesh(roomGeometryY, wallMaterial);
+                roomWall.position.set(0, -(jailSize/2) + (n*roomNumberY), 10)
+                roomWall.rotation.x = Math.PI / 2
+                scene.add(roomWall);
+            }
 
             // helpers y renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);            renderer.shadowMap.enabled = true;
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
             renderer.toneMapping = THREE.ReinhardToneMapping;
             container.appendChild(renderer.domElement);
-            
-            // controls = new FlyControls( camera, renderer.domElement );
-
-            // controls.movementSpeed = 2;
-            // controls.domElement = container;
-            // controls.rollSpeed = Math.PI / 6;
-            // controls.autoForward = false;
-            // controls.dragToLook = false;
 
 
             const gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 );
             gridHelper.position.y = 0;
             gridHelper.position.x = 0;
             scene.add( gridHelper );
-            
+
             stats = new Stats();
             container.appendChild(stats.dom);
         }
@@ -145,7 +137,7 @@
             const timer = 0.0001 * Date.now();
             if (release == 1){
                 camera.position.lerp(workPosition, 0.01);
-                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
+                // camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, Math.PI, 0.03);
             } else if (release == 2) {
                 camera.position.lerp(aboutPosition, 0.02);
@@ -166,8 +158,8 @@
             }
 
             // ver al rededor de un punto
-            camera.position.x += ( mouseX - camera.position.x ) * 0.008;
-			camera.position.y += ( - ( mouseY ) - camera.position.y ) * 0.008;
+            camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
+			camera.position.y += ( - ( mouseY/4 ) - camera.position.y ) * 0.008;
 
 			// camera.lookAt( workPosition);
             renderer.render(scene, camera);
@@ -189,4 +181,3 @@
         align-items: center;
     }
 </style>
-    
