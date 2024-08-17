@@ -1,23 +1,23 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
     import Background from "$lib/components/SphereVoidBackground.svelte";
-    import { release } from "$lib/writables";
-    import { loaded } from "$lib/writables";
+    import { release, loaded } from "$lib/writables";
 	import { onMount } from "svelte";
     import Loader from "$lib/components/Loader.svelte";
 
-    onMount(async () => {
-    // Inicializa tu escena de Three.js
-
-    });
+    let started =  false;
+    function start() {
+        started = true
+    }
 </script>
 
-{#if loaded}
-    <Loader/>
-{:else}
 <div class="bg">
     <Background release={$release}/>
 </div>
+
+{#if !started}
+    <Loader on:message={start}/>
+{:else}
 <nav>
     <Navbar/>
 </nav>

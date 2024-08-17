@@ -175,7 +175,7 @@
 
         init();
         animate();
-        loaded.update(1)
+        loaded.set(true)
     });
 </script>
 
