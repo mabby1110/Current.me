@@ -5,37 +5,57 @@
         release.set(0)
     })
 
-    let lista_cosas =  ['[PRODUCTO]']
+    let lista_cosas =  ['[PRODUCTO]'];
+    
+    let threshold = 0.9;
+    let elements = [];
+    let visibleElements = {};
+
+    onMount(() => {
+        function handleIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                visibleElements[id] = entry.isIntersecting;
+                visibleElements = visibleElements; // Trigger reactivity
+                if (visibleElements[id]) {
+                    console.log(id)             
+                }
+            });
+
+        }
+        const observer = new IntersectionObserver(handleIntersection, { threshold });
+
+        elements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    });
 </script>
 
-<div class="content-1">
-    <h1 class="que_es">¿Que es</h1>
-    <h1 class="cosa">{lista_cosas[0]}</h1>
-    <h1 class="sin_significado">sin significado?</h1>
+
+<div bind:this={elements[0]} class="content" id="num-1">
+    <h1 class="left-position title-2">¿Que es</h1>
+    <h1 class="title-1">{lista_cosas[0]}</h1>    
+    <h1 class="right-position title-2">sin significado?</h1>
 </div>
-<div class="content-1">
-    <h1 class="que_es">¿Que es</h1>
-    <h1 class="cosa">{lista_cosas[0]}</h1>
-    <h1 class="sin_significado">sin significado?</h1>
+<div bind:this={elements[1]} class="content" id="num-2">
+    <p class="left-position text">El verdadero valor no reside en lo superficial, sino en el significado profundo que le otorgamos.</p>    
+    <p class="right-position text">Sin significado, todo se vuelve vacío, carente de sentido.</p>
 </div>
-<div class="content-1">
-    <h1 class="que_es">¿Que es</h1>
-    <h1 class="cosa">{lista_cosas[0]}</h1>
-    <h1 class="sin_significado">sin significado?</h1>
+<div bind:this={elements[2]} class="content" id="num-3">
+    <h1 class="left-position text">¿Que es</h1>
+    <h1 class="right-position title-2">sin significado?</h1>    
 </div>
-<div class="content-1">
-    <h1 class="que_es">¿Que es</h1>
-    <h1 class="cosa">{lista_cosas[0]}</h1>
-    <h1 class="sin_significado">sin significado?</h1>
+<div bind:this={elements[3]} class="content" id="num-4">
+    <h1 class="left-position text">¿Que es</h1>
+    <h1 class="right-position title-2">sin significado?</h1>    
 </div>
-<div class="content-1">
-    <h1 class="que_es">¿Que es</h1>
-    <h1 class="cosa">{lista_cosas[0]}</h1>
-    <h1 class="sin_significado">sin significado?</h1>
+<div bind:this={elements[4]} class="content" id="num-5">
+    <h1 class="left-position text">¿Que es</h1>
+    <h1 class="right-position title-2">sin significado?</h1>    
 </div>
 
 <style>
-    .content-1 {
+    .content {
         position: relative;
         width: 100%;
         height: 100%;
@@ -43,14 +63,7 @@
         grid-template-rows: repeat(6, 1fr);
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
-    .que_es {
-        grid-area: 2 / 1 / span 1 / span 1;
-        align-self: flex-end;
-        justify-self: center;
-        font-weight: 100;
-        font-size:3rem;
-    }
-    .cosa {
+    .title-1 {
         position: fixed;
         align-self: center;
         justify-self: center;
@@ -58,23 +71,21 @@
         font-size:4rem;
         z-index: 0;
     }
-    .sin_significado {
+    .title-2 {
+        font-weight: 100;
+        font-size:2rem;
+    }
+    .text {
+        font-weight: 100;
+        font-size:2rem;
+    }
+    .right-position {
         grid-area: 5 / 2 / span 1 / span 1;
         justify-self: center;
-        font-weight: 100;
-        font-size:3rem;
     }
-    /* .cosa::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 30vh;
-        height: 30vh;
-        background-color: var(--accent-color);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        z-index: -1;
+    .left-position {
+        grid-area: 2 / 1 / span 1 / span 1;
+        align-self: flex-end;
+        justify-self: center;
     }
-    */
 </style>
