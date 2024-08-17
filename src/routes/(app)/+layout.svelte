@@ -17,23 +17,26 @@
 <style>
     main, .bg {
         height: 95vh;
-        width: 100%;
+        min-width: 240px;
     }
     .bg {
         position: fixed;
         top: 5vh;
         bottom: 0;
         left: 0;
-        z-index: 999;
+        z-index: -999;
         width: 100%;
         background-color: rgb(0, 0, 0);
     }
     nav {
+        position: fixed;
         background-color: black;
         height: 5vh;
+        min-width: 240px;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 1;
     }
 </style>

@@ -15,9 +15,10 @@
     const roomNumberX = jailSize/3
     const roomNumberY = jailSize/3
 
+    let lastPosition = new THREE.Vector3(0, 0, 0);
     let homePosition = new THREE.Vector3(0, 0, 0);
-    let workPosition = new THREE.Vector3(0, 0, 6);
-    let aboutPosition = new THREE.Vector3(0, 0, 0);
+    let workPosition = new THREE.Vector3(0, 0, 10);
+    let aboutPosition = new THREE.Vector3(0, 0, 6);
 
     // Configuraciones de iluminación
     const spheres = [];
@@ -78,20 +79,20 @@
             const wallMaterial = new THREE.MeshPhysicalMaterial({ color: 0x808080, side: THREE.DoubleSide });
 
             const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
-            backWall.position.set(0, 0, 12);
+            backWall.position.set(0, 0, 16);
             scene.add(backWall);
 
             // paredes horizontales
             for (let n = 0; n < roomNumberX-1; n++) {
                 const roomWall = new THREE.Mesh(roomGeometryX, wallMaterial);
-                roomWall.position.set(-(jailSize/2) + (n*roomNumberX), 0, 10)
+                roomWall.position.set(-(jailSize/2) + (n*roomNumberX), 0, 14)
                 roomWall.rotation.y = Math.PI / 2
                 scene.add(roomWall);
             }
             // paredes vertical
             for (let n = 0; n < roomNumberY-1; n++) {
                 const roomWall = new THREE.Mesh(roomGeometryY, wallMaterial);
-                roomWall.position.set(0, -(jailSize/2) + (n*roomNumberY), 10)
+                roomWall.position.set(0, -(jailSize/2) + (n*roomNumberY), 14)
                 roomWall.rotation.x = Math.PI / 2
                 scene.add(roomWall);
             }
@@ -136,11 +137,11 @@
         function render() {
             const timer = 0.0001 * Date.now();
             if (release == 1){
-                camera.position.lerp(workPosition, 0.01);
-                // camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
+                lastPosition = workPosition
+                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, Math.PI, 0.03);
             } else if (release == 2) {
-                camera.position.lerp(aboutPosition, 0.02);
+                lastPosition = aboutPosition
             } else if (release == 3) {
                 for (let i = 0; i < spheres.length; i++) {
                     const sphere = spheres[i];
@@ -152,10 +153,12 @@
                     sphere.position.y += (targetY - sphere.position.y) * 0.01;
                 }
             } else {
-                camera.position.lerp(homePosition, 0.05);
+                lastPosition = homePosition
                 camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, 0, 0.03);
             }
+            // actualizar posicion de la camara segun la vista
+            camera.position.lerp(lastPosition, 0.01);
 
             // ver al rededor de un punto
             camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
