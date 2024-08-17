@@ -1,55 +1,88 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { release } from "$lib/writables";
-    onMount(()=>{
-        release.set(0)
-    })
 
     let lista_cosas =  ['[PRODUCTO]'];
-    
-    let threshold = 0.9;
-    let elements = [];
-    let visibleElements = {};
+    let gsap;
+    let ScrollTrigger;
 
-    onMount(() => {
-        function handleIntersection(entries) {
-            entries.forEach(entry => {
-                const id = entry.target.id;
-                visibleElements[id] = entry.isIntersecting;
-                visibleElements = visibleElements; // Trigger reactivity
-                if (visibleElements[id]) {
-                    console.log(id)             
+    onMount(async () => {
+        release.set(0)
+        // Importa GSAP
+        const gsapModule = await import('gsap');
+        gsap = gsapModule.gsap;
+
+        // Importa ScrollTrigger
+        const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+        ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
+
+        // Registra el plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+         // Animación para el título principal
+         gsap.from(".title-1", {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            scrollTrigger: {
+                trigger: "#num-1",
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Animación para los elementos con clase .left-position
+        gsap.utils.toArray(".left-position").forEach((element: Element) => {
+            gsap.from(element, {
+                opacity: 0,
+                x: -50,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
                 }
             });
+        });
 
-        }
-        const observer = new IntersectionObserver(handleIntersection, { threshold });
-
-        elements.forEach(el => observer.observe(el));
-
-        return () => observer.disconnect();
+        // Animación para los elementos con clase .right-position
+        gsap.utils.toArray(".right-position").forEach((element: Element) => {
+            gsap.from(element, {
+                opacity: 0,
+                x: 50,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
     });
 </script>
 
 
-<div bind:this={elements[0]} class="content" id="num-1">
+<div class="content" id="num-1">
     <h1 class="left-position title-2">¿Que es</h1>
     <h1 class="title-1">{lista_cosas[0]}</h1>    
     <h1 class="right-position title-2">sin significado?</h1>
 </div>
-<div bind:this={elements[1]} class="content" id="num-2">
+<div class="content" id="num-2">
     <p class="left-position text">El verdadero valor no reside en lo superficial, sino en el significado profundo que le otorgamos.</p>    
     <p class="right-position text">Sin significado, todo se vuelve vacío, carente de sentido.</p>
 </div>
-<div bind:this={elements[2]} class="content" id="num-3">
+<div class="content" id="num-3">
     <h1 class="left-position text">¿Que es</h1>
     <h1 class="right-position title-2">sin significado?</h1>    
 </div>
-<div bind:this={elements[3]} class="content" id="num-4">
+<div class="content" id="num-4">
     <h1 class="left-position text">¿Que es</h1>
     <h1 class="right-position title-2">sin significado?</h1>    
 </div>
-<div bind:this={elements[4]} class="content" id="num-5">
+<div class="content" id="num-5">
     <h1 class="left-position text">¿Que es</h1>
     <h1 class="right-position title-2">sin significado?</h1>    
 </div>
