@@ -11,7 +11,7 @@
     }
 </script>
 
-<div class="bg">
+<div class="bg" class:visible={!started}>
     <Background release={$release}/>
 </div>
 
@@ -49,5 +49,8 @@
         align-items: center;
         justify-content: center;
         z-index: 1;
+    }
+    .visible {
+        opacity: 0;
     }
 </style>
