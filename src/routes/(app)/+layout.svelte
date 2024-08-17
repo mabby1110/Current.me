@@ -2,8 +2,19 @@
     import Navbar from "$lib/components/Navbar.svelte";
     import Background from "$lib/components/SphereVoidBackground.svelte";
     import { release } from "$lib/writables";
+    import { loaded } from "$lib/writables";
+	import { onMount } from "svelte";
+    import Loader from "$lib/components/Loader.svelte";
+
+    onMount(async () => {
+    // Inicializa tu escena de Three.js
+
+    });
 </script>
 
+{#if loaded}
+    <Loader/>
+{:else}
 <div class="bg">
     <Background release={$release}/>
 </div>
@@ -13,7 +24,7 @@
 <main>
     <slot/>
 </main>
-
+{/if}
 <style>
     main, .bg {
         height: 95vh;

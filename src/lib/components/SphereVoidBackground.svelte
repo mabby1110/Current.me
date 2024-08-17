@@ -1,12 +1,17 @@
 <script lang="ts">
     // Importaciones necesarias
     import { onMount } from 'svelte';
+    import { loaded } from '$lib/writables';
     import * as THREE from 'three';
     import Stats from 'stats.js';
     import { BulbLight } from '$lib/threeUtils';
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
 
     // Variables y configuraciones iniciales
     export let release;
+
     let container;
     let camera, scene, renderer, windowHalfX, windowHalfY;
     const lights = [];
@@ -170,6 +175,7 @@
 
         init();
         animate();
+        loaded.update(1)
     });
 </script>
 
