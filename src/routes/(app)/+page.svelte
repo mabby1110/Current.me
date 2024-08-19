@@ -7,7 +7,7 @@
     let ScrollTrigger;
 
     onMount(async () => {
-        release.set(0)
+        release.set(3)
         // Importa GSAP
         const gsapModule = await import('gsap');
         gsap = gsapModule.gsap;
@@ -23,19 +23,6 @@
         gsap.utils.toArray(".fade-in").forEach((element) => {
             gsap.from(element, {
                 opacity: 0,
-                y: 20,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-        gsap.utils.toArray(".fade-out").forEach((element) => {
-            gsap.from(element, {
-                opacity: 100,
                 y: 20,
                 duration: 0.8,
                 scrollTrigger: {
@@ -74,40 +61,30 @@
 
 <style>
     .content {
-        position: relative;
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-rows: repeat(6, 1fr);
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-rows: repeat(5, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        padding: 0 1rem;
     }
     .title-1 {
         position: fixed;
         align-self: center;
         justify-self: center;
         font-weight: bold;
-        font-size:4rem;
+        font-size:10vw;
         z-index: 0;
     }
     .text {
         font-weight: 100;
         font-size:2rem;
+        align-self: center;
     }
     .right-position {
-        grid-area: 5 / 2 / span 1 / span 1;
-        justify-self: center;
+        grid-area: 4 / 2 / span 1 / span 1;
     }
     .left-position {
         grid-area: 2 / 1 / span 1 / span 1;
-        align-self: flex-end;
-        justify-self: center;
-    }
-    /* Nuevas clases para animaciones */
-    .color-change {
-        transition: color 0.8s ease, font-weight 0.8s ease;
-    }
-
-    .style-change {
-        transition: font-style 0.8s ease, letter-spacing 0.8s ease;
     }
 </style>

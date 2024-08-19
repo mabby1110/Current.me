@@ -21,11 +21,15 @@
     const roomNumberY = jailSize/3
 
     let lastPosition = new THREE.Vector3(0, 0, 0);
+
+    let startPosition = new THREE.Vector3(0, 0, -10);
+
+    let landingPosition = new THREE.Vector3(0, 0, -14.5);
     let homePosition = new THREE.Vector3(0, 0, 0);
+
     let workPosition = new THREE.Vector3(0, 0, 10);
     let aboutPosition = new THREE.Vector3(0, 0, 6);
     
-    let startPosition = new THREE.Vector3(0, 0, -10);
     
     // Configuraciones de iluminación
     const spheres = [];
@@ -46,7 +50,7 @@
             camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
             camera.position.z = -10
             // iluminacion start
-            lights[0] = new BulbLight({ x: 0, y: 0, z: -13 }, 0xffffff, 10);
+            lights[0] = new BulbLight({ x: 2, y: 2, z: -13 }, 0xffffff, 5);
             lights[0].addToScene(scene);
 
             // iluminacion home
@@ -161,6 +165,8 @@
             } else if (release == 2) {
                 lastPosition = aboutPosition
             } else if (release == 3) {
+                lastPosition = landingPosition
+            } else if (release == 9) {
                 for (let i = 0; i < spheres.length; i++) {
                     const sphere = spheres[i];
                     const targetX = 5 * Math.cos(timer + i);

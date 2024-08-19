@@ -11,6 +11,7 @@
 
     function start() {
         started = true
+        release.set(3)
     }
 
     onMount(async ()=>{
@@ -87,6 +88,7 @@
         background-color: black;
         height: 5vh;
         min-width: 240px;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
