@@ -11,13 +11,12 @@
     }
 </script>
 
-<div class="bg" class:visible={!started}>
+<div class="bg">
     <Background release={$release}/>
 </div>
 
+<Loader on:message={start}/>
 {#if !started}
-    <Loader on:message={start}/>
-{:else}
 <nav>
     <Navbar/>
 </nav>

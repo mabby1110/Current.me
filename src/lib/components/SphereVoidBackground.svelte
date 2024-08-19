@@ -24,7 +24,9 @@
     let homePosition = new THREE.Vector3(0, 0, 0);
     let workPosition = new THREE.Vector3(0, 0, 10);
     let aboutPosition = new THREE.Vector3(0, 0, 6);
-
+    
+    let startPosition = new THREE.Vector3(0, 0, -13);
+    
     // Configuraciones de iluminación
     const spheres = [];
 
@@ -42,18 +44,22 @@
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
-
-            // iluminacion home
-            lights[0] = new BulbLight({ x: 0, y: 0, z: 0 }, 0x500EFE, 1);
+            camera.position.z = -13
+            // iluminacion start
+            lights[0] = new BulbLight({ x: 0, y: 0, z: -13 }, 0xffffff, 10);
             lights[0].addToScene(scene);
 
-            // iluminacion work
-            lights[1] = new BulbLight({ x: 0, y: -4, z: 8 }, 0xffffff, 30);
+            // iluminacion home
+            lights[1] = new BulbLight({ x: 0, y: 0, z: 0 }, 0x500EFE, 1);
             lights[1].addToScene(scene);
 
+            // iluminacion work
+            lights[2] = new BulbLight({ x: 0, y: -4, z: 8 }, 0xffffff, 30);
+            lights[2].addToScene(scene);
+
             // Cubo de esferas
-            const cubeGeometry = new THREE.SphereGeometry(0.1, 32, 16);
-            const cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff});
+            const sphereGeometry = new THREE.SphereGeometry(0.1, 32, 16);
+            const sphereMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff});
 
             const sphereCountPerAxis = Math.cbrt(500);
             const offset = 3.5
@@ -61,7 +67,7 @@
             for (let x = 0; x < sphereCountPerAxis; x++) {
                 for (let y = 0; y < sphereCountPerAxis; y++) {
                     for (let z = 0; z < sphereCountPerAxis; z++) {
-                        const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+                        const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
                         // Calcular la posición de cada esfera con el espacio deseado entre ellas
                         mesh.position.x = x-offset;
@@ -76,6 +82,13 @@
                     }
                 }
             }
+
+            // esfera de inicio
+            const thing = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            // thing.position.x = -0.32;
+            // thing.position.y = 0.3;
+            thing.position.z = -15;
+            scene.add(thing);
 
             // habitacion
             const wallGeometry = new THREE.BoxGeometry(jailSize, jailSize, 0.1);
@@ -158,7 +171,7 @@
                     sphere.position.y += (targetY - sphere.position.y) * 0.01;
                 }
             } else {
-                lastPosition = homePosition
+                lastPosition = startPosition
                 camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, 0, 0.03);
             }
@@ -166,8 +179,8 @@
             camera.position.lerp(lastPosition, 0.01);
 
             // ver al rededor de un punto
-            camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
-			camera.position.y += ( - ( mouseY/4 ) - camera.position.y ) * 0.008;
+            // camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
+			// camera.position.y += ( - ( mouseY/4 ) - camera.position.y ) * 0.008;
 
 			// camera.lookAt( workPosition);
             renderer.render(scene, camera);
