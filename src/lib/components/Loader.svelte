@@ -23,8 +23,8 @@
         opacity: 0;
     }
     .loader-container {
-        width: 100%;
         height: 100vh;
+        width: 100%;
         padding-top: 10vh;
         display: grid;
         place-items: center;

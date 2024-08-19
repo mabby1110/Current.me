@@ -19,20 +19,6 @@
         // Registra el plugin
         gsap.registerPlugin(ScrollTrigger);
 
-        // Animación para el título principal
-        gsap.from(".title-1", {
-            opacity: 0,
-            y: 30,
-            color: "#ccc",
-            duration: 1,
-            scrollTrigger: {
-                trigger: "#num-1",
-                start: "top center",
-                end: "bottom center",
-                toggleActions: "play none none reverse"
-            }
-        });
-
         // Animación para elementos con clase .fade-in
         gsap.utils.toArray(".fade-in").forEach((element) => {
             gsap.from(element, {
@@ -47,12 +33,10 @@
                 }
             });
         });
-
-        // Animación para elementos con clase .color-change
-        gsap.utils.toArray(".color-change").forEach((element) => {
+        gsap.utils.toArray(".fade-out").forEach((element) => {
             gsap.from(element, {
-                color: "#ccc",
-                fontWeight: "normal",
+                opacity: 100,
+                y: 20,
                 duration: 0.8,
                 scrollTrigger: {
                     trigger: element,
@@ -62,29 +46,13 @@
                 }
             });
         });
-
-        // Animación para elementos con clase .style-change
-        gsap.utils.toArray(".style-change").forEach((element) => {
-            gsap.from(element, {
-                fontStyle: "normal",
-                letterSpacing: "0em",
-                y: 10,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        })
     });
 </script>
 
 
 <div class="content" id="num-1">
     <h1 class="left-position text fade-in">¿Que es</h1>
-    <h1 class="title-1">{lista_cosas[0]}</h1>    
+    <h1 class="title-1 fade-in">{lista_cosas[0]}</h1>    
     <h1 class="right-position text fade-in">sin significado?</h1>
 </div>
 <div class="content" id="num-2">
