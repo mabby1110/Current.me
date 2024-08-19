@@ -16,7 +16,9 @@
 </div>
 
 {#if !started}
+<main>
     <Loader on:message={start}/>
+</main>
 {:else}
 <nav>
     <Navbar/>
