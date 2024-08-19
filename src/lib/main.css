@@ -1,8 +1,6 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    overflow-y: hidden; /* Hide vertical scrollbar */
-    overflow-x: hidden; /* Hide horizontal scrollbar */
     --primary-color: rgba(21, 21, 22, 0.786);
     --secondary-color: rgb(0, 0, 0);
     --tertiary-color: rgb(70, 73, 75);
