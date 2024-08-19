@@ -25,7 +25,7 @@
     let workPosition = new THREE.Vector3(0, 0, 10);
     let aboutPosition = new THREE.Vector3(0, 0, 6);
     
-    let startPosition = new THREE.Vector3(0, 0, -13);
+    let startPosition = new THREE.Vector3(0, 0, -10);
     
     // Configuraciones de iluminación
     const spheres = [];
@@ -44,7 +44,7 @@
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
-            camera.position.z = -13
+            camera.position.z = -10
             // iluminacion start
             lights[0] = new BulbLight({ x: 0, y: 0, z: -13 }, 0xffffff, 10);
             lights[0].addToScene(scene);
