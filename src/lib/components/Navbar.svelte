@@ -8,6 +8,7 @@
 
     function toggleMenu() {
         menuVisible = !menuVisible;
+        hereKitty = !hereKitty;
     }
 </script>
 
@@ -67,6 +68,12 @@
         text-decoration: none;
         font-size: 1.6em;
         font-weight: 100;
+    }
+    nav a:hover {
+        color: black;
+        text-decoration: none;
+        font-size: 1.6em;
+        font-weight: bolder;
     }
 
     .hidden {
