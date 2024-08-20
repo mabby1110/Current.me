@@ -1,74 +1,25 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
     import Background from "$lib/components/SphereVoidBackground.svelte";
-    import { release, loaded } from "$lib/writables";
-	import { onMount } from "svelte";
+    import { release, started } from "$lib/writables";
+    import { fade } from "svelte/transition";
     import Loader from "$lib/components/Loader.svelte";
-
-    let started =  false;
-    let gsap;
-    let ScrollTrigger;
-
-    function start() {
-        started = true
-        release.set(3)
-    }
-
-    onMount(async ()=>{
-        // Importa GSAP
-        const gsapModule = await import('gsap');
-        gsap = gsapModule.gsap
-
-        // Importa ScrollTrigger
-        const ScrollTriggerModule = await import('gsap/ScrollTrigger');
-        ScrollTrigger = ScrollTriggerModule.ScrollTrigger;
-
-        // Animación para elementos con clase .fade-in
-        gsap.utils.toArray(".fade-in").forEach((element) => {
-            gsap.from(element, {
-                opacity: 0,
-                y: 20,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-        gsap.utils.toArray(".fade-out").forEach((element) => {
-            gsap.from(element, {
-                opacity: 100,
-                y: 20,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-    })
 </script>
 
 <div class="bg">
     <Background release={$release}/>
 </div>
 
-{#if !started}
-<main>
-    <Loader on:message={start}/>
-</main>
-{:else}
 <nav>
-    <Navbar/>
+<Navbar/>
 </nav>
 <main>
+{#if $started}
     <slot/>
-</main>
+{:else}
+    <Loader/>
 {/if}
+</main>
 <style>
     main, .bg {
         height: 95vh;
