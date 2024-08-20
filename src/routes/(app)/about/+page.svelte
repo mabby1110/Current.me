@@ -21,10 +21,8 @@
 
 <style>
     .aboutContainer {
-        width: 100%;
-        height: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
     .Generales {
         height: 50vh;

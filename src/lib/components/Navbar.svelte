@@ -35,13 +35,13 @@
     img {
         position: absolute;
         right: 0;
-        transform: translate(110%, 0) rotate(20deg);
-		transform-origin: 100% 100%;
+        top:-80%;
+        transform: translate(110%, 0) rotate(-10deg);
 		transition: transform 0.4s;
 	}
     
 	.curious {
-        transform: translate(75%, 0) rotate(-80deg);
+        transform: translate(40%, 0) rotate(-90deg);
 	}
 
 

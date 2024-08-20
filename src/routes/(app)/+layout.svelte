@@ -36,6 +36,7 @@
     }
     nav {
         position: fixed;
+        bottom: 0;
         display: block;
         width: 100%;
     }
