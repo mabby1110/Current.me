@@ -25,7 +25,6 @@
     .loader-container {
         height: 100vh;
         width: 100%;
-        padding-top: 10vh;
         display: grid;
         place-items: center;
     }

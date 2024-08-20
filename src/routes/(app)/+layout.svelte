@@ -6,29 +6,29 @@
     import Loader from "$lib/components/Loader.svelte";
 </script>
 
+<nav>
+    <Navbar/>
+</nav>
+
 <div class="bg">
     <Background release={$release}/>
 </div>
 
-<nav>
-<Navbar/>
-</nav>
-<main>
 {#if $started}
+<main>
     <slot/>
+</main>
 {:else}
     <Loader/>
 {/if}
-</main>
 <style>
     main, .bg {
-        height: 95vh;
         width: 100%;
         min-width: 240px;
     }
     .bg {
         position: fixed;
-        top: 5vh;
+        top: 0;
         bottom: 0;
         left: 0;
         z-index: -999;
@@ -36,13 +36,8 @@
     }
     nav {
         position: fixed;
-        background-color: black;
-        min-width: 240px;
+        display: block;
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1;
     }
     .visible {
         opacity: 0;
