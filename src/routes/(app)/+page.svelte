@@ -30,12 +30,12 @@
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-rows: repeat(5, 1fr);
+        grid-template-rows: repeat(7, 1fr);
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         padding: 0 1rem;
     }
     .title-1 {
-        position: fixed;
+        grid-area: 4 / 1 / 6 / 3;
         align-self: center;
         justify-self: center;
         font-weight: bold;
@@ -55,9 +55,9 @@
         text-align: right;
     }
     .right-position {
-        grid-area: 4 / 2 / span 1 / span 1;
+        grid-area: 6 / 2 / span 1 / span 1;
     }
     .left-position {
-        grid-area: 2 / 1 / span 1 / span 1;
+        grid-area: 3 / 1 / span 1 / span 1;
     }
 </style>
