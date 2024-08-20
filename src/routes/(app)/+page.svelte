@@ -1,12 +1,23 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { release, started } from "$lib/writables";
     import { fade } from "svelte/transition";
 
-    let lista_cosas = ['[PRODUCTO]'];
+    let lista_cosas = ['[PRODUCTO]', '[IDEA]', '[MARCA]', '[EMPRESA]', '[SERVICIO]'];
+    let currentIndex = 0;
+    let intervalId;
+
+    function rotateItems() {
+        currentIndex = (currentIndex + 1) % lista_cosas.length;
+    }
 
     onMount(() => {
+        intervalId = setInterval(rotateItems, 1000);
         release.set(3);
+    });
+
+    onDestroy(() => {
+        clearInterval(intervalId);
     });
 </script>
 <div class="content">
@@ -14,7 +25,7 @@
     ¿Que es
     </h1>
     <h1 class="title-1" in:fade={{ duration: 1000, delay:2000  }}>
-        {lista_cosas[0]}
+        {lista_cosas[currentIndex]}
     </h1>    
     <h1 class="right-position text-landing r" in:fade={{ duration: 1000, delay:3000  }}>
         sin significado?
