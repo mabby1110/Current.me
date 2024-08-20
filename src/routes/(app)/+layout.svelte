@@ -37,7 +37,6 @@
     nav {
         position: fixed;
         background-color: black;
-        height: 5vh;
         min-width: 240px;
         width: 100%;
         display: flex;
