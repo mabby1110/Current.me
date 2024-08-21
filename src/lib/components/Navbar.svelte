@@ -8,18 +8,24 @@
 
     function toggleMenu() {
         menuVisible = !menuVisible;
+        hereKitty = menuVisible
     }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <header 
-    on:click={toggleMenu} style="height: {menuVisible ? '20vh' : '5vh'};"
-    on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave}>
+    style="height: {menuVisible ? '20vh' : '5vh'};">
     {#if !menuVisible}
-        <div on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave}>Menú</div>
+        <div class="menu" 
+        on:click={toggleMenu}
+        on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave}>Menú</div>
     {:else}
-        <nav>
+        <div class="screenCover"
+            on:click={toggleMenu}>
+        </div>
+        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+        <nav on:click={toggleMenu}>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/">Inicio</a>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/work">Trabajo</a>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/about">Sobre mi</a>
@@ -32,12 +38,30 @@
         />
 </header>
 <style>
+    .screenCover {
+        z-index: 2;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+    }
+    .menu {
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    .menu:hover {
+        color: black;
+        font-weight: bolder;
+        background-color: rgb(255, 255, 255);
+    }
+
     img {
-        position: absolute;
-        right: 0;
-        top:-110;
+        z-index: 2;
+        position: fixed;
+        right: -5%;
+        bottom: 10%;
         transform: translate(110%, 0) rotate(-10deg);
 		transition: transform 0.4s;
+        pointer-events: none;
 	}
     
 	.curious {
@@ -46,6 +70,7 @@
 
 
     header {
+        z-index: 1;
         width: 100%;
         display: flex;
         align-items: center;
@@ -55,6 +80,7 @@
     }
 
     nav {
+        z-index: 3;
         width: 100%;
         height: 100%;
         background-color: #ffff00;
@@ -64,6 +90,7 @@
     }
 
     nav a {
+        z-index: 5;
         color: black;
         padding: 1rem;
         border-radius: 5px;
