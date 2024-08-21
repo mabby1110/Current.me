@@ -6,15 +6,15 @@
     import Loader from "$lib/components/Loader.svelte";
 </script>
 
-<nav>
-    <Navbar/>
-</nav>
 
 <div class="bg">
     <Background release={$release}/>
 </div>
 
 {#if $started}
+<nav>
+    <Navbar/>
+</nav>
 <main>
     <slot/>
 </main>

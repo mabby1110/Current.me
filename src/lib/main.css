@@ -27,8 +27,3 @@ small { font-size: 0.875rem; } /* 14px */
 /* Interlineado */
 h1, h2, h3 { line-height: 1.2; }
 p, li, a { line-height: 1.5; }
-
-/* Márgenes */
-h1 { margin-bottom: 1.5rem; }
-h2, h3 { margin-bottom: 1rem; }
-p, li, a { margin-bottom: 0.75rem; }

@@ -12,8 +12,8 @@
     // Variables y configuraciones iniciales
     export let release;
 
-    let container;
-    let camera, scene, renderer, windowHalfX, windowHalfY;
+    let container: HTMLElement;
+    let camera: THREE.Camera, scene, renderer, windowHalfX, windowHalfY;
     const lights = [];
 
     const jailSize = 14
@@ -150,10 +150,13 @@
             mouseY = (event.clientY - windowHalfY) / 100;
         }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            render();
-            stats.update();
+        function updateCamera() {
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            const aspectRatio = containerWidth / containerHeight;
+
+            camera.aspect = aspectRatio;
+            camera.updateProjectionMatrix();
         }
 
         function render() {
@@ -162,6 +165,9 @@
                 lastPosition = workPosition
                 camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, Math.PI, 0.03);
+                // ver al rededor de un punto
+                camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
+                camera.position.y += ( - ( mouseY/4 ) - camera.position.y ) * 0.008;
             } else if (release == 2) {
                 lastPosition = aboutPosition
             } else if (release == 3) {
@@ -184,12 +190,16 @@
             // actualizar posicion de la camara segun la vista
             camera.position.lerp(lastPosition, 0.01);
 
-            // ver al rededor de un punto
-            // camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
-			// camera.position.y += ( - ( mouseY/4 ) - camera.position.y ) * 0.008;
 
 			// camera.lookAt( workPosition);
             renderer.render(scene, camera);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            updateCamera();
+            render();
+            stats.update();
         }
 
         init();
