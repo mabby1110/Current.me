@@ -25,10 +25,8 @@
     let startPosition = new THREE.Vector3(0, 0, -10);
 
     let landingPosition = new THREE.Vector3(0, 0, -14.5);
-    let homePosition = new THREE.Vector3(0, 0, 0);
-
-    let workPosition = new THREE.Vector3(0, 0, 10);
-    let aboutPosition = new THREE.Vector3(0, 0, 6);
+    let workPosition = new THREE.Vector3(0, 0, 9);
+    let aboutPosition = new THREE.Vector3(0, 0, 0);
     
     
     // Configuraciones de iluminación
@@ -163,7 +161,7 @@
             const timer = 0.0001 * Date.now();
             if (release == 1){
                 lastPosition = workPosition
-                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, Math.PI / 15, 0.03);
+                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
                 camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, Math.PI, 0.03);
                 // ver al rededor de un punto
                 camera.position.x += ( mouseX/4 - camera.position.x ) * 0.008;
@@ -172,6 +170,9 @@
                 lastPosition = aboutPosition
             } else if (release == 3) {
                 lastPosition = landingPosition
+                
+                camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, 0, 0.03);
+                camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, 0, 0.03);
             } else if (release == 9) {
                 for (let i = 0; i < spheres.length; i++) {
                     const sphere = spheres[i];
