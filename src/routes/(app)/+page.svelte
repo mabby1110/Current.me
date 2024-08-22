@@ -21,7 +21,7 @@
     });
 </script>
 <div class="content">
-    <h1 class="left-position text-landing l" in:fade={{ duration: 1000, delay:1000 }}>
+    <h1 class="left-position text-landing l" in:fade={{ duration: 1000, delay:3000 }}>
     ¿Que es
     </h1>
     <h1 class="title-1" in:fade={{ duration: 1000, delay:2000  }}>
