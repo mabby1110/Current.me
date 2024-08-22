@@ -4,7 +4,7 @@
     import { loaded } from '$lib/writables';
     import * as THREE from 'three';
     import Stats from 'stats.js';
-    import { BulbLight } from '$lib/threeUtils';
+    import { BulbLight, createStarField } from '$lib/threeUtils';
     import { createEventDispatcher } from 'svelte';
 
     const dispatch = createEventDispatcher();
@@ -116,6 +116,9 @@
                 roomWall.rotation.x = Math.PI / 2
                 scene.add(roomWall);
             }
+
+            // nube de estrellas
+            createStarField(scene, 1000, 100)
 
             // helpers y renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
