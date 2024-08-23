@@ -7,10 +7,16 @@
 </script>
 
 <div class="aboutContainer">
-    <div class="datos generales">
-        <h1>Bernardo A. Márquez</h1>
-        <h3>Ing, en desarrollo de software</h3>
-        <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. Estoy comprometido con mantenerme al día con las tendencias tecnológicas actuales y comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
+    <div class="generales">
+        <div class="datos">
+            <h1>Bernardo A. Márquez</h1>
+            <h3>Ing, en desarrollo de software</h3>
+            <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. Estoy comprometido con mantenerme al día con las tendencias tecnológicas actuales y comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
+        </div>
+        <div class="datos">
+            <h2>Experiencia</h2>
+            <p>no tengo :(</p>
+        </div>
     </div>
     <div class="datos tecnicos">
         <h2>Habilidades Técnicas</h2>
@@ -121,27 +127,22 @@
         </ul>
 
     </div>
-    
-    <div class="datos experiencia">
-        <h2>Experiencia</h2>
-        <p>no tengo :(</p>
-    </div>
 </div>
 
 <style>
     .aboutContainer {
+        padding: 1rem;
         position: fixed;
         top: 0;
+        width: 100%;
         height: 95vh;
         gap: 1rem;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(45vw, 1fr));
-        grid-template-rows: repeat(3, auto);
-        grid-auto-flow: row dense;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         overflow: scroll;
     }
     .datos   {
-        background-color: rgba(0, 0, 0, 0.623);
+        background-color: #0f042bb7;
         border-radius: 10px;
         padding: 1rem;
         height: fit-content;
@@ -150,19 +151,15 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        position: sticky;
-        top: 0;
-        min-width: 45vw;
     }
-
+    h1 {
+        margin-bottom: 0.6rem;
+    }
     h2, h3{
         margin-bottom: 2rem;
     }
     ul {
         margin-bottom: 3rem;
-    }
-    .experiencia {
-        grid-row: 2 / -1;
     }
     .tecnicos {
         grid-row: auto / span 1;

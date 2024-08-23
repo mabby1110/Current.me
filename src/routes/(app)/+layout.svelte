@@ -39,6 +39,7 @@
         bottom: 0;
         display: block;
         width: 100%;
+        z-index: 999;
     }
     .visible {
         opacity: 0;
