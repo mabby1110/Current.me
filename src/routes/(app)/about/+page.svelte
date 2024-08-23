@@ -11,8 +11,6 @@
         <h1>Bernardo A. Márquez</h1>
         <h3>Ing, en desarrollo de software</h3>
         <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. Estoy comprometido con mantenerme al día con las tendencias tecnológicas actuales y comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
-
-        <p>Mi objetivo principal es contribuir al bienestar de las comunidades a través de soluciones tecnológicas eficientes y accesibles, enfocadas en reducir la desigualdad de oportunidades y combatir la diferencia de clases.</p>
     </div>
     <div class="datos tecnicos">
         <h2>Habilidades Técnicas</h2>
@@ -132,11 +130,15 @@
 
 <style>
     .aboutContainer {
+        position: fixed;
+        top: 0;
+        height: 95vh;
         gap: 1rem;
-        padding: 6vh 1rem;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(45vw, 1fr));
+        grid-template-rows: repeat(3, auto);
         grid-auto-flow: row dense;
+        overflow: scroll;
     }
     .datos   {
         background-color: rgba(0, 0, 0, 0.623);
@@ -148,6 +150,9 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        position: sticky;
+        top: 0;
+        min-width: 45vw;
     }
 
     h2, h3{
@@ -157,7 +162,9 @@
         margin-bottom: 3rem;
     }
     .experiencia {
+        grid-row: 2 / -1;
     }
     .tecnicos {
+        grid-row: auto / span 1;
     }
 </style>
