@@ -138,7 +138,7 @@
         height: 95vh;
         gap: 1rem;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         overflow: scroll;
     }
     .datos   {
