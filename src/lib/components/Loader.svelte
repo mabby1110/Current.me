@@ -9,7 +9,7 @@
         if ($loaded) {
             visible = false;
             started.set(true)
-            release.set(3)
+            release.set(0)
         }
     }
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount, onDestroy } from "svelte";
-    import { release, started } from "$lib/writables";
+    import { release } from "$lib/writables";
     import { fade } from "svelte/transition";
 
     let lista_cosas = ['[PRODUCTO]', '[IDEA]', '[MARCA]', '[EMPRESA]', '[SERVICIO]'];
@@ -13,7 +13,7 @@
 
     onMount(() => {
         intervalId = setInterval(rotateItems, 1000);
-        release.set(3);
+        release.set(0);
     });
 
     onDestroy(() => {
@@ -31,12 +31,23 @@
         sin significado?
     </h1>
 </div>
-<div class="content">
-    <p class="left-position text">El verdadero valor no reside en lo superficial, sino en el significado profundo que le otorgamos.</p>    
-    <p class="right-position text">Sin significado, todo se vuelve vacío, carente de sentido.</p>
+<div class="content-2">
+    <p>Aplicado a lo que nos concierne, un producto o una marca es un significante que no existe en la mente del consumidor a menos que este le otorgue un significado</p>
+    <p>un sentido que le atribuya singularidad al producto y a su relación con el consumidor.</p>
+    <!-- <p class="left-position text">El verdadero valor no reside en lo superficial, sino en el significado profundo que le otorgamos.</p>     -->
+    <!-- <p class="right-position text">Sin significado, todo se vuelve vacío, carente de sentido.</p> -->
 </div>
 
 <style>
+    .content-2{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-row: 1rem auto auto 1rem;
+    }
+    .content-2 p {
+        background-color: yellow;
+        color: black;
+    }
     .content {
         width: 100%;
         height: 100vh;

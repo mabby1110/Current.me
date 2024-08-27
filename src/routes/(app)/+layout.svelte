@@ -8,7 +8,7 @@
 
 
 <div class="bg">
-    <Background release={$release}/>
+    <Background release={$release} started={$started}/>
 </div>
 
 {#if $started}
