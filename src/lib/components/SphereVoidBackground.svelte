@@ -12,6 +12,7 @@
     // Variables y configuraciones iniciales
     export let release;
     export let started;
+    let counter = 1;
 
     let container: HTMLElement;
     let camera: THREE.Camera, scene, renderer, windowHalfX, windowHalfY;
@@ -52,6 +53,7 @@
             // iluminacion home
             lights[1] = new BulbLight({ x: 2, y:0, z: 0 }, 0x500EFE, 10);
             lights[1].addToScene(scene);
+
             // iluminacion work
             lights[2] = new BulbLight({ x: 0, y: -4, z: 8 }, 0xffffff, 0);
             lights[2].addToScene(scene);
@@ -157,13 +159,16 @@
 
         function updateLightPosition() {
             const radius = 2; // distance from the camera
-            const angle = 1 +performance.now() / 2000; // adjust speed of rotation
-
-            lights[1].light.position.set(
-                // camera.position.x + radius * Math.cos(angle),
-                camera.position.y + radius * Math.sin(angle),
-                camera.position.z
-            );
+            counter -= 0.006;
+            console.log(counter)
+            if (counter >= -1.33) {
+                lights[1].light.position.set(
+                    camera.position.y + radius * Math.sin(counter),
+                    camera.position.z
+                );
+                return true
+            }
+            return false
         };
 
         function render() {
@@ -171,7 +176,7 @@
             switch (release) {
                 case 0:
                     if (started) {
-                        updateLightPosition()
+                        started = updateLightPosition()
                     }
                         lastPosition = loaderPosition
                         break

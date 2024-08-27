@@ -24,7 +24,7 @@
     <h1 class="left-position text-landing l" in:fade={{ duration: 1000, delay:3000 }}>
     ¿Que es
     </h1>
-    <h1 class="title-1" in:fade={{ duration: 1000, delay:2000  }}>
+    <h1 class="title-1" in:fade={{ duration: 1000, delay:1500  }}>
         {lista_cosas[currentIndex]}
     </h1>    
     <h1 class="right-position text-landing r" in:fade={{ duration: 1000, delay:3000  }}>
