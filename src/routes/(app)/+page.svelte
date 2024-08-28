@@ -25,7 +25,7 @@
 
 <svelte:window bind:scrollY={y} />
 
-<div class="landing-container slide-1 {y>200?"hide":"show"}">
+<div class="landing-container slide-1 {y>400?"hide":"show"}">
     <h2 class="left-positios" in:fade={{ duration: 1000, delay:3000 }}>
     ¿Que es
     </h2>
@@ -37,17 +37,14 @@
     </h2>
 </div>
 <div class="debug">
-    pixel y: {y} {deviceHeight}
-    {#if deviceHeight >= y}
-    algo
-    {/if}
+    pixel: {y} y algo
 </div>
-<div class="landing-container slide-2">
+<div class="slide-2">
     <div>
-        <p class="title-3">un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado</p>
+        <p class="title-2">un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado</p>
     </div>
     <div>
-        <p>un sentido que le atribuya singularidad al producto y a su relación con el consumidor.</p>
+        <p class="title-1">un sentido que le atribuya singularidad al producto y a su relación con el consumidor.</p>
     </div>
 </div>
 
@@ -96,14 +93,22 @@
     }
 
     .slide-2 {
-        background-color: yellow;
         color: black;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-auto-flow: dense;
     }
     .slide-2 div:first-child {
-        grid-area: 1 / 1 / -1 / span 1;
+        border: 2rem;
+        border-style: solid;
+        border-color: yellow;
+        color: white;
+        padding: 1.6rem;
     }
     .slide-2 div:last-child {
-        grid-area: 2 / 1 / -2 / span 1;
+        background-color: yellow;
+        width: 100%;
+        word-wrap: break-word;
     }
     /* UTILES */
     

@@ -41,6 +41,9 @@
         />
 </header>
 <style>
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
     .screenCover {
         z-index: 2;
         position: fixed;
@@ -82,7 +85,6 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: height 0.3s ease;
     }
 
     nav {
@@ -114,6 +116,6 @@
     }
 
     .hidden {
-        display: none;
+        display: hide;
     }
 </style>
