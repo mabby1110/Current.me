@@ -160,7 +160,7 @@
         function updateLightPosition() {
             const radius = 2; // distance from the camera
             counter -= 0.006;
-            console.log(counter)
+            
             if (counter >= -1.33) {
                 lights[1].light.position.set(
                     camera.position.y + radius * Math.sin(counter),
