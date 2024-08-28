@@ -1,5 +1,6 @@
 <script>
     import kitten from '$lib/assets/kitten.png'
+    import { fade } from 'svelte/transition';
     let hereKitty = false;
 
     const handleMouseenter = () => (hereKitty = true);
@@ -21,15 +22,17 @@
         on:click={toggleMenu}
         on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave}>Menú</div>
     {:else}
-        <div class="screenCover"
-            on:click={toggleMenu}>
-        </div>
+    <div class="screenCover"
+    in:fade={{ duration: 500 }}
+    out:fade={{ duration: 500 }}
+    on:click={toggleMenu}>
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-        <nav on:click={toggleMenu}>
+        <nav>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/">Inicio</a>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/work">Trabajo</a>
             <a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/about">Sobre mi</a>
         </nav>
+    </div>
     {/if}
         <img
             class:curious={hereKitty}
@@ -41,8 +44,11 @@
     .screenCover {
         z-index: 2;
         position: fixed;
+        top: 0;
         width: 100vw;
         height: 100vh;
+        background-color: rgb(0, 0, 0);
+        display: flex;
     }
     .menu {
         padding: 1rem;
@@ -65,7 +71,7 @@
 	}
     
 	.curious {
-        transform: translate(5%, 0) rotate(-65deg);
+        transform: translate(40%, 0) rotate(-65deg);
 	}
 
 
@@ -83,15 +89,16 @@
         z-index: 3;
         width: 100%;
         height: 100%;
-        background-color: #ffff00;
+        background-color: #000000;
         display: flex;
-        align-items: center;
+        align-items:flex-end;
         justify-content: space-evenly;
+        padding-bottom: 2rem;
     }
 
     nav a {
         z-index: 5;
-        color: black;
+        color: rgb(255, 255, 255);
         padding: 1rem;
         border-radius: 5px;
         text-decoration: none;
