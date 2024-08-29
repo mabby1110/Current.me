@@ -41,10 +41,13 @@
 </div>
 <div class="slide-2">
     <div>
-        <p class="title-2">un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado</p>
+        <p class="title-2">un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado Y este obtenga singularidad</p>
     </div>
     <div>
-        <p class="title-1">un sentido que le atribuya singularidad al producto y a su relación con el consumidor.</p>
+        <p class="title-1">¿buscas singularidad?</p>
+        <p class="title-1">¿buscas singularidad?</p>
+        <p class="title-1">¿buscas singularidad?</p>
+        <p class="title-1">¿buscas singularidad?</p>
     </div>
 </div>
 
@@ -101,12 +104,12 @@
     .slide-2 div:first-child {
         border: 2rem;
         border-style: solid;
-        border-color: yellow;
+        border-color: white;
         color: white;
         padding: 1.6rem;
     }
     .slide-2 div:last-child {
-        background-color: yellow;
+        background-color: white;
         width: 100%;
         word-wrap: break-word;
     }
