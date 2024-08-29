@@ -104,7 +104,7 @@
     .slide-2 div:first-child {
         border: 2rem;
         border-style: solid;
-        border-color: white;
+        border-color: rgb(0, 0, 0);
         color: white;
         padding: 1.6rem;
     }

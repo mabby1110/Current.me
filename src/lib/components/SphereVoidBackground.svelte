@@ -12,6 +12,9 @@
     // Variables y configuraciones iniciales
     export let release;
     export let started;
+
+    let scrollPosition = 0;
+
     let counter = 1;
 
     let container: HTMLElement;
@@ -40,8 +43,14 @@
         windowHalfX = window.innerWidth / 2;
         windowHalfY = window.innerHeight / 2;
 
-        document.addEventListener('mousemove', onDocumentMouseMove);
+        window.addEventListener('mousemove', onDocumentMouseMove);
         window.addEventListener('resize', onWindowResize);
+
+        // Escucha el evento de scroll
+        window.addEventListener('scroll', () => {
+        // Calcula la posición del scroll normalizada (0 a 1)
+            scrollPosition = -window.scrollY/10000;
+        });
 
         function init() {
             scene = new THREE.Scene();
@@ -51,7 +60,7 @@
             lights[0].addToScene(scene);
 
             // iluminacion home
-            lights[1] = new BulbLight({ x: 2, y:0, z: 0 }, 0x500EFE, 10);
+            lights[1] = new BulbLight({ x: 0, y:-2, z: 0 }, 0x500EFE, 10);
             lights[1].addToScene(scene);
 
             // iluminacion work
@@ -152,7 +161,8 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
             const aspectRatio = containerWidth / containerHeight;
-
+            camera.position.y = scrollPosition;
+            camera.position.z = - scrollPosition;
             camera.aspect = aspectRatio;
             camera.updateProjectionMatrix();
         }
@@ -163,7 +173,8 @@
             
             if (counter >= -1.33) {
                 lights[1].light.position.set(
-                    camera.position.y + radius * Math.sin(counter),
+                    camera.position.y,
+                    camera.position.x - radius * Math.sin(counter),
                     camera.position.z
                 );
                 return true

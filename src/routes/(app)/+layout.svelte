@@ -6,7 +6,6 @@
     import Loader from "$lib/components/Loader.svelte";
 </script>
 
-
 <div class="bg">
     <Background release={$release} started={$started}/>
 </div>
