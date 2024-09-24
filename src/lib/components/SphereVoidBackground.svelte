@@ -27,7 +27,8 @@
 
     let lastPosition = new THREE.Vector3(0, 0, 0);
 
-    let loaderPosition = new THREE.Vector3(0, 0, 0);
+    let pos_slide_1 = new THREE.Vector3(0, 0, 0);
+    let pos_slide_2 = new THREE.Vector3(0, 0, 0.4);
     let workPosition = new THREE.Vector3(0, 0, 9);
     let aboutPosition = new THREE.Vector3(0, 0, 0);
     
@@ -49,7 +50,7 @@
         // Escucha el evento de scroll
         window.addEventListener('scroll', () => {
         // Calcula la posición del scroll normalizada (0 a 1)
-            scrollPosition = -window.scrollY/10000;
+            scrollPosition = window.scrollY;
         });
 
         function init() {
@@ -161,35 +162,46 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
             const aspectRatio = containerWidth / containerHeight;
-            camera.position.y = scrollPosition;
-            camera.position.z = - scrollPosition;
+            // camera.position.y = scrollPosition;
+            // camera.position.z = - scrollPosition;
             camera.aspect = aspectRatio;
             camera.updateProjectionMatrix();
         }
 
-        function updateLightPosition() {
+        function updateLightPosition(slide) {
             const radius = 2; // distance from the camera
             counter -= 0.006;
-            
-            if (counter >= -1.33) {
-                lights[1].light.position.set(
-                    camera.position.y,
-                    camera.position.x - radius * Math.sin(counter),
-                    camera.position.z
-                );
-                return true
+            switch(slide){
+                case 1:
+                    lights[1].light.position.set(
+                        camera.position.y,
+                        camera.position.x - radius * Math.sin(counter),
+                        camera.position.z
+                    );
+                    break
+                default:
+                    if (counter >= -1.33) {
+                        lights[1].light.position.set(
+                            camera.position.y,
+                            camera.position.x - radius * Math.sin(counter),
+                            camera.position.z
+                        );
+                        return true
+                    }
+                    break
             }
             return false
         };
 
         function render() {
             const timer = 0.0001 * Date.now();
+            console.log(scrollPosition)
             switch (release) {
                 case 0:
                     if (started) {
                         started = updateLightPosition()
                     }
-                        lastPosition = loaderPosition
+                        lastPosition = pos_slide_1
                         break
                 case 1:
                         lastPosition = workPosition
@@ -198,7 +210,7 @@
                         lastPosition = aboutPosition
                         break
                 case 3:
-                        lastPosition = loaderPosition
+                        lastPosition = pos_slide_1
                         break
                 case 4: 
                         for (let i = 0; i < spheres.length; i++) {
@@ -211,6 +223,14 @@
                             sphere.position.y += (targetY - sphere.position.y) * 0.01;
                         }
                         break
+            }
+        
+            if(scrollPosition > 400) {
+                lastPosition = pos_slide_2
+                updateLightPosition(1)
+            }
+            else {
+                lastPosition = pos_slide_1
             }
             // actualizar posicion de la camara segun la vista
             camera.position.lerp(lastPosition, 0.01);

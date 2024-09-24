@@ -7,7 +7,6 @@
     let currentIndex = 0;
     let intervalId;
     let y;
-    let deviceHeight = window.innerHeight
 
     function rotateItems() {
         currentIndex = (currentIndex + 1) % lista_cosas.length;
@@ -39,15 +38,16 @@
 <div class="debug">
     pixel: {y} y algo
 </div>
-<div class="slide-2">
+<div class="landing-container slide-2 {y>800?"hide":"show"}">
     <div>
-        <p class="title-2">un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado Y este obtenga singularidad</p>
+        <p class="title-1">¿buscas singularidad?</p>
     </div>
     <div>
-        <p class="title-1">¿buscas singularidad?</p>
-        <p class="title-1">¿buscas singularidad?</p>
-        <p class="title-1">¿buscas singularidad?</p>
-        <p class="title-1">¿buscas singularidad?</p>
+        <p>Cada idea nueva es una oportunidad para ayudar y crecer como sociedad</p>
+        <br>
+        <p>un producto o una marca no existe en la mente del consumidor a menos que este le otorgue un significado</p>
+        <br>
+        <p>descubre el potencial de tu marca y hagamosla realidad</p>
     </div>
 </div>
 
