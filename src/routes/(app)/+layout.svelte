@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "$lib/main.css";
     import Navbar from "$lib/components/Navbar.svelte";
     import Background from "$lib/components/SphereVoidBackground.svelte";
     import { release, started } from "$lib/writables";
