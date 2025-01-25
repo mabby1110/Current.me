@@ -4,6 +4,7 @@
 	import Background from '$lib/components/SphereVoidBackground.svelte';
 	import { release, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
+	import { fade } from 'svelte/transition';
 </script>
 
 <div class="bg">
@@ -11,10 +12,10 @@
 </div>
 
 {#if $started}
-	<nav>
+	<nav transition:fade={{ duration: 500 }}>
 		<Navbar />
 	</nav>
-	<main>
+	<main transition:fade={{ duration: 1000, delay: 1000 }}>
 		<slot />
 	</main>
 {:else}
@@ -41,8 +42,5 @@
 		display: block;
 		width: 100%;
 		z-index: 999;
-	}
-	.visible {
-		opacity: 0;
 	}
 </style>
