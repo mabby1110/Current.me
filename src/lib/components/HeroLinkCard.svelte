@@ -4,7 +4,8 @@
 <style>
     .card-container {
 		max-width: 280px;
-		width: 100%;
+        width: 100%;
+		height: auto;
 		aspect-ratio: 1/1;
 		background-color: #f0f0f030;
 		border-radius: 1rem;
