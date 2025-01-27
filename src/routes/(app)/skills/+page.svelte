@@ -11,7 +11,7 @@
         <div class="datos">
             <h1>Bernardo A. Márquez</h1>
             <h3>Ing, en desarrollo de software</h3>
-            <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. Estoy comprometido con mantenerme al día con las tendencias tecnológicas actuales y comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
+            <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. siempre al día con las tendencias tecnológicas actuales comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
         </div>
         <div class="datos">
             <h2>Experiencia</h2>

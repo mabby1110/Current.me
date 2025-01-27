@@ -1,12 +1,15 @@
-
-<div class="card-container">card-container</div>
+<script>
+	export let title = 'HeroLinkCard';
+	export let link = '/';
+</script>
+<button class="card-container"><a href="{link}">{title}</a></button>
 
 <style>
     .card-container {
 		max-width: 280px;
+		min-height: 200px;
         width: 100%;
-		height: auto;
-		aspect-ratio: 1/1;
+		height: 100%;
 		background-color: #f0f0f030;
 		border-radius: 1rem;
 		padding: 1rem;

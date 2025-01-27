@@ -1,6 +1,8 @@
 <script>
 	import kitten from '$lib/assets/kitten.png';
 	import { fade } from 'svelte/transition';
+	import Slider from './Slider.svelte';
+	import SliderLinkCard from './SliderLinkCard.svelte';
 	let hereKitty = false;
 
 	const handleMouseenter = () => (hereKitty = true);
@@ -23,20 +25,31 @@
 			on:mouseenter={handleMouseenter}
 			on:mouseleave={handleMouseleave}
 		>
-			Menú
+			<h1>MABBY</h1>
 		</div>
 	{:else}
-		<div
-			class="screenCover"
-			in:fade={{ duration: 500 }}
-			out:fade={{ duration: 500 }}
-			on:click={toggleMenu}
-		>
+		<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<nav>
-				<a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/">Inicio</a>
-				<a on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} href="/about">Sobre mi</a>
+				<a
+					on:mouseenter={handleMouseenter}
+					on:mouseleave={handleMouseleave}
+					on:click={toggleMenu}
+					href="/">Home</a
+				>
+				<a
+					on:mouseenter={handleMouseenter}
+					on:mouseleave={handleMouseleave}
+					on:click={toggleMenu}
+					href="/about">About</a
+				>
 			</nav>
+			<Slider title="cambiar fondo">
+				<SliderLinkCard />
+				<SliderLinkCard />
+				<SliderLinkCard />
+				<SliderLinkCard />
+			</Slider>
 		</div>
 	{/if}
 	<img class:curious={hereKitty} alt="Kitten wants to know what's going on" src={kitten} />
@@ -47,17 +60,18 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 	.screenCover {
-		z-index: 2;
 		position: fixed;
 		top: 0;
 		width: 100vw;
 		height: 100vh;
 		background-color: rgb(0, 0, 0);
 		display: flex;
-		cursor:default;
+		flex-direction: column;
+		justify-items: center;
+		cursor: default;
 	}
 	.menu {
-		padding: 1rem;
+		box-sizing: border-box;
 		border-radius: 5px;
 	}
 	.menu:hover {
@@ -90,6 +104,7 @@
 	}
 
 	nav {
+		flex-grow: 1;
 		z-index: 3;
 		width: 100%;
 		height: 100%;
@@ -98,7 +113,6 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding-bottom: 2rem;
 	}
 
 	nav a {
@@ -116,9 +130,5 @@
 		text-decoration: none;
 		font-size: 1.6em;
 		font-weight: bolder;
-	}
-
-	.hidden {
-		display: hide;
 	}
 </style>

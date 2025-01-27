@@ -1,36 +1,48 @@
 <script>
-    let visible = true;
+	import { fade } from "svelte/transition";
+
+    export let title = 'Slider';
+    let visible = false;
     function toggleMenu() {
         visible = !visible;
     }
 </script>
 <div class="slider-container">
-    <h2 on:click={toggleMenu}>Proyectos</h2>
     {#if visible}
-        <div class="slider-content">
+        <div class="slider-content"
+			in:fade={{ duration: 500 }}
+			out:fade={{ duration: 500 }}>
             <slot/>
         </div>
     {/if}
+    <button on:click={toggleMenu}><p>{title}</p></button>
 </div>
 <style>
     .slider-container {
+        z-index: 2;
         height: 100%;
         width: 100%;
 		overflow-x: auto;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        justify-content: flex-end;
     }
 	.slider-content {
 		display: flex;
 		gap: 1rem;
 	}
-    h2 {
-        user-select: none;
+    button {
         align-self: center;
-        width: min-content;
+        background-color: transparent;
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 5px;
+        padding: 1rem;
+        font-size: 1.6em;
+        font-weight: 100;
+        cursor: pointer;
         position: sticky;
         left: 0;
-        cursor: pointer;
     }
 </style>

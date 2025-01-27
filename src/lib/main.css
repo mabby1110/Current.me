@@ -12,8 +12,6 @@
 body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-  }
-body { 
     background-color: rgb(0, 0, 0);
     font-family: 'Montserrat', sans-serif;
     color: var(--text-body);
@@ -21,7 +19,7 @@ body {
 }
 
 /* Tamaños de fuente */
-p, li, a { font-size: 1rem; font-weight: 100;} /* 16px */
+p, li, a, button { font-size: 1rem; font-weight: 100;color: var(--text-body);} /* 16px */
 small { font-size: 0.875rem; } /* 14px */
 .title-1 { font-size: 2.5rem; font-weight: 800;} /* 40px */
 .title-2 { font-size: 2rem; font-weight: 400; } /* 32px */

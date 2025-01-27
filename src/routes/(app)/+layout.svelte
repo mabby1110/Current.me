@@ -12,10 +12,10 @@
 </div>
 
 {#if $started}
-	<nav transition:fade={{ duration: 500 }}>
-		<Navbar />
-	</nav>
 	<main transition:fade={{ duration: 1000, delay: 1000 }}>
+		<nav transition:fade={{ duration: 500 }}>
+			<Navbar />
+		</nav>
 		<slot />
 	</main>
 {:else}
@@ -23,10 +23,16 @@
 {/if}
 
 <style>
+	main {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
 	main,
 	.bg {
 		width: 100%;
 		min-width: 240px;
+		padding: 2rem 1rem;
 	}
 	.bg {
 		position: fixed;
@@ -37,9 +43,8 @@
 		background-color: rgb(0, 0, 0);
 	}
 	nav {
-		position: fixed;
-		bottom: 0;
-		display: block;
+		position: sticky;
+		top: 2rem;
 		width: 100%;
 		z-index: 999;
 	}
