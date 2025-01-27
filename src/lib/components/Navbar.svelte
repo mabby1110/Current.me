@@ -101,6 +101,7 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		backdrop-filter: blur(5px);
 	}
 
 	nav {

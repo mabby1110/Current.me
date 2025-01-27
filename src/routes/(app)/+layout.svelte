@@ -31,6 +31,7 @@
 	main,
 	.bg {
 		width: 100%;
+		height: 100vh;
 		min-width: 240px;
 		padding: 2rem 1rem;
 	}
