@@ -32,7 +32,7 @@
 	.bg {
 		width: 100%;
 		min-width: 240px;
-		padding: 2rem 1rem;
+		padding: 0 1rem;
 	}
 	.bg {
 		position: fixed;
@@ -43,8 +43,6 @@
 		background-color: rgb(0, 0, 0);
 	}
 	nav {
-		position: sticky;
-		top: 2rem;
 		width: 100%;
 		z-index: 999;
 	}

@@ -1,8 +1,10 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	export let title = 'HeroLinkCard';
 	export let link = '/';
 </script>
-<button class="card-container"><a href="{link}">{title}</a></button>
+<button class="card-container" on:click={goto(link)}>{title}</button>
 
 <style>
     .card-container {
@@ -16,5 +18,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
 	}
 </style>

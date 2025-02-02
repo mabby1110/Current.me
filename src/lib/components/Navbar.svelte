@@ -1,55 +1,59 @@
 <script>
 	import kitten from '$lib/assets/kitten.png';
 	import { fade } from 'svelte/transition';
-	import Slider from './Slider.svelte';
-	import SliderLinkCard from './SliderLinkCard.svelte';
+	import { onMount } from 'svelte';
+	import { navState } from '$lib/writables';
 	let hereKitty = false;
 
 	const handleMouseenter = () => (hereKitty = true);
-	const handleMouseleave = () => (hereKitty = false);
-	let menuVisible = false;
+	const handleMouseleave = () => (hereKitty = false);;
 
-	function toggleMenu() {
-		menuVisible = !menuVisible;
-		hereKitty = menuVisible;
+	function closeNav() {
+		navState.set({visible: false, kitty: false});
 	}
+
+	function openNav() {
+		navState.set({visible: true, kitty: true});
+	}
+
+	onMount(() => {
+		const handleKeydown = () => {
+			if (event.key === 'Escape') {
+				navState.set({visible: false, kitty: false});
+			}
+		};
+		window.addEventListener('keydown', handleKeydown);
+		return () => window.removeEventListener('keydown', handleKeydown);
+	});
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<header style="height: {menuVisible ? '20vh' : '5vh'};">
-	{#if !menuVisible}
-		<div
-			class="menu"
-			on:click={toggleMenu}
-			on:mouseenter={handleMouseenter}
-			on:mouseleave={handleMouseleave}
+<header style="height: {$navState ? '20vh' : '5vh'};">
+	<div
+		class="menu"
+		on:click={openNav}
 		>
-			<h1>MABBY</h1>
-		</div>
-	{:else}
+		<h1>Current.me</h1>
+	</div>
+	{#if $navState.visible}
 		<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+			<button class="close-nav" on:click={closeNav}>x</button>
 			<nav>
 				<a
 					on:mouseenter={handleMouseenter}
 					on:mouseleave={handleMouseleave}
-					on:click={toggleMenu}
+					on:click={closeNav}
 					href="/">Home</a
 				>
 				<a
 					on:mouseenter={handleMouseenter}
 					on:mouseleave={handleMouseleave}
-					on:click={toggleMenu}
+					on:click={closeNav}
 					href="/about">About</a
 				>
 			</nav>
-			<Slider title="cambiar fondo">
-				<SliderLinkCard />
-				<SliderLinkCard />
-				<SliderLinkCard />
-				<SliderLinkCard />
-			</Slider>
 		</div>
 	{/if}
 	<img class:curious={hereKitty} alt="Kitten wants to know what's going on" src={kitten} />
@@ -58,6 +62,14 @@
 <style>
 	* {
 		-webkit-tap-highlight-color: transparent;
+	}
+	.close-nav {
+		position: absolute;
+		top: 5%;
+		right: 8%;
+		color: rgb(255, 255, 255);
+		z-index: 4;
+		background-color: transparent;
 	}
 	.screenCover {
 		position: fixed;
@@ -73,6 +85,7 @@
 	.menu {
 		box-sizing: border-box;
 		border-radius: 5px;
+		padding: 1rem;
 	}
 	.menu:hover {
 		color: black;
@@ -95,6 +108,7 @@
 	}
 
 	header {
+		max-height: 5vh;
 		z-index: 1;
 		width: 100%;
 		display: flex;

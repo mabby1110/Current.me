@@ -5,9 +5,9 @@
 </script>
 
 <div class="hero-section">
-	<HeroLinkCard title="Habilidades" link="skills"/>
+	<HeroLinkCard title="Skills" link="skills"/>
 	<!-- <HeroLinkCard title="Galeria"/> -->
-	<HeroLinkCard title="CV" link="cv"/>
+	<HeroLinkCard title="Curriculum Vitae" link="cv"/>
 	<!-- <HeroLinkCard title="Merch"/> -->
 </div>
 
