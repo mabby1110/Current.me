@@ -5,8 +5,9 @@
 	import { release, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
+	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 </script>
-
+<DevelopmentBanner showBanner={true} message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas." />
 <div class="bg">
 	<Background release={$release} started={$started} />
 </div>
@@ -33,7 +34,7 @@
 		width: 100%;
 		height: 100vh;
 		min-width: 240px;
-		padding: 2rem 1rem;
+		padding: 0 1rem;
 	}
 	.bg {
 		position: fixed;
@@ -44,8 +45,6 @@
 		background-color: rgb(0, 0, 0);
 	}
 	nav {
-		position: sticky;
-		top: 2rem;
 		width: 100%;
 		z-index: 999;
 	}

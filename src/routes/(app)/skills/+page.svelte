@@ -13,10 +13,6 @@
             <h3>Ing, en desarrollo de software</h3>
             <p>Soy Egresado de la Universidad Autónoma de Guadalajara, con experiencia en el diseño, desarrollo e implementación de aplicaciones de software, tanto existentes como a la medida. siempre al día con las tendencias tecnológicas actuales comprendo los factores clave para resolver problemas específicos, ya sea utilizando soluciones preexistentes o creando nuevas.</p>
         </div>
-        <div class="datos">
-            <h2>Experiencia</h2>
-            <p>no tengo :(</p>
-        </div>
     </div>
     <div class="datos tecnicos">
         <h2>Habilidades Técnicas</h2>
@@ -132,8 +128,6 @@
 <style>
     .aboutContainer {
         padding: 1rem;
-        position: fixed;
-        top: 0;
         width: 100%;
         height: 95vh;
         gap: 1rem;
