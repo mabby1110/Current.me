@@ -5,15 +5,14 @@
     const pdfUrlEn = 'src/lib/assets/CV BERNARDO MARQUEZ english.pdf';
   </script>
   <div class="cv-container">
-    <h1>Curriculum Vitae</h1>
     <h3>Español</h3>
     <PdfViewer pdfUrl={pdfUrlEs} />
     <h3>English</h3>
     <PdfViewer pdfUrl={pdfUrlEn} />
-  </main>
+  </div>
 
   <style>
-    main {
+    div.cv-container {
       display: flex;
       flex-direction: column;
       align-items: center;

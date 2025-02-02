@@ -7,7 +7,7 @@
 	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 </script>
-<DevelopmentBanner showBanner={true} message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas." />
+
 <div class="bg">
 	<Background release={$release} started={$started} />
 </div>
@@ -18,6 +18,7 @@
 			<Navbar />
 		</nav>
 		<slot />
+		<DevelopmentBanner showBanner={true} message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas." />
 	</main>
 {:else}
 	<Loader />
@@ -32,9 +33,7 @@
 	main,
 	.bg {
 		width: 100%;
-		height: 100vh;
 		min-width: 240px;
-		padding: 0 1rem;
 	}
 	.bg {
 		position: fixed;

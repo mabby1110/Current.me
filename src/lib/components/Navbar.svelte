@@ -3,10 +3,9 @@
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { navState } from '$lib/writables';
-	let hereKitty = false;
 
-	const handleMouseenter = () => (hereKitty = true);
-	const handleMouseleave = () => (hereKitty = false);;
+	const handleMouseenter = () => ($navState.kitty = true);
+	const handleMouseleave = () => ($navState.kitty = false);
 
 	function closeNav() {
 		navState.set({visible: false, kitty: false});
@@ -18,6 +17,7 @@
 
 	onMount(() => {
 		const handleKeydown = () => {
+			// @ts-ignore
 			if (event.key === 'Escape') {
 				navState.set({visible: false, kitty: false});
 			}
@@ -29,35 +29,38 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<header style="height: {$navState ? '20vh' : '5vh'};">
+<header>
 	<div
 		class="menu"
 		on:click={openNav}
 		>
 		<h1>Current.me</h1>
 	</div>
-	{#if $navState.visible}
-		<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
-			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<button class="close-nav" on:click={closeNav}>x</button>
-			<nav>
-				<a
-					on:mouseenter={handleMouseenter}
-					on:mouseleave={handleMouseleave}
-					on:click={closeNav}
-					href="/">Home</a
-				>
-				<a
-					on:mouseenter={handleMouseenter}
-					on:mouseleave={handleMouseleave}
-					on:click={closeNav}
-					href="/about">About</a
-				>
-			</nav>
-		</div>
-	{/if}
-	<img class:curious={hereKitty} alt="Kitten wants to know what's going on" src={kitten} />
 </header>
+
+{#if $navState.visible}
+<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<button class="close-nav" on:click={closeNav}>x</button>
+	<nav>
+		<a
+			on:mouseenter={handleMouseenter}
+			on:mouseleave={handleMouseleave}
+			on:click={closeNav}
+			href="/">Home</a
+		>
+		<a
+			on:mouseenter={handleMouseenter}
+			on:mouseleave={handleMouseleave}
+			on:click={closeNav}
+			href="/about">About</a
+		>
+	</nav>
+</div>
+<div class="kitty-cage">
+	<img class:curious={$navState.kitty} alt="Kitten wants to know what's going on" src={kitten} />
+</div>
+{/if}
 
 <style>
 	* {
@@ -74,6 +77,7 @@
 	.screenCover {
 		position: fixed;
 		top: 0;
+		left: 0;
 		width: 100vw;
 		height: 100vh;
 		background-color: rgb(0, 0, 0);
@@ -81,6 +85,7 @@
 		flex-direction: column;
 		justify-items: center;
 		cursor: default;
+		overflow-x: hidden;
 	}
 	.menu {
 		box-sizing: border-box;
@@ -94,8 +99,8 @@
 	}
 
 	img {
-		z-index: 2;
-		position: fixed;
+		z-index: 4;
+		position: absolute;
 		right: -5%;
 		bottom: 10%;
 		transform: translate(110%, 0) rotate(-10deg);
@@ -106,7 +111,10 @@
 	.curious {
 		transform: translate(40%, 0) rotate(-65deg);
 	}
-
+	.kitty-cage {
+		position: relative;
+		overflow: hidden;
+	}
 	header {
 		max-height: 5vh;
 		z-index: 1;
