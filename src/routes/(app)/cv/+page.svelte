@@ -1,13 +1,31 @@
 <script lang="ts">
     import PdfViewer from "$lib/components/PdfViewer.svelte";
-  
-    const pdfUrl = 'src/lib/assets/CV BERNARDO MARQUEZ español.pdf'; // Asegúrate de que la ruta al PDF sea correcta
+
+    const pdfUrlEs = 'src/lib/assets/CV BERNARDO MARQUEZ español.pdf';
+    const pdfUrlEn = 'src/lib/assets/CV BERNARDO MARQUEZ english.pdf';
   </script>
   
   <main>
     <h1>Curriculum Vitae</h1>
-    <PdfViewer {pdfUrl} />
+    <h3>Español</h3>
+    <PdfViewer pdfUrl={pdfUrlEs} />
+    <h3>English</h3>
+    <PdfViewer pdfUrl={pdfUrlEn} />
   </main>
 
   <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    h1 {
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+    h3 {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
   </style>

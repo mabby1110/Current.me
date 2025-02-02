@@ -4,8 +4,8 @@
   
   <style>
     .pdf-container {
-      width: 100%;
-      height: 500px;
+      height: 80vh;
+      width: 90%;
       border: 1px solid #ccc;
     }
   </style>
