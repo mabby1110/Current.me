@@ -8,18 +8,18 @@
 	const handleMouseleave = () => ($navState.kitty = false);
 
 	function closeNav() {
-		navState.set({visible: false, kitty: false});
+		navState.set({ visible: false, kitty: false });
 	}
 
 	function openNav() {
-		navState.set({visible: true, kitty: true});
+		navState.set({ visible: true, kitty: true });
 	}
 
 	onMount(() => {
 		const handleKeydown = () => {
 			// @ts-ignore
 			if (event.key === 'Escape') {
-				navState.set({visible: false, kitty: false});
+				navState.set({ visible: false, kitty: false });
 			}
 		};
 		window.addEventListener('keydown', handleKeydown);
@@ -30,36 +30,45 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <header>
-	<div
-		class="menu"
-		on:click={openNav}
-		>
+	<div class="menu" on:click={openNav}>
 		<h1>Current.me</h1>
 	</div>
 </header>
 
 {#if $navState.visible}
-<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<button class="close-nav" on:click={closeNav}>x</button>
-	<nav>
-		<a
-			on:mouseenter={handleMouseenter}
-			on:mouseleave={handleMouseleave}
-			on:click={closeNav}
-			href="/">Home</a
-		>
-		<a
-			on:mouseenter={handleMouseenter}
-			on:mouseleave={handleMouseleave}
-			on:click={closeNav}
-			href="/about">About</a
-		>
-	</nav>
-</div>
-<div class="kitty-cage">
-	<img class:curious={$navState.kitty} alt="Kitten wants to know what's going on" src={kitten} />
-</div>
+	<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
+		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+		<button class="close-nav" on:click={closeNav}>x</button>
+		<nav>
+			<a
+				on:mouseenter={handleMouseenter}
+				on:mouseleave={handleMouseleave}
+				on:click={closeNav}
+				href="/">Home</a
+			>
+			<a
+				on:mouseenter={handleMouseenter}
+				on:mouseleave={handleMouseleave}
+				on:click={closeNav}
+				href="/skills">Skills</a
+			>
+			<a
+				on:mouseenter={handleMouseenter}
+				on:mouseleave={handleMouseleave}
+				on:click={closeNav}
+				href="/cv">Curriculum Vitae</a
+			>
+			<a
+				on:mouseenter={handleMouseenter}
+				on:mouseleave={handleMouseleave}
+				on:click={closeNav}
+				href="/work">my work</a
+			>
+		</nav>
+	</div>
+	<div class="kitty-cage">
+		<img class:curious={$navState.kitty} alt="Kitten wants to know what's going on" src={kitten} />
+	</div>
 {/if}
 
 <style>
