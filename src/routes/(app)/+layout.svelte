@@ -1,15 +1,17 @@
 <script lang="ts">
 	import '$lib/main.css';
 	import Navbar from '$lib/components/Navbar.svelte';
-	import Background from '$lib/components/SphereVoidBackground.svelte';
-	import { release, started } from '$lib/writables';
+
+	import { started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
+	import EyeballScene from '$lib/components/scenes/EyeballScene.svelte';
 </script>
 
 <div class="bg">
-	<Background release={$release} started={$started} />
+	<!-- <Background release={$release} started={$started} /> -->
+	<EyeballScene />
 </div>
 
 {#if $started}
@@ -18,33 +20,36 @@
 			<Navbar />
 		</nav>
 		<slot />
-		<DevelopmentBanner showBanner={true} message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas." />
+		<DevelopmentBanner
+			showBanner={true}
+			message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
+		/>
 	</main>
 {:else}
 	<Loader />
 {/if}
 
 <style>
-	main {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+	nav {
+		padding-top: 1rem;
+		position: sticky;
+		top: 0;
+		width: 100%;
+		backdrop-filter: blur(10px);
 	}
-	main,
+	main {
+		width: 100%;
+		z-index: 1;
+		position: relative;
+	}
 	.bg {
 		width: 100%;
 		min-width: 240px;
-	}
-	.bg {
 		position: fixed;
 		top: 0;
 		bottom: 0;
 		left: 0;
-		z-index: -999;
+		z-index: -1;
 		background-color: rgb(0, 0, 0);
-	}
-	nav {
-		width: 100%;
-		z-index: 999;
 	}
 </style>

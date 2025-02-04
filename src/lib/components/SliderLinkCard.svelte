@@ -3,9 +3,8 @@
 
 <style>
     .card-container {
-		min-width: 180px;
-        width: 100%;
-        aspect-ratio: 1/1;
+		height: 100%;
+		min-width: 200px;
 		background-color: #f0f0f030;
 		border-radius: 1rem;
 		padding: 1rem;

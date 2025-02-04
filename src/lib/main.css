@@ -16,6 +16,8 @@ body {
     font-family: 'Montserrat', sans-serif;
     color: var(--text-body);
     width: 100vw;
+    position: relative;
+    z-index: 0;
 }
 
 /* Tamaños de fuente */

@@ -31,7 +31,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <header>
 	<div class="menu" on:click={openNav}>
-		<h1>Current.me</h1>
+		<h1>CURRENT.ME</h1>
 	</div>
 </header>
 
@@ -108,7 +108,7 @@
 	}
 
 	img {
-		z-index: 4;
+		z-index: 3;
 		position: absolute;
 		right: -5%;
 		bottom: 10%;
@@ -132,7 +132,6 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		backdrop-filter: blur(5px);
 	}
 
 	nav {

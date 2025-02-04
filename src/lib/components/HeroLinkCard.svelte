@@ -4,14 +4,13 @@
 	export let title = 'HeroLinkCard';
 	export let link = '/';
 </script>
-<button class="card-container" on:click={goto(link)}>{title}</button>
+<button class="card-container" on:click={goto(link)}>
+	<slot>{title}</slot>
+</button>
 
 <style>
     .card-container {
-		max-width: 280px;
-		max-height: 280px;
-		min-height: 200px;
-        width: 100%;
+		width: 100%;
 		height: 100%;
 		background-color: #f0f0f030;
 		border-radius: 1rem;
