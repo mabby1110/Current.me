@@ -155,14 +155,6 @@
         scrollbar-width: none;  /* Firefox */
     }
 
-    body {
-        font-family: "Tahoma", "Arial", sans-serif;
-        background-color: var(--primary-color);
-        color: var(--text-body);
-        margin: 0;
-        padding: 0;
-    }
-
     .windows-xp-container {
         padding: 1rem;
         display: grid;
@@ -176,7 +168,7 @@
         border: 1px solid var(--tertiary-color);
         border-radius: 4px;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        min-height: fit-content; /* Adjust height to fit content */
+        max-height: fit-content;
     }
 
     .xp-title-bar {

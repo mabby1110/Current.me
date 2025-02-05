@@ -119,7 +119,7 @@
 	.work {
 		width: 100%;
 		backdrop-filter: blur(10px);
-		height: 100vh;
+		height: 95vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

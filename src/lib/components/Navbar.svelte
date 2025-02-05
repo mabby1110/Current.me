@@ -58,12 +58,6 @@
 				on:click={closeNav}
 				href="/cv">Curriculum Vitae</a
 			>
-			<a
-				on:mouseenter={handleMouseenter}
-				on:mouseleave={handleMouseleave}
-				on:click={closeNav}
-				href="/work">my work</a
-			>
 		</nav>
 	</div>
 	<div class="kitty-cage">

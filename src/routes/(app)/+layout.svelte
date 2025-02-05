@@ -15,10 +15,10 @@
 </div>
 
 {#if $started}
+	<nav transition:fade={{ duration: 500 }}>
+		<Navbar />
+	</nav>
 	<main transition:fade={{ duration: 1000, delay: 1000 }}>
-		<nav transition:fade={{ duration: 500 }}>
-			<Navbar />
-		</nav>
 		<slot />
 		<DevelopmentBanner
 			showBanner={true}
@@ -34,6 +34,7 @@
 		padding-top: 1rem;
 		position: sticky;
 		top: 0;
+		z-index: 999;
 		width: 100%;
 		backdrop-filter: blur(10px);
 	}
