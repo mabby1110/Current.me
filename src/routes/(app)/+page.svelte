@@ -22,7 +22,10 @@
 </script>
 
 <div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
-	<XpCard title="About & Skills" top="10vh" left="10vw">
+	<p>
+		drag the windows to see contents & scroll for more content
+	</p>
+	<XpCard title="About & Skills" top="25vh" left="10vw">
 		<HeroLinkCard title="About & Skills" link="skills">
 			<img
 				src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
@@ -31,7 +34,7 @@
 			/>
 		</HeroLinkCard>
 	</XpCard>
-	<XpCard title="Curriculum Vitae" top="20vh" left="20vw">
+	<XpCard title="Curriculum Vitae" top="30vh" left="14vw">
 		<HeroLinkCard title="Curriculum Vitae" link="cv">
 			<img
 				src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExd244bXVmYWR6OHFreGVqMXZ5NGo4ajVnaGUwaTdyZnY3cW5nOGN4aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0aCuhFPonpBwjy0olC/giphy.gif"
@@ -43,8 +46,9 @@
 </div>
 <div class="work">
 	<div class="project-description">
+		<h1 class="section-title">My Work</h1>
 		{#if $selectedProject}
-			<div class="project-info">
+			<div class="project-info ">
 				<h2>{$selectedProject.title}</h2>
 				<p>{$selectedProject.description}</p>
 				<a
@@ -59,15 +63,18 @@
 			<img src={$selectedProject.image} alt={$selectedProject.title} />
 		{/if}
 	</div>
-	<Slider title="My Work">
-		<SliderLinkCard title="HoneyHost" link="https://github.com/mabby1110/HoneyHost" />
-		<SliderLinkCard title="POS-CRM" link="https://github.com/mabby1110/POS-CRM" />
-		<SliderLinkCard title="C de Comercio" link="https://github.com/mabby1110/cd-desktop" />
-		<SliderLinkCard title="Artado" link="https://github.com/mabby1110/Artado" />
+	<Slider>
+		<SliderLinkCard title="HoneyHost"/>
+		<SliderLinkCard title="POS-CRM"/>
+		<SliderLinkCard title="C de Comercio"/>
+		<SliderLinkCard title="Artado"/>
 	</Slider>
 </div>
 
 <style>
+	.section-title {
+		margin-bottom: 5%;
+	}
 	.project-description {
 		padding: 2rem;
 		display: flex;

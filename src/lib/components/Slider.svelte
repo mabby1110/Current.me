@@ -1,30 +1,20 @@
 <script>
     import { fade } from "svelte/transition";
-
-    export let title = 'Slider';
-    let visible = true;
-    
-    function toggleMenu() {
-        visible = !visible;
-    }
 </script>
 
 <div class="slider-container">
-    {#if visible}
-        <div class="slider-content"
-            in:fade={{ duration: 500 }}
-            out:fade={{ duration: 500 }}>
-            <div class="items-wrapper">
-                <slot/>
-            </div>
+    <div class="slider-content"
+        in:fade={{ duration: 500 }}
+        out:fade={{ duration: 500 }}>
+        <div class="items-wrapper">
+            <slot/>
         </div>
-    {/if}
-    <button on:click={toggleMenu}><p>{title}</p></button>
+    </div>
 </div>
 
 <style>
     .slider-container {
-        height: 30vh;
+        height: 20vh;
         width: 100%;
         overflow-x: hidden;
         display: flex;
