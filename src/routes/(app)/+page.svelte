@@ -5,15 +5,14 @@
 	import XpCard from '$lib/components/XPCard.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	// Variable reactiva para almacenar la posición de desplazamiento
+	import { selectedProject } from '$lib/writables'
+
 	let scrollY = 0;
 
-	// Función para actualizar scrollY cuando el usuario hace scroll
 	function handleScroll() {
 		scrollY = window.scrollY;
 	}
 
-	// Escuchar el evento de scroll cuando el componente se monta
 	onMount(() => {
 		window.addEventListener('scroll', handleScroll);
 		return () => {
@@ -44,13 +43,64 @@
 </div>
 <div class="work">
 	<Slider title="My Work">
-		<SliderLinkCard/>
-		<SliderLinkCard/>
-		<SliderLinkCard/>
+		<SliderLinkCard title="HoneyHost" link="https://github.com/mabby1110/HoneyHost" />
+		<SliderLinkCard title="POS-CRM" link="https://github.com/mabby1110/POS-CRM" />
+		<SliderLinkCard title="C de Comercio" link="https://github.com/mabby1110/cd-desktop" />
+		<SliderLinkCard title="Artado" link="https://github.com/mabby1110/Artado" />
 	</Slider>
+	<div class="project-description">
+		{#if $selectedProject}
+			<img src={$selectedProject.image} alt={$selectedProject.title} />
+			<div class="project-info">
+				<h2>{$selectedProject.title}</h2>
+				<p>{$selectedProject.description}</p>
+				<a
+					href={$selectedProject.link}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="github-link"
+				>
+					Ver en GitHub
+				</a>
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
+	.project-description {
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.project-info {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.project-description img {
+		width: 100%;
+		max-height: 400px;
+		object-fit: cover;
+		border-radius: 8px;
+	}
+
+	.github-link {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		background-color: #500efe;
+		color: white;
+		text-decoration: none;
+		border-radius: 4px;
+		transition: background-color 0.3s ease;
+	}
+
+	.github-link:hover {
+		background-color: #4000cb;
+	}
 	.hero-section {
 		gap: 1rem;
 		padding: 1rem;
@@ -64,15 +114,9 @@
 	.hero-section :global(.xp-panel) {
 		pointer-events: auto;
 	}
-
-	.hero-image {
-		width: 100%;
-		object-fit: cover;
-	}
-
 	.work {
 		width: 100%;
-		background-color: rgb(255, 255, 255);
+		backdrop-filter: blur(5px);
 		height: 100vh;
 		display: flex;
 		flex-direction: column-reverse;
