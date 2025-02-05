@@ -23,7 +23,7 @@
 
 <div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
 	<p>
-		drag the windows to see contents & scroll for more content
+		drag any window to view the content or scroll to view other sections
 	</p>
 	<XpCard title="About & Skills" top="25vh" left="10vw">
 		<HeroLinkCard title="About & Skills" link="skills">
