@@ -21,11 +21,15 @@
         padding: 1rem;
 		height: 100%;
 		min-width: 200px;
-		background-color: #000000e6;
+		background-color: #1909497d;
 		border-radius: 1rem;
 		padding: 1rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.slider-link-card:hover {
+		background-color: #190949ba;
 	}
 </style>

@@ -98,6 +98,7 @@
     });
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div 
     class="xp-panel" 
     style="position: fixed; top:{top}; left:{left}"
@@ -126,8 +127,7 @@
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         min-width: 240px;
         max-width: 90%; /* Ajustado para móvil */
-        width: fit-content;
-        height: 30%;
+        aspect-ratio: 4/3;
         user-select: none;
         z-index: -1;
         touch-action: none; /* Previene el scroll mientras se arrastra en móvil */

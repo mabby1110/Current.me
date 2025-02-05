@@ -16,25 +16,25 @@ export const projects = [
     {
         title: "HoneyHost",
         image: "/path-to-honeyhost-image.jpg", // Reemplaza con la ruta real
-        description: "HoneyHost es una plataforma de hosting que ofrece servicios de alojamiento web con interfaz intuitiva y herramientas de seguridad avanzadas.",
+        description: "Una colección de scripts y herramientas para la administración profesional de redes empresariales.",
         link: "https://github.com/mabby1110/HoneyHost"
     },
     {
         title: "POS-CRM",
         image: "/path-to-poscrm-image.jpg", // Reemplaza con la ruta real
-        description: "Sistema punto de venta integrado con CRM para gestión de inventario y relaciones con clientes.",
+        description: "Sistema integrado de Punto de Venta (POS) y Gestión de Relaciones con Clientes (CRM) diseñado específicamente para PYMEs, facilitando la administración completa del negocio en una sola plataforma.",
         link: "https://github.com/mabby1110/POS-CRM"
     },
     {
         title: "C de Comercio",
         image: "/path-to-cdecomercio-image.jpg", // Reemplaza con la ruta real
-        description: "Aplicación de escritorio para gestión comercial con interfaz moderna y funcionalidades avanzadas.",
+        description: "Concepto de aplicación para el intercambio de bienes y servicios en tu localidad.",
         link: "https://github.com/mabby1110/cd-desktop"
     },
     {
         title: "Artado",
         image: "/path-to-artado-image.jpg", // Reemplaza con la ruta real
-        description: "Plataforma para artistas digitales que permite compartir y monetizar su trabajo.",
+        description: "Plataforma social innovadora diseñada para conectar artistas independientes y casas productoras, facilitando la contratación y colaboración en el sector creativo.",
         link: "https://github.com/mabby1110/Artado"
     }
 ];

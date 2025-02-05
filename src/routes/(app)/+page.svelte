@@ -42,15 +42,8 @@
 	</XpCard>
 </div>
 <div class="work">
-	<Slider title="My Work">
-		<SliderLinkCard title="HoneyHost" link="https://github.com/mabby1110/HoneyHost" />
-		<SliderLinkCard title="POS-CRM" link="https://github.com/mabby1110/POS-CRM" />
-		<SliderLinkCard title="C de Comercio" link="https://github.com/mabby1110/cd-desktop" />
-		<SliderLinkCard title="Artado" link="https://github.com/mabby1110/Artado" />
-	</Slider>
 	<div class="project-description">
 		{#if $selectedProject}
-			<img src={$selectedProject.image} alt={$selectedProject.title} />
 			<div class="project-info">
 				<h2>{$selectedProject.title}</h2>
 				<p>{$selectedProject.description}</p>
@@ -63,8 +56,15 @@
 					Ver en GitHub
 				</a>
 			</div>
+			<img src={$selectedProject.image} alt={$selectedProject.title} />
 		{/if}
 	</div>
+	<Slider title="My Work">
+		<SliderLinkCard title="HoneyHost" link="https://github.com/mabby1110/HoneyHost" />
+		<SliderLinkCard title="POS-CRM" link="https://github.com/mabby1110/POS-CRM" />
+		<SliderLinkCard title="C de Comercio" link="https://github.com/mabby1110/cd-desktop" />
+		<SliderLinkCard title="Artado" link="https://github.com/mabby1110/Artado" />
+	</Slider>
 </div>
 
 <style>
@@ -89,7 +89,7 @@
 	}
 
 	.github-link {
-		display: inline-block;
+		width: fit-content;
 		padding: 0.5rem 1rem;
 		background-color: #500efe;
 		color: white;
@@ -109,17 +109,20 @@
 		z-index: 1; /* z-index bajo */
 		pointer-events: none; /* Permite que los clicks pasen a través */
 	}
-
+	.hero-image {
+        max-width: 240px;
+	}
 	/* Asegurar que los XpCard dentro de hero-section puedan recibir eventos */
 	.hero-section :global(.xp-panel) {
 		pointer-events: auto;
 	}
 	.work {
 		width: 100%;
-		backdrop-filter: blur(5px);
+		backdrop-filter: blur(10px);
 		height: 100vh;
 		display: flex;
-		flex-direction: column-reverse;
+		flex-direction: column;
+		justify-content: space-between;
 		position: relative; /* Añadir position relative */
 		z-index: 100; /* z-index alto para estar sobre todo */
 	}
