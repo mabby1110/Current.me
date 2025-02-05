@@ -162,15 +162,14 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         min-height: 100vh; /* Adjust height to fit content */
     }
-
+    
     .xp-panel {
-        background-color: var(--secondary-color);
         border: 1px solid var(--tertiary-color);
         border-radius: 4px;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        max-height: fit-content;
+        max-height: fit-content; /* Adjust height to fit content */
     }
-
+    
     .xp-title-bar {
         background: var(--tertiary-color);
         color: var(--text-body);
@@ -181,12 +180,12 @@
         font-size: 14px;
         font-weight: bold;
     }
-
+    
     .xp-controls {
         display: flex;
         gap: 4px;
     }
-
+    
     .xp-controls button {
         background-color: var(--primary-color);
         border: 1px solid var(--tertiary-color);
@@ -199,15 +198,15 @@
         font-size: 12px;
         cursor: pointer;
     }
-
+    
     .xp-controls button:hover {
         background-color: var(--accent-color);
     }
-
+    
     .xp-content {
         padding: 1rem;
     }
-
+    
     h1 {
         color: var(--accent-color);
         margin-bottom: 0.6rem;
@@ -230,6 +229,6 @@
 
     .personal-details,
     .technical-skills {
-        background-color: var(--secondary-color);
+        backdrop-filter: blur(5px);
     }
 </style>
