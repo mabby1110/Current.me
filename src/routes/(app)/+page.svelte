@@ -117,7 +117,7 @@
 		pointer-events: none; /* Permite que los clicks pasen a través */
 	}
 	.hero-image {
-        max-width: 240px;
+        width: 100%;
 	}
 	/* Asegurar que los XpCard dentro de hero-section puedan recibir eventos */
 	.hero-section :global(.xp-panel) {

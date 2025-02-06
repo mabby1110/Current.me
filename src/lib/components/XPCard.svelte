@@ -72,6 +72,57 @@
 		}
 	}
 
+	// acciones de la ventana
+	let minimized = false;
+	function handleMin() {
+		minimized = !minimized;
+	}
+
+	let isMaximized = false;
+	let previousStyles = {
+		top: '10vh',
+		left: '10vw',
+	};
+
+	function handleMax() {
+		if (!isMaximized) {
+			// Store current position and size before maximizing
+			previousStyles = {
+				top,
+				left
+			};
+
+			// Maximize the window
+			top = '10vh';
+			left = '10vw';
+			cardElement.style.width = '80vw';
+			cardElement.style.height = '80vh';
+			cardElement.style.maxWidth = '80vw';
+		} else {
+			// Restore previous position and size
+			top = previousStyles.top;
+			left = previousStyles.left;
+			cardElement.style.width = 'auto';
+			cardElement.style.height = 'auto';
+			cardElement.style.maxWidth = '90%';
+			cardElement.style.minWidth = '240px';
+		}
+
+		isMaximized = !isMaximized;
+		minimized = false;
+	}
+
+	function handleClose() {
+		// We'll need to dispatch a custom event for the parent to handle the window removal
+		cardElement.dispatchEvent(
+			new CustomEvent('windowclose', {
+				bubbles: true,
+				composed: true,
+				detail: { id: cardElement.id }
+			})
+		);
+	}
+
 	import { onMount, onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -110,14 +161,16 @@
 	<div class="xp-title-bar">
 		<span class="xp-title">{title}</span>
 		<div class="xp-controls">
-			<button class="xp-minimize">-</button>
-			<button class="xp-maximize">□</button>
-			<button class="xp-close">×</button>
+			<button class="xp-minimize" on:click={handleMin}>-</button>
+			<button class="xp-maximize" on:click={handleMax}>□</button>
+			<button class="xp-close" on:click={handleClose}>×</button>
 		</div>
 	</div>
-	<div class="xp-content">
-		<slot />
-	</div>
+	{#if !minimized}
+		<div class="xp-content">
+			<slot />
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -128,7 +181,6 @@
 		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 		min-width: 240px;
 		max-width: 90%; /* Ajustado para móvil */
-		aspect-ratio: 4/3;
 		user-select: none;
 		z-index: -1;
 		touch-action: none; /* Previene el scroll mientras se arrastra en móvil */
