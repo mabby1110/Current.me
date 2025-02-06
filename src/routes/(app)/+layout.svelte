@@ -40,8 +40,13 @@
 	}
 	main {
 		width: 100%;
-		z-index: 1;
 		position: relative;
+		z-index: 1;
+	}
+
+	/* Habilitar interactividad solo para elementos específicos */
+	main * {
+		pointer-events: auto;
 	}
 	.bg {
 		width: 100%;

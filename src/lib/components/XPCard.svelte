@@ -81,7 +81,7 @@
 	let isMaximized = false;
 	let previousStyles = {
 		top: '10vh',
-		left: '10vw',
+		left: '10vw'
 	};
 
 	function handleMax() {
@@ -111,16 +111,9 @@
 		isMaximized = !isMaximized;
 		minimized = false;
 	}
-
+	let closed = false;
 	function handleClose() {
-		// We'll need to dispatch a custom event for the parent to handle the window removal
-		cardElement.dispatchEvent(
-			new CustomEvent('windowclose', {
-				bubbles: true,
-				composed: true,
-				detail: { id: cardElement.id }
-			})
-		);
+		closed = true;
 	}
 
 	import { onMount, onDestroy } from 'svelte';
@@ -149,29 +142,31 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-	class="xp-panel"
-	style="position: fixed; top:{top}; left:{left}"
-	bind:this={cardElement}
-	on:mousedown={handleMouseDown}
-	on:touchstart={handleTouchStart}
-	transition:fade={{ delay: 100, duration: 500 }}
->
-	<div class="xp-title-bar">
-		<span class="xp-title">{title}</span>
-		<div class="xp-controls">
-			<button class="xp-minimize" on:click={handleMin}>-</button>
-			<button class="xp-maximize" on:click={handleMax}>□</button>
-			<button class="xp-close" on:click={handleClose}>×</button>
+{#if !closed}
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
+		class="xp-panel"
+		style="position: fixed; top:{top}; left:{left}"
+		bind:this={cardElement}
+		on:mousedown={handleMouseDown}
+		on:touchstart={handleTouchStart}
+		transition:fade={{ delay: 100, duration: 500 }}
+	>
+		<div class="xp-title-bar">
+			<span class="xp-title">{title}</span>
+			<div class="xp-controls">
+				<button class="xp-minimize" on:click={handleMin}>-</button>
+				<button class="xp-maximize" on:click={handleMax}>□</button>
+				<button class="xp-close" on:click={handleClose}>×</button>
+			</div>
 		</div>
+		{#if !minimized}
+			<div class="xp-content">
+				<slot />
+			</div>
+		{/if}
 	</div>
-	{#if !minimized}
-		<div class="xp-content">
-			<slot />
-		</div>
-	{/if}
-</div>
+{/if}
 
 <style>
 	.xp-panel {

@@ -112,9 +112,8 @@
 		gap: 1rem;
 		padding: 1rem;
 		height: 100vh;
-		position: relative; /* Añadir position relative */
-		z-index: 1; /* z-index bajo */
-		pointer-events: none; /* Permite que los clicks pasen a través */
+		position: relative;
+		z-index: 1;
 	}
 	.hero-image {
         width: 100%;
