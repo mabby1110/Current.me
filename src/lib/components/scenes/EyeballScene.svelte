@@ -71,9 +71,9 @@
 
 		// Crear la esfera de luz
 
-		const targetPosition = new THREE.Vector3(0, 0, 0); // Posición objetivo
+		const targetPosition = new THREE.Vector3(0, 2.05, 0); // Posición objetivo
 		const smoothness = 0.1; // Factor de suavizado (0.1 es suave, 1 es inmediato)
-		const lightSphereGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
 		const lightSphereMaterial = new THREE.MeshBasicMaterial({
 			color: 0xffffff,
 			emissive: 0xffffff,
