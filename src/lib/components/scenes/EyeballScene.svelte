@@ -1,166 +1,133 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
+	import { FlakesTexture } from 'three/addons/textures/FlakesTexture.js';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { loaded } from '$lib/writables';
 
 	let canvas: HTMLCanvasElement;
-    let moveForward = false;
-    let moveBackward = false;
-    let moveLeft = false;
-    let moveRight = false;
-    let canFly = false;
 
 	onMount(() => {
 		const scene = new THREE.Scene();
-		scene.background = new THREE.Color(0xffffff);
-		scene.fog = new THREE.Fog(0xffffff, 0, 750);
 
 		const camera = new THREE.PerspectiveCamera(
-			75,
+			235,
 			window.innerWidth / window.innerHeight,
 			0.1,
 			1000
 		);
-		camera.position.set(0, 0, 5);
+		camera.position.set(0, 2, 1);
 
 		const renderer = new THREE.WebGLRenderer({ canvas });
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		// Modelo
-		let model;
-		const loader = new GLTFLoader().setPath('src/lib/assets/');
-		loader.load('nbhd.glb', function (gltf) {
-			model = gltf.scene;
-			model.position.set(0, -45, 0);
-			scene.add(model);
+		// helpers
+		// const controls = new OrbitControls(camera, renderer.domElement);
+		// scene.add(controls);
+
+		// Objetos
+		const roomSize = 3;
+		const numRooms = 3;
+		const normalMap3 = new THREE.CanvasTexture(new FlakesTexture());
+		normalMap3.wrapS = THREE.RepeatWrapping;
+		normalMap3.wrapT = THREE.RepeatWrapping;
+		normalMap3.repeat.x = 10;
+		normalMap3.repeat.y = 6;
+		normalMap3.anisotropy = 16;
+		let wallMaterial = new THREE.MeshPhysicalMaterial({
+			clearcoat: 1.0,
+			clearcoatRoughness: 0.1,
+			metalness: 0.9,
+			roughness: 0.5,
+			color: 0x0000ff,
+			normalMap: normalMap3,
+			normalScale: new THREE.Vector2(0.15, 0.15)
 		});
+		const lightColors = [
+			0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff, 0xffffff, 0xffa500, 0x800080
+		];
 
-		// Luces
-		const ambientLight = new THREE.AmbientLight(0xcccccc);
-		scene.add(ambientLight);
+		for (let i = 0; i < numRooms; i++) {
+			const roomY = i * roomSize - (numRooms * roomSize) / 2;
 
-		const pointLight = new THREE.PointLight(0xff0000, 10, 100);
-		pointLight.position.set(1, 1, 1);
-		scene.add(pointLight);
+			// Create walls
+			const wallGeometry = new THREE.PlaneGeometry(roomSize, roomSize);
+			const wallPositions = [
+				{ x: 0, y: roomY, z: -roomSize / 2, rotation: [0, 0, 0] }, // back wall
+				{ x: -roomSize / 2, y: roomY, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
+				{ x: roomSize / 2, y: roomY, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
+				{ x: 0, y: roomY + roomSize / 2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
+				{ x: 0, y: roomY - roomSize / 2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall
+			];
 
-		// Helpers
-		const gridHelper = new THREE.GridHelper(10, 10);
-		scene.add(gridHelper);
+			wallPositions.forEach((pos) => {
+				const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+				wall.position.set(pos.x, pos.y, pos.z);
+				wall.rotation.set(...pos.rotation);
+				scene.add(wall);
+			});
+		}
 
-		const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
-		scene.add(pointLightHelper);
+		// Crear la esfera de luz
 
-        // Variables para el control de movimiento
-        const velocity = new THREE.Vector3();
-        const direction = new THREE.Vector3();
-        let prevTouchX = 0;
-        let prevTouchY = 0;
-        const movementSpeed = 0.3;
-        const rotationSpeed = 0.004;
+		const targetPosition = new THREE.Vector3(0, 0, 0); // Posición objetivo
+		const smoothness = 0.1; // Factor de suavizado (0.1 es suave, 1 es inmediato)
+		const lightSphereGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+		const lightSphereMaterial = new THREE.MeshBasicMaterial({
+			color: 0xffffff,
+			emissive: 0xffffff,
+			emissiveIntensity: 2
+		});
+		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
-        // Manejadores de eventos táctiles
-        function handleTouchStart(event: TouchEvent) {
-            const touch = event.touches[0];
-            prevTouchX = touch.clientX;
-            prevTouchY = touch.clientY;
-            canFly = true;
-        }
+		// Crear la luz puntual
+		const pointLight = new THREE.PointLight(0xffffff, 2, 10);
+		pointLight.position.set(0, 0, 0);
+		lightSphere.add(pointLight); // La esfera contiene la luz
+		scene.add(lightSphere);
 
-        function handleTouchMove(event: TouchEvent) {
-            if (!canFly) return;
-            
-            const touch = event.touches[0];
-            const deltaX = touch.clientX - prevTouchX;
-            const deltaY = touch.clientY - prevTouchY;
+		// Variables para el rayo y el mouse
+		const raycaster = new THREE.Raycaster();
+		const mouse = new THREE.Vector2();
 
-            // Rotar la cámara basado en el movimiento horizontal del dedo
-            camera.rotation.y -= deltaX * rotationSpeed;
-            
-            // Inclinar la cámara basado en el movimiento vertical del dedo
-            camera.rotation.x -= deltaY * rotationSpeed;
-            
-            // Limitar la rotación vertical para evitar giros completos
-            camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
+		function moveLightToMouse(event) {
+			// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            // Mover hacia adelante mientras se toca la pantalla
-            moveForward = true;
+			// Lanzar un rayo desde la cámara en la dirección del mouse
+			raycaster.setFromCamera(mouse, camera);
 
-            prevTouchX = touch.clientX;
-            prevTouchY = touch.clientY;
-        }
+			// Calcular la intersección del rayo con un plano en Z=0 (o cualquier otro plano)
+			const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+			const intersection = new THREE.Vector3();
+			raycaster.ray.intersectPlane(plane, intersection);
 
-        function handleTouchEnd() {
-            canFly = false;
-            moveForward = false;
-        }
+			// Actualizar la posición objetivo
+			if (intersection) {
+				targetPosition.copy(intersection);
+			}
+		}
+
+		// Evento para mover la luz con el mouse
+		window.addEventListener('mousemove', moveLightToMouse);
+
+		
 
 		// Animación y movimiento
 		const animate = () => {
 			requestAnimationFrame(animate);
+			lightSphere.position.lerp(targetPosition, smoothness);
 
-            if (canFly) {
-                // Calcular dirección
-                direction.z = Number(moveForward) - Number(moveBackward);
-                direction.x = Number(moveRight) - Number(moveLeft);
-                direction.normalize();
-
-                // Aplicar velocidad en la dirección de la cámara
-                if (moveForward) {
-                    velocity.z = direction.z * movementSpeed;
-                    velocity.x = -direction.x * movementSpeed;
-                    
-                    // Mover la cámara en la dirección que está mirando
-                    camera.translateZ(-velocity.z);
-                    camera.translateX(-velocity.x);
-                }
-            }
-
+			// helpers
+			// controls.update();
+			// render
 			renderer.render(scene, camera);
 		};
 
 		animate();
 
-		// Event listeners
-        canvas.addEventListener('touchstart', handleTouchStart);
-        canvas.addEventListener('touchmove', handleTouchMove);
-        canvas.addEventListener('touchend', handleTouchEnd);
-		// Manejadores de eventos de ratón
-		function handleMouseDown(event: MouseEvent) {
-			prevTouchX = event.clientX;
-			prevTouchY = event.clientY;
-			canFly = true;
-			moveForward = true;
-		}
-
-		function handleMouseMove(event: MouseEvent) {
-			if (!canFly) return;
-
-			const deltaX = event.clientX - prevTouchX;
-			const deltaY = event.clientY - prevTouchY;
-
-			// Rotar la cámara basado en el movimiento horizontal del ratón
-			camera.rotation.y -= deltaX * rotationSpeed;
-
-			// Inclinar la cámara basado en el movimiento vertical del ratón
-			camera.rotation.x -= deltaY * rotationSpeed;
-
-			// Limitar la rotación vertical para evitar giros completos
-			camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
-
-			prevTouchX = event.clientX;
-			prevTouchY = event.clientY;
-		}
-
-		function handleMouseUp() {
-			canFly = false;
-			moveForward = false;
-		}
-
-		canvas.addEventListener('mousedown', handleMouseDown);
-		canvas.addEventListener('mousemove', handleMouseMove);
-		canvas.addEventListener('mouseup', handleMouseUp);
-		canvas.addEventListener('mouseleave', handleMouseUp);
 		// Manejo del redimensionamiento
 		const handleResize = () => {
 			camera.aspect = window.innerWidth / window.innerHeight;
@@ -172,9 +139,6 @@
 
 		return () => {
 			window.removeEventListener('resize', handleResize);
-            canvas.removeEventListener('touchstart', handleTouchStart);
-            canvas.removeEventListener('touchmove', handleTouchMove);
-            canvas.removeEventListener('touchend', handleTouchEnd);
 			renderer.dispose();
 		};
 	});
@@ -185,10 +149,10 @@
 <canvas bind:this={canvas} />
 
 <style>
-    canvas {
-        touch-action: none;
-        width: 100%;
-        height: 100vh;
-        display: block;
-    }
+	canvas {
+		touch-action: none;
+		width: 100%;
+		height: 100vh;
+		display: block;
+	}
 </style>
