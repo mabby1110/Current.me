@@ -30,7 +30,6 @@
 		const newTopVh = (newTop / window.innerHeight) * 100;
 		const newLeftVw = (newLeft / window.innerWidth) * 100;
 
-		// Límites ajustados para mejor experiencia en móvil
 		if (newTopVh >= 0 && newTopVh <= 80) {
 			top = `${newTopVh}vh`;
 		}
@@ -43,9 +42,10 @@
 		isDragging = false;
 	}
 
-	// Eventos de mouse
 	function handleMouseDown(event: MouseEvent) {
-		if ((event.target as HTMLElement).closest('.xp-title-bar')) {
+		const target = event.target as HTMLElement;
+		// Check if click is on title bar but not on buttons
+		if (target.closest('.xp-title-bar') && !target.closest('.xp-controls')) {
 			event.preventDefault();
 			startDragging(event.clientX, event.clientY);
 		}
@@ -55,9 +55,10 @@
 		moveElement(event.clientX, event.clientY);
 	}
 
-	// Eventos táctiles
 	function handleTouchStart(event: TouchEvent) {
-		if ((event.target as HTMLElement).closest('.xp-title-bar')) {
+		const target = event.target as HTMLElement;
+		// Check if touch is on title bar but not on buttons
+		if (target.closest('.xp-title-bar') && !target.closest('.xp-controls')) {
 			event.preventDefault();
 			const touch = event.touches[0];
 			startDragging(touch.clientX, touch.clientY);
@@ -72,9 +73,9 @@
 		}
 	}
 
-	// acciones de la ventana
 	let minimized = false;
-	function handleMin() {
+	function handleMin(event: Event) {
+		event.stopPropagation(); // Prevent event bubbling
 		minimized = !minimized;
 	}
 
@@ -84,22 +85,19 @@
 		left: '10vw'
 	};
 
-	function handleMax() {
+	function handleMax(event: Event) {
+		event.stopPropagation(); // Prevent event bubbling
 		if (!isMaximized) {
-			// Store current position and size before maximizing
 			previousStyles = {
 				top,
 				left
 			};
-
-			// Maximize the window
 			top = '10vh';
 			left = '10vw';
 			cardElement.style.width = '80vw';
 			cardElement.style.height = '80vh';
 			cardElement.style.maxWidth = '80vw';
 		} else {
-			// Restore previous position and size
 			top = previousStyles.top;
 			left = previousStyles.left;
 			cardElement.style.width = 'auto';
@@ -111,8 +109,10 @@
 		isMaximized = !isMaximized;
 		minimized = false;
 	}
+
 	let closed = false;
-	function handleClose() {
+	function handleClose(event: Event) {
+		event.stopPropagation(); // Prevent event bubbling
 		closed = true;
 	}
 
@@ -120,22 +120,16 @@
 	import { fade } from 'svelte/transition';
 
 	onMount(() => {
-		// Mouse events
 		window.addEventListener('mousemove', handleMouseMove);
 		window.addEventListener('mouseup', stopDragging);
-
-		// Touch events
 		window.addEventListener('touchmove', handleTouchMove, { passive: false });
 		window.addEventListener('touchend', stopDragging);
 		window.addEventListener('touchcancel', stopDragging);
 	});
 
 	onDestroy(() => {
-		// Mouse events
 		window.removeEventListener('mousemove', handleMouseMove);
 		window.removeEventListener('mouseup', stopDragging);
-
-		// Touch events
 		window.removeEventListener('touchmove', handleTouchMove);
 		window.removeEventListener('touchend', stopDragging);
 		window.removeEventListener('touchcancel', stopDragging);
@@ -155,9 +149,21 @@
 		<div class="xp-title-bar">
 			<span class="xp-title">{title}</span>
 			<div class="xp-controls">
-				<button class="xp-minimize" on:click={handleMin}>-</button>
-				<button class="xp-maximize" on:click={handleMax}>□</button>
-				<button class="xp-close" on:click={handleClose}>×</button>
+				<button 
+					class="xp-minimize" 
+					on:click={handleMin}
+					on:touchend|preventDefault|stopPropagation={handleMin}
+				>-</button>
+				<button 
+					class="xp-maximize" 
+					on:click={handleMax}
+					on:touchend|preventDefault|stopPropagation={handleMax}
+				>□</button>
+				<button 
+					class="xp-close" 
+					on:click={handleClose}
+					on:touchend|preventDefault|stopPropagation={handleClose}
+				>×</button>
 			</div>
 		</div>
 		{#if !minimized}
@@ -175,23 +181,23 @@
 		border-radius: 4px;
 		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 		min-width: 240px;
-		max-width: 90%; /* Ajustado para móvil */
+		max-width: 90%;
 		user-select: none;
 		z-index: -1;
-		touch-action: none; /* Previene el scroll mientras se arrastra en móvil */
+		touch-action: none;
 	}
 
 	@media (max-width: 768px) {
 		.xp-panel {
-			min-width: 200px; /* Menor tamaño mínimo para móvil */
-			max-width: 95%; /* Mayor ancho máximo para móvil */
+			min-width: 200px;
+			max-width: 95%;
 		}
 	}
 
 	.xp-title-bar {
 		background: rgb(70, 73, 75);
 		color: #ffffff;
-		padding: 8px; /* Padding aumentado para mejor área táctil */
+		padding: 8px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -203,21 +209,23 @@
 
 	.xp-controls {
 		display: flex;
-		gap: 8px; /* Mayor espaciado para botones en móvil */
+		gap: 8px;
 	}
 
 	.xp-controls button {
 		background-color: rgba(21, 21, 22, 0.786);
 		border: 1px solid rgb(70, 73, 75);
 		color: #ffffff;
-		width: 24px; /* Botones más grandes para móvil */
-		height: 24px;
+		width: 32px; /* Increased for better touch targets */
+		height: 32px; /* Increased for better touch targets */
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 14px;
+		font-size: 16px; /* Slightly larger font for better visibility */
 		cursor: pointer;
-		touch-action: none;
+		touch-action: manipulation; /* Improved touch handling */
+		padding: 0;
+		margin: 0;
 	}
 
 	.xp-controls button:hover {
