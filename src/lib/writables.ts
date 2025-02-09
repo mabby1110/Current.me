@@ -40,3 +40,11 @@ export const projects = [
 ];
 
 export const selectedProject = writable<Project>(projects[0]);
+
+// Store para controlar la luz
+export const lightControl = writable({
+    color: 0x4400ff,
+    intensity: 2,
+    position: { x: 0, y: 2.05, z: 0 },
+    smoothness: 0.06
+});

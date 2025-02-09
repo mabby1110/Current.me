@@ -2,12 +2,11 @@
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
 	import { FlakesTexture } from 'three/addons/textures/FlakesTexture.js';
-	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { loaded } from '$lib/writables';
+	import { lightControl } from '$lib/writables';
 
 	let canvas: HTMLCanvasElement;
-
+	$: console.log($lightControl.color)
 	onMount(() => {
 		const scene = new THREE.Scene();
 
@@ -40,13 +39,10 @@
 			clearcoatRoughness: 0.1,
 			metalness: 0.9,
 			roughness: 0.5,
-			color: 0x0000ff,
+			color: 0xffffff,
 			normalMap: normalMap3,
 			normalScale: new THREE.Vector2(0.15, 0.15)
 		});
-		const lightColors = [
-			0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff, 0xffffff, 0xffa500, 0x800080
-		];
 
 		for (let i = 0; i < numRooms; i++) {
 			const roomY = i * roomSize - (numRooms * roomSize) / 2;
@@ -58,7 +54,7 @@
 				{ x: -roomSize / 2, y: roomY, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
 				{ x: roomSize / 2, y: roomY, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
 				{ x: 0, y: roomY + roomSize / 2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
-				{ x: 0, y: roomY - roomSize / 2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall
+				{ x: 0, y: roomY - roomSize / 2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall||
 			];
 
 			wallPositions.forEach((pos) => {
@@ -72,18 +68,18 @@
 		// Crear la esfera de luz
 
 		const targetPosition = new THREE.Vector3(0, 2.05, 0); // Posición objetivo
-		const smoothness = 0.1; // Factor de suavizado (0.1 es suave, 1 es inmediato)
+		const smoothness = $lightControl.smoothness; // Factor de suavizado (0.1 es suave, 1 es inmediato)
 		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
 		const lightSphereMaterial = new THREE.MeshBasicMaterial({
-			color: 0xffffff,
-			emissive: 0xffffff,
+			color: 0xfff000,
+			emissive: 0xfff000,
 			emissiveIntensity: 2
 		});
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
 		// Crear la luz puntual
 		const pointLight = new THREE.PointLight(0xffffff, 2, 10);
-		pointLight.position.set(0, 0, 0);
+		pointLight.position.set(0, 0, -2);
 		lightSphere.add(pointLight); // La esfera contiene la luz
 		scene.add(lightSphere);
 

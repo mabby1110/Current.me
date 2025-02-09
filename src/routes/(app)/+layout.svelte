@@ -6,7 +6,7 @@
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
-	import EyeballScene from '$lib/components/scenes/EyeballScene.svelte';
+	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 </script>
 
 <div class="bg">
