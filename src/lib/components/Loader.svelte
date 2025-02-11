@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import loader from '$lib/assets/loader.svg';
 	import { lightControl, loaded, release, started } from '$lib/writables';
-	import InstuctionBanner from './InstuctionBanner.svelte';
+	import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
 
 	let visible = true;
 	$: opacity = 1;
