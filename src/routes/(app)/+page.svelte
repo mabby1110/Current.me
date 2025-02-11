@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { selectedProject } from '$lib/writables';
-	import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
+	// import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
 	import HeroAnchorCard from '$lib/components/HeroAnchorCard.svelte';
 
 	let scrollY = 0;
@@ -23,9 +23,9 @@
 	});
 </script>
 
-<InstuctionBanner
+<!-- <InstuctionBanner
 	>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
->
+> -->
 <div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
 	<XpCard title="CV" top="20vh" left="30vw">
 		<!-- svelte-ignore a11y-missing-attribute -->
