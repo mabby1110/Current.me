@@ -212,7 +212,7 @@
         margin-bottom: 0.6rem;
     }
 
-    h2, h3, h4 {
+    h3, h4 {
         color: var(--text-body);
         margin-bottom: 1rem;
     }

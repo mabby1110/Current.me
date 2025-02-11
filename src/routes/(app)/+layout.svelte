@@ -7,6 +7,7 @@
 	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
+	import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
 </script>
 
 <div class="bg">
@@ -26,6 +27,7 @@
 		/>
 	</main>
 {:else}
+	<InstuctionBanner>Move or touch around, keep pressing to enter</InstuctionBanner>
 	<Loader />
 {/if}
 

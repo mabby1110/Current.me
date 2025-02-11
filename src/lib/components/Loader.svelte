@@ -2,7 +2,6 @@
 	import { fade } from 'svelte/transition';
 	import loader from '$lib/assets/loader.svg';
 	import { lightControl, loaded, release, started } from '$lib/writables';
-	import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
 
 	let visible = true;
 	$: opacity = 1;
@@ -67,7 +66,6 @@
 	}
 </script>
 
-<InstuctionBanner>move or touch around, keep pressing to enter</InstuctionBanner>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
