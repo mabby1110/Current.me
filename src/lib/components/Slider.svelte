@@ -44,18 +44,4 @@
         height: 100%;
         margin: 0 auto;  /* Centrar items cuando hay pocos */
     }
-
-    button {
-        align-self: center;
-        background-color: transparent;
-        color: rgb(255, 255, 255);
-        border: none;
-        border-radius: 5px;
-        padding: 1rem;
-        font-size: 1.6em;
-        font-weight: 100;
-        cursor: pointer;
-        position: sticky;
-        left: 0;
-    }
 </style>

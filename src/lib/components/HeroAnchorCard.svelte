@@ -21,15 +21,3 @@
 <a href="#anchor-{anchor}" on:click={handleAnchorClick}>
 	<slot>{title}</slot>
 </a>
-
-<style>
-    .card-container {
-		background-color: #f0f0f030;
-		border-radius: 1rem;
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-	}
-</style>
