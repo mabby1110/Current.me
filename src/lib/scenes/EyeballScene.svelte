@@ -86,9 +86,14 @@
 
 		function moveLightToMouse(event) {
 			// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			if(event.clientX / window.innerWidth > 0.30 && event.clientX / window.innerWidth < 0.70){
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			}
+			if(event.clientY / window.innerHeight > 0.20 && event.clientY / window.innerHeight < 0.80){
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			}
 
+			console.log(event.clientY / window.innerHeight)
 			// Lanzar un rayo desde la cámara en la dirección del mouse
 			raycaster.setFromCamera(mouse, camera);
 
