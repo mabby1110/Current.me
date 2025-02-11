@@ -67,6 +67,7 @@
 	}
 </script>
 
+<InstuctionBanner>move or touch around, keep pressing to enter</InstuctionBanner>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
