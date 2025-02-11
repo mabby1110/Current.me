@@ -30,7 +30,7 @@
 		const newTopVh = (newTop / window.innerHeight) * 100;
 		const newLeftVw = (newLeft / window.innerWidth) * 100;
 
-		if (newTopVh >= 0 && newTopVh <= 80) {
+		if (newTopVh >= 6 && newTopVh <= 80) {
 			top = `${newTopVh}vh`;
 		}
 		if (newLeftVw >= -20 && newLeftVw <= 80) {
@@ -149,21 +149,21 @@
 		<div class="xp-title-bar">
 			<span class="xp-title">{title}</span>
 			<div class="xp-controls">
-				<button 
-					class="xp-minimize" 
+				<button
+					class="xp-minimize"
 					on:click={handleMin}
-					on:touchend|preventDefault|stopPropagation={handleMin}
-				>-</button>
-				<button 
-					class="xp-maximize" 
+					on:touchend|preventDefault|stopPropagation={handleMin}>-</button
+				>
+				<button
+					class="xp-maximize"
 					on:click={handleMax}
-					on:touchend|preventDefault|stopPropagation={handleMax}
-				>□</button>
-				<button 
-					class="xp-close" 
+					on:touchend|preventDefault|stopPropagation={handleMax}>□</button
+				>
+				<button
+					class="xp-close"
 					on:click={handleClose}
-					on:touchend|preventDefault|stopPropagation={handleClose}
-				>×</button>
+					on:touchend|preventDefault|stopPropagation={handleClose}>×</button
+				>
 			</div>
 		</div>
 		{#if !minimized}
@@ -193,7 +193,10 @@
 			max-width: 95%;
 		}
 	}
-
+	.xp-title-bar,
+	.xp-controls button {
+		pointer-events: auto; /* Habilita eventos de puntero en el título y los botones */
+	}
 	.xp-title-bar {
 		background: rgb(70, 73, 75);
 		color: #ffffff;

@@ -15,7 +15,7 @@
 			0.1,
 			1000
 		);
-		camera.position.set(0, 1.5, 4);
+		camera.position.set(0, 1.5, 6);
 
 		const renderer = new THREE.WebGLRenderer({ canvas });
 		renderer.setSize(window.innerWidth, window.innerHeight);

@@ -15,29 +15,30 @@ type Project = {
 export const projects = [
     {
         title: "HoneyHost",
-        image: "/path-to-honeyhost-image.jpg", // Reemplaza con la ruta real
-        description: "Una colección de scripts y herramientas para la administración profesional de redes empresariales.",
+        image: "/honey-host-git-repo.png", // Replace with the actual path
+        description: "A collection of scripts and tools for professional enterprise network management.",
         link: "https://github.com/mabby1110/HoneyHost"
     },
     {
         title: "POS-CRM",
-        image: "/path-to-poscrm-image.jpg", // Reemplaza con la ruta real
-        description: "Sistema integrado de Punto de Venta (POS) y Gestión de Relaciones con Clientes (CRM) diseñado específicamente para PYMEs, facilitando la administración completa del negocio en una sola plataforma.",
+        image: "/POS-CRM-git-repo.png", // Replace with the actual path
+        description: "An integrated Point of Sale (POS) and Customer Relationship Management (CRM) system designed specifically for SMEs, facilitating complete business management on a single platform.",
         link: "https://github.com/mabby1110/POS-CRM"
     },
     {
         title: "C de Comercio",
-        image: "/path-to-cdecomercio-image.jpg", // Reemplaza con la ruta real
-        description: "Concepto de aplicación para el intercambio de bienes y servicios en tu localidad.",
+        image: "/C-git-repo.png", // Replace with the actual path
+        description: "A concept application for exchanging goods and services in your locality.",
         link: "https://github.com/mabby1110/cd-desktop"
     },
     {
         title: "Artado",
-        image: "/path-to-artado-image.jpg", // Reemplaza con la ruta real
-        description: "Plataforma social innovadora diseñada para conectar artistas independientes y casas productoras, facilitando la contratación y colaboración en el sector creativo.",
+        image: "/Artado-git-repo.png", // Replace with the actual path
+        description: "An innovative social platform designed to connect independent artists and production houses, facilitating hiring and collaboration in the creative sector.",
         link: "https://github.com/mabby1110/Artado"
     }
 ];
+
 
 export const selectedProject = writable<Project>(projects[0]);
 
