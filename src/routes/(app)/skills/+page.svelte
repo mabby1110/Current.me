@@ -229,6 +229,6 @@
 
     .personal-details,
     .technical-skills {
-        backdrop-filter: blur(5px);
+        background-color: rgba(0, 0, 0, 0.80);
     }
 </style>

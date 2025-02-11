@@ -56,12 +56,14 @@
 				...state,
 				color: newColor
 			}));
-		}, 100); // Ajusta este intervalo según tus necesidades
+		}, 50); // Ajusta este intervalo según tus necesidades
 	}
 
 	function stopFade() {
 		if (intervalId) {
 			clearInterval(intervalId);
+			count = 5; // Ajusta este valor según tus necesidades
+			opacity = 1;
 		}
 	}
 </script>
