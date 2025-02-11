@@ -5,14 +5,25 @@
 	import XpCard from '$lib/components/XPCard.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { selectedProject } from '$lib/writables'
+	import { selectedProject } from '$lib/writables';
+	import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
+	import HeroAnchorCard from '$lib/components/HeroAnchorCard.svelte';
 
 	let scrollY = 0;
 
 	function handleScroll() {
 		scrollY = window.scrollY;
 	}
-
+	function handleAnchorClick(event) {
+		event.preventDefault();
+		const link = event.currentTarget;
+		const anchorId = new URL(link.href).hash.replace('#', '');
+		const anchor = document.getElementById(anchorId);
+		window.scrollTo({
+			top: anchor.offsetTop,
+			behavior: 'smooth'
+		});
+	}
 	onMount(() => {
 		window.addEventListener('scroll', handleScroll);
 		return () => {
@@ -21,11 +32,19 @@
 	});
 </script>
 
+<InstuctionBanner
+	>drag any window to view the content or scroll to view other sections</InstuctionBanner
+>
 <div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
-	<p>
-		drag any window to view the content or scroll to view other sections
-	</p>
-	<XpCard title="About & Skills" top="25vh" left="10vw">
+	<XpCard title="CV" top="20vh" left="10vw">
+		<!-- svelte-ignore a11y-missing-attribute -->
+		<iframe
+			src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
+			id="pdf"
+			allow="autoplay"
+		></iframe>
+	</XpCard>
+	<XpCard title="About & Skills" top="30vh" left="15vw">
 		<HeroLinkCard title="About & Skills" link="skills">
 			<img
 				src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
@@ -34,21 +53,21 @@
 			/>
 		</HeroLinkCard>
 	</XpCard>
-	<XpCard title="Curriculum Vitae" top="30vh" left="14vw">
-		<HeroLinkCard title="Curriculum Vitae" link="cv">
+	<XpCard title="work" top="40vh" left="20vw">
+		<HeroAnchorCard title="Work">
 			<img
-				src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExd244bXVmYWR6OHFreGVqMXZ5NGo4ajVnaGUwaTdyZnY3cW5nOGN4aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0aCuhFPonpBwjy0olC/giphy.gif"
+				src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
 				alt="cv-gif"
 				class="hero-image"
 			/>
-		</HeroLinkCard>
+		</HeroAnchorCard>
 	</XpCard>
 </div>
-<div class="work">
+<div class="work" id="work-section">
 	<div class="project-description">
 		<h1 class="section-title">My Work</h1>
 		{#if $selectedProject}
-			<div class="project-info ">
+			<div class="project-info">
 				<h2>{$selectedProject.title}</h2>
 				<p>{$selectedProject.description}</p>
 				<a
@@ -64,10 +83,10 @@
 		{/if}
 	</div>
 	<Slider>
-		<SliderLinkCard title="HoneyHost"/>
-		<SliderLinkCard title="POS-CRM"/>
-		<SliderLinkCard title="C de Comercio"/>
-		<SliderLinkCard title="Artado"/>
+		<SliderLinkCard title="HoneyHost" />
+		<SliderLinkCard title="POS-CRM" />
+		<SliderLinkCard title="C de Comercio" />
+		<SliderLinkCard title="Artado" />
 	</Slider>
 </div>
 
@@ -116,7 +135,7 @@
 		z-index: 1;
 	}
 	.hero-image {
-        width: 100%;
+		width: 100%;
 	}
 	/* Asegurar que los XpCard dentro de hero-section puedan recibir eventos */
 	.hero-section :global(.xp-panel) {
@@ -131,5 +150,10 @@
 		justify-content: space-between;
 		position: relative; /* Añadir position relative */
 		z-index: 100; /* z-index alto para estar sobre todo */
+	}
+	#pdf {
+		width: 100%;
+		aspect-ratio: 1 / 1.414;
+		max-height: 70vh;
 	}
 </style>

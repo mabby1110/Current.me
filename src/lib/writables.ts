@@ -42,9 +42,40 @@ export const projects = [
 export const selectedProject = writable<Project>(projects[0]);
 
 // Store para controlar la luz
+
+// Función para interpolar entre dos colores
+function interpolateColor(value, startColor, endColor) {
+  const startR = (startColor >> 16) & 0xff;
+  const startG = (startColor >> 8) & 0xff;
+  const startB = startColor & 0xff;
+
+  const endR = (endColor >> 16) & 0xff;
+  const endG = (endColor >> 8) & 0xff;
+  const endB = endColor & 0xff;
+
+  const r = Math.round(startR + value * (endR - startR));
+  const g = Math.round(startG + value * (endG - startG));
+  const b = Math.round(startB + value * (endB - startB));
+
+  return (r << 16) + (g << 8) + b;
+}
+
 export const lightControl = writable({
-    color: 0x4400ff,
-    intensity: 2,
-    position: { x: 0, y: 2.05, z: 0 },
-    smoothness: 0.06
+  color: 0x4400ff,
+  intensity: 2,
+  position: { x: 0, y: 2.05, z: 0 },
+  smoothness: 0.06
 });
+
+// Función para actualizar el color según un valor entre 0 y 1
+export function updateLightColor(value) {
+  const startColor = 0x4400ff; // Color inicial (amarillo)
+  const endColor = 0xfff000;   // Color final (cian)
+
+  const newColor = interpolateColor(value, startColor, endColor);
+
+  lightControl.update(state => ({
+    ...state,
+    color: newColor
+  }));
+}

@@ -6,17 +6,16 @@
 	import { lightControl } from '$lib/writables';
 
 	let canvas: HTMLCanvasElement;
-	$: console.log($lightControl.color)
 	onMount(() => {
 		const scene = new THREE.Scene();
 
 		const camera = new THREE.PerspectiveCamera(
-			235,
+			35,
 			window.innerWidth / window.innerHeight,
 			0.1,
 			1000
 		);
-		camera.position.set(0, 2, 1);
+		camera.position.set(0, 1.5, 4);
 
 		const renderer = new THREE.WebGLRenderer({ canvas });
 		renderer.setSize(window.innerWidth, window.innerHeight);
@@ -37,13 +36,13 @@
 		let wallMaterial = new THREE.MeshPhysicalMaterial({
 			clearcoat: 1.0,
 			clearcoatRoughness: 0.1,
-			metalness: 0.9,
-			roughness: 0.5,
+			metalness: 1,
+			roughness: 0.4,
 			color: 0xffffff,
 			normalMap: normalMap3,
 			normalScale: new THREE.Vector2(0.15, 0.15)
 		});
-
+		// let wallMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0 } )
 		for (let i = 0; i < numRooms; i++) {
 			const roomY = i * roomSize - (numRooms * roomSize) / 2;
 
@@ -64,22 +63,20 @@
 				scene.add(wall);
 			});
 		}
-
 		// Crear la esfera de luz
-
-		const targetPosition = new THREE.Vector3(0, 2.05, 0); // Posición objetivo
+		const targetPosition = new THREE.Vector3(0, 1.5, 0); // Posición objetivo
 		const smoothness = $lightControl.smoothness; // Factor de suavizado (0.1 es suave, 1 es inmediato)
 		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
 		const lightSphereMaterial = new THREE.MeshBasicMaterial({
-			color: 0xfff000,
+			color: $lightControl.color,
 			emissive: 0xfff000,
 			emissiveIntensity: 2
 		});
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
 		// Crear la luz puntual
-		const pointLight = new THREE.PointLight(0xffffff, 2, 10);
-		pointLight.position.set(0, 0, -2);
+		const pointLight = new THREE.PointLight($lightControl.color, 2, 10);
+		pointLight.position.set(0, 0, -1);
 		lightSphere.add(pointLight); // La esfera contiene la luz
 		scene.add(lightSphere);
 
@@ -109,13 +106,15 @@
 		// Evento para mover la luz con el mouse
 		window.addEventListener('mousemove', moveLightToMouse);
 
-		
-
 		// Animación y movimiento
 		const animate = () => {
 			requestAnimationFrame(animate);
+
+			// Interpolación suave de la posición
 			lightSphere.position.lerp(targetPosition, smoothness);
 
+			// Interpolación suave del color
+			pointLight.color.set($lightControl.threeColor);
 			// helpers
 			// controls.update();
 			// render
