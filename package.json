@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"animate.css": "^4.1.1",
 		"gsap": "^3.12.5",
 		"pocketbase": "^0.21.4",
 		"stats.js": "^0.17.0",

@@ -8,6 +8,7 @@
 	import { selectedProject } from '$lib/writables';
 	// import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
 	import HeroAnchorCard from '$lib/components/HeroAnchorCard.svelte';
+	import Intro from '$lib/sections/Intro.svelte';
 
 	let scrollY = 0;
 
@@ -26,9 +27,8 @@
 <!-- <InstuctionBanner
 	>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
 > -->
-<div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
+<!-- <div class="hero-section" transition:fade={{ delay: 100, duration: 500 }}>
 	<XpCard title="CV" top="20vh" left="30vw">
-		<!-- svelte-ignore a11y-missing-attribute -->
 		<iframe
 			src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
 			id="pdf"
@@ -53,7 +53,8 @@
 			/>
 		</HeroAnchorCard>
 	</XpCard>
-</div>
+</div> -->
+<Intro/>
 <div class="work" id="work-section">
 	<div class="project-description">
 		<h1 class="section-title">My Work</h1>

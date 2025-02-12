@@ -15,24 +15,19 @@
 			0.1,
 			1000
 		);
-		camera.position.set(0, 1.5, 6);
+		camera.position.set(0, 0, 10); // Ajustado para ver mejor la habitación
 
 		const renderer = new THREE.WebGLRenderer({ canvas });
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		// helpers
-		// const controls = new OrbitControls(camera, renderer.domElement);
-		// scene.add(controls);
-
-		// Objetos
-		const roomSize = 3;
-		const numRooms = 3;
+		// Crear textura para las paredes
 		const normalMap3 = new THREE.CanvasTexture(new FlakesTexture());
 		normalMap3.wrapS = THREE.RepeatWrapping;
 		normalMap3.wrapT = THREE.RepeatWrapping;
 		normalMap3.repeat.x = 10;
 		normalMap3.repeat.y = 6;
 		normalMap3.anisotropy = 16;
+
 		let wallMaterial = new THREE.MeshPhysicalMaterial({
 			clearcoat: 1.0,
 			clearcoatRoughness: 0.1,
@@ -42,30 +37,33 @@
 			normalMap: normalMap3,
 			normalScale: new THREE.Vector2(0.15, 0.15)
 		});
-		// let wallMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0 } )
-		for (let i = 0; i < numRooms; i++) {
-			const roomY = i * roomSize - (numRooms * roomSize) / 2;
 
-			// Create walls
-			const wallGeometry = new THREE.PlaneGeometry(roomSize, roomSize);
-			const wallPositions = [
-				{ x: 0, y: roomY, z: -roomSize / 2, rotation: [0, 0, 0] }, // back wall
-				{ x: -roomSize / 2, y: roomY, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
-				{ x: roomSize / 2, y: roomY, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
-				{ x: 0, y: roomY + roomSize / 2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
-				{ x: 0, y: roomY - roomSize / 2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall||
-			];
+		// Calcular el tamaño de la habitación basado en la vista de la cámara
+		const distance = Math.abs(camera.position.z);
+		const vFov = THREE.MathUtils.degToRad(camera.fov);
+		const roomHeight = 2 * Math.tan(vFov / 2) * distance;
+		const roomWidth = roomHeight * camera.aspect;
 
-			wallPositions.forEach((pos) => {
-				const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-				wall.position.set(pos.x, pos.y, pos.z);
-				wall.rotation.set(...pos.rotation);
-				scene.add(wall);
-			});
-		}
+		// Crear las paredes
+		const wallPositions = [
+			{ x: 0, y: 0, z: -roomWidth/2, rotation: [0, 0, 0] }, // back wall
+			{ x: -roomWidth/2, y: 0, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
+			{ x: roomWidth/2, y: 0, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
+			{ x: 0, y: roomHeight/2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
+			{ x: 0, y: -roomHeight/2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall
+		];
+
+		wallPositions.forEach((pos) => {
+			const wallGeometry = new THREE.PlaneGeometry(roomWidth, roomHeight);
+			const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+			wall.position.set(pos.x, pos.y, pos.z);
+			wall.rotation.set(...pos.rotation);
+			scene.add(wall);
+		});
+
 		// Crear la esfera de luz
-		const targetPosition = new THREE.Vector3(0, 1.5, 0); // Posición objetivo
-		const smoothness = $lightControl.smoothness; // Factor de suavizado (0.1 es suave, 1 es inmediato)
+		const targetPosition = new THREE.Vector3(0, 0, 0);
+		const smoothness = $lightControl.smoothness;
 		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
 		const lightSphereMaterial = new THREE.MeshBasicMaterial({
 			color: $lightControl.color,
@@ -75,9 +73,9 @@
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
 		// Crear la luz puntual
-		const pointLight = new THREE.PointLight($lightControl.color, 2, 10);
+		const pointLight = new THREE.PointLight($lightControl.color, 2, roomWidth * 2);
 		pointLight.position.set(0, 0, -1);
-		lightSphere.add(pointLight); // La esfera contiene la luz
+		lightSphere.add(pointLight);
 		scene.add(lightSphere);
 
 		// Variables para el rayo y el mouse
@@ -86,18 +84,13 @@
 
 		function moveLightToMouse(event) {
 			// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
-			if(event.clientX / window.innerWidth > 0.30 && event.clientX / window.innerWidth < 0.70){
-				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			}
-			if(event.clientY / window.innerHeight > 0.20 && event.clientY / window.innerHeight < 0.80){
-				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-			}
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-			console.log(event.clientY / window.innerHeight)
 			// Lanzar un rayo desde la cámara en la dirección del mouse
 			raycaster.setFromCamera(mouse, camera);
 
-			// Calcular la intersección del rayo con un plano en Z=0 (o cualquier otro plano)
+			// Calcular la intersección del rayo con un plano en Z=0
 			const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 			const intersection = new THREE.Vector3();
 			raycaster.ray.intersectPlane(plane, intersection);
@@ -108,30 +101,34 @@
 			}
 		}
 
-		// Evento para mover la luz con el mouse
 		window.addEventListener('mousemove', moveLightToMouse);
 
-		// Animación y movimiento
 		const animate = () => {
 			requestAnimationFrame(animate);
-
-			// Interpolación suave de la posición
 			lightSphere.position.lerp(targetPosition, smoothness);
-
-			// Interpolación suave del color
 			pointLight.color.set($lightControl.threeColor);
-			// helpers
-			// controls.update();
-			// render
 			renderer.render(scene, camera);
 		};
 
 		animate();
 
-		// Manejo del redimensionamiento
 		const handleResize = () => {
+			// Actualizar cámara
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
+			
+			// Recalcular dimensiones de la habitación
+			const newRoomHeight = 2 * Math.tan(vFov / 2) * distance;
+			const newRoomWidth = newRoomHeight * camera.aspect;
+			
+			// Actualizar geometría de las paredes
+			scene.children.forEach((child) => {
+				if (child instanceof THREE.Mesh && child.geometry instanceof THREE.PlaneGeometry) {
+					child.geometry.dispose();
+					child.geometry = new THREE.PlaneGeometry(newRoomWidth, newRoomHeight);
+				}
+			});
+			
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		};
 
@@ -139,6 +136,7 @@
 
 		return () => {
 			window.removeEventListener('resize', handleResize);
+			window.removeEventListener('mousemove', moveLightToMouse);
 			renderer.dispose();
 		};
 	});
