@@ -80,3 +80,5 @@ export function updateLightColor(value) {
     color: newColor
   }));
 }
+
+export const scrollY = writable(0);

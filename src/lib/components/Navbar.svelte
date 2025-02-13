@@ -3,9 +3,9 @@
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { navState } from '$lib/writables';
-
-	const handleMouseenter = () => ($navState.kitty = true);
-	const handleMouseleave = () => ($navState.kitty = false);
+	import XpCard from './XPCard.svelte';
+	import HeroLinkCard from './HeroLinkCard.svelte';
+	import HeroAnchorCard from './HeroAnchorCard.svelte';
 
 	function closeNav() {
 		navState.set({ visible: false, kitty: false });
@@ -29,39 +29,45 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<header>
-	<div class="menu" on:click={openNav}>
-		<h1>CURRENT.ME</h1>
-	</div>
+<header on:click={openNav}>
+	<h1>CURRENT.ME</h1>
 </header>
 
 {#if $navState.visible}
 	<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<button class="close-nav" on:click={closeNav}>x</button>
-		<nav>
-			<a
-				on:mouseenter={handleMouseenter}
-				on:mouseleave={handleMouseleave}
-				on:click={closeNav}
-				href="/">Home</a
-			>
-			<a
-				on:mouseenter={handleMouseenter}
-				on:mouseleave={handleMouseleave}
-				on:click={closeNav}
-				href="/skills">Skills</a
-			>
-			<a
-				on:mouseenter={handleMouseenter}
-				on:mouseleave={handleMouseleave}
-				on:click={closeNav}
-				href="/cv">Curriculum Vitae</a
-			>
-		</nav>
-	</div>
-	<div class="kitty-cage">
-		<img class:curious={$navState.kitty} alt="Kitten wants to know what's going on" src={kitten} />
+		<!-- <InstuctionBanner
+			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
+		> -->
+		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
+			<XpCard title="CV" top="20vh" left="30vw">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<iframe
+					src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
+					id="pdf"
+					allow="autoplay"
+				></iframe>
+			</XpCard>
+			<XpCard title="About & Skills" top="30vh" left="20vw">
+				<HeroLinkCard title="About & Skills" link="skills">
+					<img
+						src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
+						alt="cv-gif"
+						class="hero-image"
+					/>
+				</HeroLinkCard>
+			</XpCard>
+			<XpCard title="My work" top="40vh" left="10vw">
+				<HeroAnchorCard title="Work">
+					<img
+						src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
+						alt="cv-gif"
+						class="hero-image"
+					/>
+				</HeroAnchorCard>
+			</XpCard>
+		</div>
 	</div>
 {/if}
 
@@ -75,7 +81,6 @@
 		right: 8%;
 		color: rgb(255, 255, 255);
 		z-index: 4;
-		background-color: transparent;
 	}
 	.screenCover {
 		position: fixed;
@@ -83,40 +88,11 @@
 		left: 0;
 		width: 100vw;
 		height: 100vh;
-		background-color: rgb(0, 0, 0);
 		display: flex;
 		flex-direction: column;
 		justify-items: center;
 		cursor: default;
 		overflow-x: hidden;
-	}
-	.menu {
-		box-sizing: border-box;
-		border-radius: 5px;
-		padding: 1rem;
-	}
-	.menu:hover {
-		color: black;
-		font-weight: bolder;
-		background-color: rgb(255, 255, 255);
-	}
-
-	img {
-		z-index: 3;
-		position: absolute;
-		right: -5%;
-		bottom: 10%;
-		transform: translate(110%, 0) rotate(-10deg);
-		transition: transform 0.4s;
-		pointer-events: none;
-	}
-
-	.curious {
-		transform: translate(40%, 0) rotate(-65deg);
-	}
-	.kitty-cage {
-		position: relative;
-		overflow: hidden;
 	}
 	header {
 		max-height: 5vh;
@@ -126,34 +102,6 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-	}
-
-	nav {
-		flex-grow: 1;
-		z-index: 3;
-		width: 100%;
-		height: 100%;
-		background-color: #000000;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	nav a {
-		z-index: 5;
-		color: rgb(255, 255, 255);
-		padding: 1rem;
-		border-radius: 5px;
-		text-decoration: none;
-		font-size: 1.6em;
-		font-weight: 100;
-	}
-	nav a:hover {
-		color: rgb(255, 255, 255);
-		background-color: rgb(0, 0, 0);
-		text-decoration: none;
-		font-size: 1.6em;
-		font-weight: bolder;
+		box-sizing: border-box;
 	}
 </style>

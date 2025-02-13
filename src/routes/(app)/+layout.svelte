@@ -2,12 +2,17 @@
 	import '$lib/main.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 
-	import { started } from '$lib/writables';
+	import { scrollY, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	// import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
+	function handleScroll(event) {
+        const element = event.target;
+        console.log(element)
+        $scrollY = element.scrollTop;
+    }
 </script>
 
 <div class="bg">
@@ -16,10 +21,11 @@
 </div>
 
 {#if $started}
-	<nav transition:fade={{ duration: 500 }}>
-		<Navbar />
-	</nav>
-	<main transition:fade={{ duration: 1000, delay: 1000 }}>
+		<span></span>
+		<nav transition:fade={{ duration: 500 }}>
+			<Navbar />
+		</nav>
+	<main>
 		<slot />
 		<DevelopmentBanner
 			showBanner={true}
@@ -30,22 +36,15 @@
 	<!-- <InstuctionBanner>Move or touch around, keep pressing to enter</InstuctionBanner> -->
 	<Loader />
 {/if}
-
 <style>
+	span {
+		height: 20vh;
+	}
 	nav {
-		padding-top: 1rem;
 		position: sticky;
 		top: 0;
 		z-index: 999;
-		width: 100%;
-		backdrop-filter: blur(10px);
 	}
-	main {
-		width: 100%;
-		position: relative;
-		z-index: 1;
-	}
-
 	/* Habilitar interactividad solo para elementos específicos */
 	main * {
 		pointer-events: auto;
