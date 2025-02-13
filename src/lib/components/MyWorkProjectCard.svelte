@@ -5,7 +5,7 @@
 
 	<div class="project-title">
 		<div>
-			<h3>TítuloTítuloTítuloTítuloTítuloTítuloTítuloTítuloTítulo</h3>
+			<h3>Título TítuloTítulo Título</h3>
 		</div>
 	</div>
 	<div class="project-info">

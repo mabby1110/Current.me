@@ -33,10 +33,10 @@
 	<h1>CURRENT.ME</h1>
 </header>
 
-{#if $navState.visible}
-	<div class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
+
+	<div class:hidden={!$navState.visible} class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-		<button class="close-nav" on:click={closeNav}>x</button>
+		<button class="close-nav" on:click={closeNav}>close</button>
 		<!-- <InstuctionBanner
 			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
 		> -->
@@ -58,18 +58,26 @@
 					/>
 				</HeroLinkCard>
 			</XpCard>
-			<XpCard title="My work" top="40vh" left="10vw">
-				<HeroAnchorCard title="Work">
+			<XpCard title="Home" top="40vh" left="10vw">
+				<HeroLinkCard title="Home" link="/">
+					<img
+						src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
+						alt="cv-gif"
+						class="hero-image"
+					/>
+				</HeroLinkCard>
+			</XpCard>
+			<!-- <XpCard title="Home" top="40vh" left="10vw">
+				<HeroAnchorCard title="Home">
 					<img
 						src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
 						alt="cv-gif"
 						class="hero-image"
 					/>
 				</HeroAnchorCard>
-			</XpCard>
+			</XpCard> -->
 		</div>
 	</div>
-{/if}
 
 <style>
 	* {
@@ -79,7 +87,7 @@
 		position: absolute;
 		top: 5%;
 		right: 8%;
-		color: rgb(255, 255, 255);
+		background-color: rgb(255, 0, 0);
 		z-index: 4;
 	}
 	.screenCover {
@@ -93,6 +101,11 @@
 		justify-items: center;
 		cursor: default;
 		overflow-x: hidden;
+		background-color: rgba(0, 0, 0, 0.2);
+		backdrop-filter: blur(20px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease, visibility 0.3s ease;
 	}
 	header {
 		max-height: 5vh;
@@ -104,4 +117,13 @@
 		cursor: pointer;
 		box-sizing: border-box;
 	}
+	img {
+		width: 100%;
+		height: auto;
+	}
+	.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 </style>

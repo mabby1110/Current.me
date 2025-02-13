@@ -1,28 +1,60 @@
 <script>
-	import { fade, fly, scale } from 'svelte/transition';
-	import { selectedProject } from '$lib/writables';
-	import Slider from '$lib/components/Slider.svelte';
-	import SliderLinkCard from '$lib/components/SliderLinkCard.svelte';
-	import { cubicOut } from 'svelte/easing';
-	import MyWorkProjectCard from '$lib/components/MyWorkProjectCard.svelte';
+	import { projects, scrollY } from '$lib/writables';
+	import { fade } from 'svelte/transition';
 
-	let isVisible = false;
+	// Control para animación de salida
+	let section_1 = false;
+	let section_2 = false;
+
+	$: if ($scrollY > 1500 && !section_1) {
+		section_1 = true;
+	} else if ($scrollY > 1900 && !section_2){
+		section_2 = true;
+	}
 </script>
 
-<section class="hero">
-	<MyWorkProjectCard/>
-</section>
+{#each projects as project}
+	<section class="project-container">
+		<h1 class="sticky" in:fade={{ duration: 800, delay: 200 }}>
+			{project.title}
+		</h1>
+		<div class="description sticky">
+			<p>{project.description}</p>
+			<img src="{project.image}" alt="{project.title} image" />
+		</div>
+	</section>
+{/each}
 
 <style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-        height: 95vh;
+	.project-container {
+		height: 95vh;
 		color: white;
-		background-color: rgba(0, 0, 255, 0.26);
-		font-family: 'Poppins', sans-serif;
-		padding: 5vw;
-		max-width: 2048px;
+
+		display: flex;
+	}
+	h1 {
+		font-size: 2.4rem;
+		backdrop-filter: blur(20px);
+		height: min-content;
+		width: 25vw;
+		padding: 1rem 2rem;
+	}
+	.description {
+		backdrop-filter: blur(20px);
+		background-color: rgba(255, 0, 0, 0.113);
+		max-width: 500px;
+		height: min-content;
+		min-height: 240px;
+		border-radius: 16px;
+		padding: 1rem 2rem;
+	}
+	.description img {
+		margin-top: 2rem;
+		width: 100%;
+		height: auto;
+	}
+	.sticky {
+		position: sticky;
+		top: 20%;
 	}
 </style>

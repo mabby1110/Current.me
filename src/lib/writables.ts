@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 export const release = writable(0);
 export const loaded = writable<boolean>(false);
 export const started = writable<boolean>(false);
-export const navState = writable({visible: false, kitty: false});
+export const navState = writable({visible: false});
 
 type Project = {
     title: string;
@@ -24,18 +24,6 @@ export const projects = [
         image: "/POS-CRM-git-repo.png", // Replace with the actual path
         description: "An integrated Point of Sale (POS) and Customer Relationship Management (CRM) system designed specifically for SMEs, facilitating complete business management on a single platform.",
         link: "https://github.com/mabby1110/POS-CRM"
-    },
-    {
-        title: "C de Comercio",
-        image: "/C-git-repo.png", // Replace with the actual path
-        description: "A concept application for exchanging goods and services in your locality.",
-        link: "https://github.com/mabby1110/cd-desktop"
-    },
-    {
-        title: "Artado",
-        image: "/Artado-git-repo.png", // Replace with the actual path
-        description: "An innovative social platform designed to connect independent artists and production houses, facilitating hiring and collaboration in the creative sector.",
-        link: "https://github.com/mabby1110/Artado"
     }
 ];
 

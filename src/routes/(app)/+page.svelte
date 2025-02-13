@@ -17,9 +17,18 @@
 		};
 	});
 </script>
-<Intro/>
-<MyWork/>
+<div class="home">
+	<Intro/>
+	<MyWork/>
+	<Intro/>
+</div>
 <InfoBanner>{$scrollY}</InfoBanner>
 <style>
-
+.home {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 2048px;
+	padding: 0 5vw;
+}
 </style>

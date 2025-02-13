@@ -1,10 +1,16 @@
 <script>
 	import { goto } from "$app/navigation";
+	import { navState } from "$lib/writables";
 
 	export let title = 'HeroLinkCard';
 	export let link = '/';
+
+	function handleClick() {
+		navState.set({ visible: false});
+		goto(link);
+	}
 </script>
-<button class="card-container" on:click={goto(link)}>
+<button class="card-container" on:click={handleClick}>
 	<slot>{title}</slot>
 </button>
 

@@ -73,7 +73,7 @@
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
 		// Crear la luz puntual
-		const pointLight = new THREE.PointLight($lightControl.color, 2, roomWidth * 2);
+		const pointLight = new THREE.PointLight($lightControl.color, 8, roomWidth * 2);
 		pointLight.position.set(0, 0, -1);
 		lightSphere.add(pointLight);
 		scene.add(lightSphere);
