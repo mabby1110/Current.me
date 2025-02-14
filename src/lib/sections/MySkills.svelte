@@ -1,10 +1,6 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte';
 	import IconCarrousel from '$lib/components/IconCarrousel.svelte';
-	import { infoStore } from '$lib/writables';
-
-	// Control para animación de salida
-	let shouldExitAnimate = false;
 	let skillList = [
 		{ name: 'backend', description: 'backend' },
 		{ name: 'frameworks', description: 'frameworks' },
@@ -36,13 +32,6 @@
 		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
 		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
 	]
-
-	// Solo detectamos cuando pasamos los 200px por primera vez
-	$: if ($infoStore.scrollY > 200 && !shouldExitAnimate) {
-		shouldExitAnimate = true;
-	} else {
-		shouldExitAnimate = false;
-	}
 </script>
 
 <section class="hero">

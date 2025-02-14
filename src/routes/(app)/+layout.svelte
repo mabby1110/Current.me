@@ -4,11 +4,10 @@
 
 	import { started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
-	import { slide } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	import InfoBanner from '$lib/components/InfoBanner.svelte';
-
 </script>
 
 <div class="bg">
@@ -16,35 +15,39 @@
 	<EyeballScene />
 </div>
 
-<InfoBanner/>
+<InfoBanner />
 
 {#if $started}
-<span transition:slide={{ duration: 500 }}></span>
-<div class="page-container">
-	<nav transition:slide={{ duration: 500 }}>
-		<Navbar />
-	</nav>
-	<main>
-		<slot />
-		<DevelopmentBanner
-			showBanner={true}
-			message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
-		/>
-	</main>
-</div>
+	<div class="space-jam" in:fade={{ duration: 500 }}></div>
+	<div class="page-container">
+		<nav in:fade={{ duration: 500 }}>
+			<Navbar />
+		</nav>
+		<main>
+			<slot />
+			<DevelopmentBanner
+				showBanner={true}
+				message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
+			/>
+		</main>
+	</div>
 {:else}
 	<!-- <InstuctionBanner>Move or touch around, keep pressing to enter</InstuctionBanner> -->
 	<Loader />
 {/if}
+
 <style>
-	span {
+
+	.space-jam {
 		height: 30vh;
-		backdrop-filter: blur(20px);
-		background-color: black;
+		backdrop-filter: blur(10px);
+		z-index: 999;
+		pointer-events: none;
+		user-select: none;
 	}
 	nav {
 		position: sticky;
-		top: -1px;
+		top: 0;
 		z-index: 999;
 		background-color: black;
 	}
@@ -63,5 +66,13 @@
 	.page-container {
 		backdrop-filter: blur(10px);
 		position: relative;
+	}
+	@media (max-width: 768px) {
+		nav {
+			position: sticky;
+			top: 10vh;
+			z-index: 999;
+			background-color: rgb(0, 0, 0);
+		}
 	}
 </style>

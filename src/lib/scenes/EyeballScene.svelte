@@ -94,21 +94,23 @@
 >>>>>>>>>>>>>>>>>>>>>>>>functions<<<<<<<<<<<<<<<<<<<<<<<
 */
 		function moveLightToMouse(event) {
-			// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-			// Lanzar un rayo desde la cámara en la dirección del mouse
-			raycaster.setFromCamera(mouse, camera);
-
-			// Calcular la intersección del rayo con un plano en Z=0
-			const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 1);
-			const intersection = new THREE.Vector3();
-			raycaster.ray.intersectPlane(plane, intersection);
-
-			// Actualizar la posición objetivo
-			if (intersection) {
-				targetPosition.copy(intersection);
+			if($sceneNumber == 1){
+				// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+	
+				// Lanzar un rayo desde la cámara en la dirección del mouse
+				raycaster.setFromCamera(mouse, camera);
+	
+				// Calcular la intersección del rayo con un plano en Z=0
+				const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 1);
+				const intersection = new THREE.Vector3();
+				raycaster.ray.intersectPlane(plane, intersection);
+	
+				// Actualizar la posición objetivo
+				if (intersection) {
+					targetPosition.copy(intersection);
+				}
 			}
 		}
 
@@ -136,9 +138,7 @@
 >>>>>>>>>>>>>>>>>>>>>>>>Reder, Controls & Listeners<<<<<
 */
 		const controls = new OrbitControls(camera, renderer.domElement);
-		if($sceneNumber == 1){
-			window.addEventListener('mousemove', moveLightToMouse);
-		}
+		window.addEventListener('mousemove', moveLightToMouse);
 		window.addEventListener('resize', handleResize);
 
 		const animate = () => {

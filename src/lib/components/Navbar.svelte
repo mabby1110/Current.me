@@ -1,26 +1,23 @@
 <script>
-	import kitten from '$lib/assets/kitten.png';
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { navState } from '$lib/writables';
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
-	import HeroAnchorCard from './HeroAnchorCard.svelte';
-	import InfoBanner from './InfoBanner.svelte';
 
 	function closeNav() {
-		navState.set({ visible: false, kitty: false });
+		navState.set({ visible: false});
 	}
 
 	function openNav() {
-		navState.set({ visible: true, kitty: true });
+		navState.set({ visible: true});
 	}
 
 	onMount(() => {
 		const handleKeydown = () => {
 			// @ts-ignore
 			if (event.key === 'Escape') {
-				navState.set({ visible: false, kitty: false });
+				navState.set({ visible: false});
 			}
 		};
 		window.addEventListener('keydown', handleKeydown);
@@ -46,14 +43,13 @@
 			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
 		> -->
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-		<XpCard title="CV" top="20vh" left="30vw">
-			<!-- svelte-ignore a11y-missing-attribute -->
+		<!-- <XpCard title="CV" top="20vh" left="30vw">
 			<iframe
 				src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
 				id="pdf"
 				allow="autoplay"
 			></iframe>
-		</XpCard>
+		</XpCard> -->
 		<XpCard title="About & Skills" top="30vh" left="20vw">
 			<HeroLinkCard title="About & Skills" link="skills">
 				<img

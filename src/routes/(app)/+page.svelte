@@ -4,6 +4,7 @@
 	import MyWork from '$lib/sections/MyWork.svelte';
 	import MySkills from '$lib/sections/MySkills.svelte';
 	import { infoStore } from '$lib/writables';
+	import { sceneNumber } from '$lib/threeStores';
 
 	// Función para normalizar el scroll
 	function getNormalizedScroll(): number {
@@ -14,16 +15,15 @@
 
 	function handleScroll() {
 		const normalizedScroll = getNormalizedScroll();
-		infoStore.set({
-			scrollY: normalizedScroll,
-			info: 'home'
-		});
+		$infoStore.scrollY=normalizedScroll;
 	}
 	
-	$: if($infoStore.scrollY <= 50) { // 50% del viewport height
+	$: if($infoStore.scrollY <= 30) { // 50% del viewport height
 		$infoStore.info = "scroll to continue"
-	} else if($infoStore.scrollY > 50) {
+		$sceneNumber = 0;
+	} else if($infoStore.scrollY <= 50) {
 		$infoStore.info = "touch or move the mouse around"
+		$sceneNumber = 1;
 	}
 
 	onMount(() => {
