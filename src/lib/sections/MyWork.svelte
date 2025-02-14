@@ -1,14 +1,14 @@
 <script>
-	import { projects, scrollY } from '$lib/writables';
+	import { projects, infoStore } from '$lib/writables';
 	import { fade } from 'svelte/transition';
 
 	// Control para animación de salida
 	let section_1 = false;
 	let section_2 = false;
 
-	$: if ($scrollY > 1500 && !section_1) {
+	$: if ($infoStore.scrollY > 1500 && !section_1) {
 		section_1 = true;
-	} else if ($scrollY > 1900 && !section_2){
+	} else if ($infoStore.scrollY > 1900 && !section_2){
 		section_2 = true;
 	}
 </script>
@@ -31,6 +31,15 @@
 		color: white;
 
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+		height: 100vh;
+		text-align: center;
+		color: white;
+		width: 100%;
+		border-style: solid;
+		border-width: 4rem;
+		border-color: black;
 	}
 	h1 {
 		font-size: 2.4rem;

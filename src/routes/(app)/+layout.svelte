@@ -2,17 +2,12 @@
 	import '$lib/main.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 
-	import { scrollY, started } from '$lib/writables';
+	import { started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
-	// import InstuctionBanner from '$lib/components/InstuctionBanner.svelte';
-	function handleScroll(event) {
-        const element = event.target;
-        console.log(element)
-        $scrollY = element.scrollTop;
-    }
+
 </script>
 
 <div class="bg">
@@ -21,10 +16,11 @@
 </div>
 
 {#if $started}
-		<span></span>
-		<nav transition:fade={{ duration: 500 }}>
-			<Navbar />
-		</nav>
+<span transition:slide={{ duration: 500 }}></span>
+<div class="page-container">
+	<nav transition:slide={{ duration: 500 }}>
+		<Navbar />
+	</nav>
 	<main>
 		<slot />
 		<DevelopmentBanner
@@ -32,18 +28,22 @@
 			message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
 		/>
 	</main>
+</div>
 {:else}
 	<!-- <InstuctionBanner>Move or touch around, keep pressing to enter</InstuctionBanner> -->
 	<Loader />
 {/if}
 <style>
 	span {
-		height: 20vh;
+		height: 40vh;
+		backdrop-filter: blur(20px);
+		background-color: black;
 	}
 	nav {
 		position: sticky;
-		top: 0;
+		top: -1px;
 		z-index: 999;
+		background-color: black;
 	}
 	/* Habilitar interactividad solo para elementos específicos */
 	main * {
@@ -57,6 +57,8 @@
 		bottom: 0;
 		left: 0;
 		z-index: -1;
-		background-color: rgb(0, 0, 0);
+	}
+	.page-container {
+		backdrop-filter: blur(10px);
 	}
 </style>

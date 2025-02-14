@@ -6,6 +6,7 @@
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
 	import HeroAnchorCard from './HeroAnchorCard.svelte';
+	import InfoBanner from './InfoBanner.svelte';
 
 	function closeNav() {
 		navState.set({ visible: false, kitty: false });
@@ -30,7 +31,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <header on:click={openNav}>
-	<h1>CURRENT.ME</h1>
+	<InfoBanner/>
+	<h1 in:fade={{ duration: 800, delay: 600 }}>CURRENT.ME</h1>
 </header>
 
 
@@ -125,5 +127,9 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+h1 {
+	margin: 0;
+	padding: 0;
 }
 </style>

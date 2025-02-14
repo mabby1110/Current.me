@@ -69,4 +69,4 @@ export function updateLightColor(value) {
   }));
 }
 
-export const scrollY = writable(0);
+export const infoStore = writable({scrollY: 0, info: ''});

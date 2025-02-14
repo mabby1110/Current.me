@@ -56,7 +56,7 @@
 				...state,
 				color: newColor
 			}));
-		}, 50); // Ajusta este intervalo según tus necesidades
+		}, 300); // Ajusta este intervalo según tus necesidades
 	}
 
 	function stopFade() {
@@ -73,7 +73,6 @@
 <div
 	id="fading-component"
 	class="loader-container"
-	style="opacity: {opacity}"
 	on:touchstart={startFade}
 	on:touchend={stopFade}
 	on:touchcancel={stopFade}
@@ -81,7 +80,6 @@
 	on:mouseup={stopFade}
 	on:mouseleave={stopFade}
 	on:contextmenu|preventDefault={() => console.log('?')}
-	out:fade={{ duration: 500 }}
 >
 	<img src={loader} alt="Loader" />
 </div>
@@ -92,7 +90,7 @@
 		width: 100%;
 		display: grid;
 		place-items: center;
-        background-color: rgba(0, 0, 0, 0.7);
+		backdrop-filter: blur(10px);
 	}
 
 	.loader-container img {
