@@ -1,11 +1,24 @@
 <script>
-    import { infoStore } from "$lib/writables";
+	import { infoStore } from '$lib/writables';
+	export let top = 0;
 </script>
-<p>{$infoStore.scrollY}: {$infoStore.info}</p>
+
+<div class="info-container">
+    <p style="top: {top}vh;">{$infoStore.info} y:{$infoStore.scrollY.toPrecision(3)}</p>
+</div>
 
 <style>
-    p {
-        position:absolute;
-        left: 5vw;
+    .info-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        height: 100vh;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
     }
+	p {
+        writing-mode: vertical-lr;
+	}
 </style>

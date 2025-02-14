@@ -7,6 +7,7 @@
 	import { slide } from 'svelte/transition';
 	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
+	import InfoBanner from '$lib/components/InfoBanner.svelte';
 
 </script>
 
@@ -14,6 +15,8 @@
 	<!-- <Background release={$release} started={$started} /> -->
 	<EyeballScene />
 </div>
+
+<InfoBanner/>
 
 {#if $started}
 <span transition:slide={{ duration: 500 }}></span>
@@ -35,7 +38,7 @@
 {/if}
 <style>
 	span {
-		height: 40vh;
+		height: 30vh;
 		backdrop-filter: blur(20px);
 		background-color: black;
 	}
@@ -60,5 +63,6 @@
 	}
 	.page-container {
 		backdrop-filter: blur(10px);
+		position: relative;
 	}
 </style>

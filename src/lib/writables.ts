@@ -69,4 +69,4 @@ export function updateLightColor(value) {
   }));
 }
 
-export const infoStore = writable({scrollY: 0, info: ''});
+export const infoStore = writable({scrollY: 0, info: 'keep pressing to start'});

@@ -31,45 +31,48 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <header on:click={openNav}>
-	<InfoBanner/>
 	<h1 in:fade={{ duration: 800, delay: 600 }}>CURRENT.ME</h1>
 </header>
 
-
-	<div class:hidden={!$navState.visible} class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
-		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-		<button class="close-nav" on:click={closeNav}>close</button>
-		<!-- <InstuctionBanner
+<div
+	class:hidden={!$navState.visible}
+	class="screenCover"
+	in:fade={{ duration: 500 }}
+	out:fade={{ duration: 500 }}
+>
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<button class="close-nav" on:click={closeNav}>close</button>
+	<!-- <InstuctionBanner
 			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
 		> -->
-		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-			<XpCard title="CV" top="20vh" left="30vw">
-				<!-- svelte-ignore a11y-missing-attribute -->
-				<iframe
-					src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
-					id="pdf"
-					allow="autoplay"
-				></iframe>
-			</XpCard>
-			<XpCard title="About & Skills" top="30vh" left="20vw">
-				<HeroLinkCard title="About & Skills" link="skills">
-					<img
-						src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
-						alt="cv-gif"
-						class="hero-image"
-					/>
-				</HeroLinkCard>
-			</XpCard>
-			<XpCard title="Home" top="40vh" left="10vw">
-				<HeroLinkCard title="Home" link="/">
-					<img
-						src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
-						alt="cv-gif"
-						class="hero-image"
-					/>
-				</HeroLinkCard>
-			</XpCard>
-			<!-- <XpCard title="Home" top="40vh" left="10vw">
+	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
+		<XpCard title="CV" top="20vh" left="30vw">
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<iframe
+				src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
+				id="pdf"
+				allow="autoplay"
+			></iframe>
+		</XpCard>
+		<XpCard title="About & Skills" top="30vh" left="20vw">
+			<HeroLinkCard title="About & Skills" link="skills">
+				<img
+					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
+					alt="cv-gif"
+					class="hero-image"
+				/>
+			</HeroLinkCard>
+		</XpCard>
+		<XpCard title="Home" top="40vh" left="10vw">
+			<HeroLinkCard title="Home" link="/">
+				<img
+					src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
+					alt="cv-gif"
+					class="hero-image"
+				/>
+			</HeroLinkCard>
+		</XpCard>
+		<!-- <XpCard title="Home" top="40vh" left="10vw">
 				<HeroAnchorCard title="Home">
 					<img
 						src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
@@ -78,8 +81,8 @@
 					/>
 				</HeroAnchorCard>
 			</XpCard> -->
-		</div>
 	</div>
+</div>
 
 <style>
 	* {
@@ -93,7 +96,7 @@
 		z-index: 4;
 	}
 	.screenCover {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100vw;
@@ -105,9 +108,11 @@
 		overflow-x: hidden;
 		background-color: rgba(0, 0, 0, 0.2);
 		backdrop-filter: blur(20px);
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.6s ease, visibility 0.3s ease;
+		opacity: 1;
+		visibility: visible;
+		transition:
+			opacity 0.6s ease,
+			visibility 0.3s ease;
 	}
 	header {
 		max-height: 5vh;
@@ -124,12 +129,12 @@
 		height: auto;
 	}
 	.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-h1 {
-	margin: 0;
-	padding: 0;
-}
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+	h1 {
+		margin: 0;
+		padding: 0;
+	}
 </style>
