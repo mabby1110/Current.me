@@ -12,9 +12,8 @@
 		section_2 = true;
 	}
 </script>
-
 {#each projects as project}
-	<section class="project-container">
+	<section class="hero">
 		<h1 class="sticky" in:fade={{ duration: 800, delay: 200 }}>
 			{project.title}
 		</h1>
@@ -26,20 +25,18 @@
 {/each}
 
 <style>
-	.project-container {
-		height: 95vh;
-		color: white;
-
+	.hero {
+		height: 100vh;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 100vh;
 		text-align: center;
 		color: white;
-		width: 100%;
 		border-style: solid;
-		border-width: 4rem;
+		border-width: 10vw;
 		border-color: black;
+		transition: background-color 1s ease;
 	}
 	h1 {
 		font-size: 2.4rem;

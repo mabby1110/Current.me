@@ -6,7 +6,7 @@
 	let description = 'This is my journey into the world of art, design, and immersive digital experiences';
   
 	// Reactive variables using normalized scroll values (0-100)
-	$: h1Animate = $infoStore.scrollY >= 15;  // Activar a 30% del viewport
+	$: h1Animate = $infoStore.scrollY >= 7;  // Activar a 30% del viewport
 	$: backgroundAnimate = $infoStore.scrollY >= 30;  // Activar a 50% del viewport
 </script>
   
@@ -32,7 +32,6 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 		gap: 10vh;
 		text-align: center;
 		color: white;
@@ -59,7 +58,16 @@
 		position: sticky;
 		top: 20vh;
 	}
-  
+@media (max-width: 768px) {
+	h1 {
+		font-size: 10vw;
+		transition:
+			opacity 0.5s,
+			transform 0.5s;
+		position: sticky;
+		top: 25vh;
+	}
+}
 	.relese {
 		font-weight: lighter;
 		max-width: 600px;

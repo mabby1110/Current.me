@@ -53,7 +53,6 @@
 		pointer-events: auto;
 	}
 	.bg {
-		width: 100%;
 		min-width: 240px;
 		position: fixed;
 		top: 0;

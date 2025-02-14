@@ -115,7 +115,7 @@
 			visibility 0.3s ease;
 	}
 	header {
-		max-height: 5vh;
+		height: 10vh;
 		z-index: 1;
 		width: 100%;
 		display: flex;
