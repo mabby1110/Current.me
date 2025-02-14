@@ -4,9 +4,14 @@
 	import { FlakesTexture } from 'three/addons/textures/FlakesTexture.js';
 	import { loaded } from '$lib/writables';
 	import { lightControl } from '$lib/writables';
+	import { lightIntensity, sceneNumber } from '$lib/threeStores';
+	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 	let canvas: HTMLCanvasElement;
 	onMount(() => {
+		/*
+>>>>>>>>>>>>>>>>>>>>>>>>SCENE<<<<<<<<<<<<<<<<<<<<<<<<
+*/
 		const scene = new THREE.Scene();
 
 		const camera = new THREE.PerspectiveCamera(
@@ -20,7 +25,9 @@
 		const renderer = new THREE.WebGLRenderer({ canvas });
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		// Crear textura para las paredes
+		/*
+>>>>>>>>>>>>>>>>>>>>>>>>Objects<<<<<<<<<<<<<<<<<<<<<<<
+*/
 		const normalMap3 = new THREE.CanvasTexture(new FlakesTexture());
 		normalMap3.wrapS = THREE.RepeatWrapping;
 		normalMap3.wrapT = THREE.RepeatWrapping;
@@ -46,11 +53,11 @@
 
 		// Crear las paredes
 		const wallPositions = [
-			{ x: 0, y: 0, z: -roomWidth/2, rotation: [0, 0, 0] }, // back wall
-			{ x: -roomWidth/2, y: 0, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
-			{ x: roomWidth/2, y: 0, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
-			{ x: 0, y: roomHeight/2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
-			{ x: 0, y: -roomHeight/2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall
+			{ x: 0, y: 0, z: -roomWidth / 2, rotation: [0, 0, 0] }, // back wall
+			{ x: -roomWidth / 2, y: 0, z: 0, rotation: [0, Math.PI / 2, 0] }, // left wall
+			{ x: roomWidth / 2, y: 0, z: 0, rotation: [0, -Math.PI / 2, 0] }, // right wall
+			{ x: 0, y: roomHeight / 2, z: 0, rotation: [Math.PI / 2, 0, 0] }, // top wall
+			{ x: 0, y: -roomHeight / 2, z: 0, rotation: [-Math.PI / 2, 0, 0] } // bottom wall
 		];
 
 		wallPositions.forEach((pos) => {
@@ -61,7 +68,9 @@
 			scene.add(wall);
 		});
 
-		// Crear la esfera de luz
+		/*
+>>>>>>>>>>>>>>>>>>>>>>>>Actors<<<<<<<<<<<<<<<<<<<<<<<
+*/
 		const targetPosition = new THREE.Vector3(0, 0, 0);
 		const smoothness = $lightControl.smoothness;
 		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
@@ -73,7 +82,7 @@
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 
 		// Crear la luz puntual
-		const pointLight = new THREE.PointLight($lightControl.color, 8, roomWidth * 2);
+		const pointLight = new THREE.PointLight($lightControl.color, $lightIntensity, roomWidth * 2);
 		pointLight.position.set(0, 0, -1);
 		lightSphere.add(pointLight);
 		scene.add(lightSphere);
@@ -81,7 +90,9 @@
 		// Variables para el rayo y el mouse
 		const raycaster = new THREE.Raycaster();
 		const mouse = new THREE.Vector2();
-
+		/*
+>>>>>>>>>>>>>>>>>>>>>>>>functions<<<<<<<<<<<<<<<<<<<<<<<
+*/
 		function moveLightToMouse(event) {
 			// Convertir la posición del mouse a coordenadas normalizadas (-1 to 1)
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -91,7 +102,7 @@
 			raycaster.setFromCamera(mouse, camera);
 
 			// Calcular la intersección del rayo con un plano en Z=0
-			const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+			const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 1);
 			const intersection = new THREE.Vector3();
 			raycaster.ray.intersectPlane(plane, intersection);
 
@@ -101,26 +112,15 @@
 			}
 		}
 
-		window.addEventListener('mousemove', moveLightToMouse);
-
-		const animate = () => {
-			requestAnimationFrame(animate);
-			lightSphere.position.lerp(targetPosition, smoothness);
-			pointLight.color.set($lightControl.threeColor);
-			renderer.render(scene, camera);
-		};
-
-		animate();
-
 		const handleResize = () => {
 			// Actualizar cámara
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
-			
+
 			// Recalcular dimensiones de la habitación
 			const newRoomHeight = 2 * Math.tan(vFov / 2) * distance;
 			const newRoomWidth = newRoomHeight * camera.aspect;
-			
+
 			// Actualizar geometría de las paredes
 			scene.children.forEach((child) => {
 				if (child instanceof THREE.Mesh && child.geometry instanceof THREE.PlaneGeometry) {
@@ -128,11 +128,29 @@
 					child.geometry = new THREE.PlaneGeometry(newRoomWidth, newRoomHeight);
 				}
 			});
-			
+
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		};
 
+		/*
+>>>>>>>>>>>>>>>>>>>>>>>>Reder, Controls & Listeners<<<<<
+*/
+		const controls = new OrbitControls(camera, renderer.domElement);
+		if($sceneNumber == 1){
+			window.addEventListener('mousemove', moveLightToMouse);
+		}
 		window.addEventListener('resize', handleResize);
+
+		const animate = () => {
+			requestAnimationFrame(animate);
+			pointLight.intensity = $lightIntensity;
+			controls.update();
+			lightSphere.position.lerp(targetPosition, smoothness);
+			pointLight.color.set($lightControl.threeColor);
+			renderer.render(scene, camera);
+		};
+
+		animate();
 
 		return () => {
 			window.removeEventListener('resize', handleResize);
