@@ -33,11 +33,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-around;
 		text-align: center;
 		color: white;
 		border-style: solid;
-		border-width: 10vw;
+		border-width: 0 10vw 10vw;
 		border-color: black;
 		background-color: black;
 		transition: background-color 1s ease;
@@ -57,7 +56,7 @@
 			opacity 0.5s,
 			transform 0.5s;
 		position: sticky;
-		top: 15vh;
+		top: 20vh;
 	}
 	.relese {
 		font-weight: lighter;

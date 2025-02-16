@@ -39,16 +39,14 @@
 <style>
 
 	.space-jam {
-		height: 30vh;
-		backdrop-filter: blur(10px);
-		z-index: 999;
-		pointer-events: none;
+		height: 40vh;
 		user-select: none;
+		background-color: black;
 	}
 	nav {
 		position: sticky;
 		top: 0;
-		z-index: 999;
+		z-index: 998;
 		background-color: black;
 	}
 	/* Habilitar interactividad solo para elementos específicos */
@@ -64,7 +62,6 @@
 		z-index: -1;
 	}
 	.page-container {
-		backdrop-filter: blur(10px);
 		position: relative;
 	}
 	@media (max-width: 768px) {

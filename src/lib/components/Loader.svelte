@@ -16,7 +16,8 @@
 				console.log(elapsedTime + ' ms');
 				if (elapsedTime >= TIME_MS) {
 					clearInterval(intervalPtr);
-					$started = true
+					$started = true;
+					$lightIntensity = 0;
 				}
 			}, 1);
 		}

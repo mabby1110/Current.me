@@ -4,7 +4,7 @@
 	import MyWork from '$lib/sections/MyWork.svelte';
 	import MySkills from '$lib/sections/MySkills.svelte';
 	import { infoStore } from '$lib/writables';
-	import { sceneNumber } from '$lib/threeStores';
+	import { lightIntensity, sceneNumber } from '$lib/threeStores';
 
 	// Función para normalizar el scroll
 	function getNormalizedScroll(): number {
@@ -23,6 +23,7 @@
 		$sceneNumber = 0;
 	} else if($infoStore.scrollY <= 50) {
 		$infoStore.info = "touch or move the mouse around"
+		$lightIntensity = 100
 		$sceneNumber = 1;
 	}
 

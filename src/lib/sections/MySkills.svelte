@@ -1,53 +1,42 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte';
 	import IconCarrousel from '$lib/components/IconCarrousel.svelte';
+
+	let backendFrameworks = [
+		{ name: 'Flask', img_link: '/flask-icon.png' },
+		{ name: 'Node', img_link: '/node-icon.png' },
+	];
+	let database = [
+		{ name: 'MySQL', img_link: '/MySql-icon.png' },
+		{ name: 'Microsoft SQL Server', img_link: '/SQLServer-icon.png' },
+		{ name: 'Pocketbase', img_link: '/Pocketbase-icon.png' }
+	];
+	let frontend = [
+		{ name: 'Svelte', img_link: '/svelte-icon.png' },
+		{ name: 'react', img_link: '/react-icon.png' },
+		{ name: 'vue', img_link: '/vue-icon.png' },
+	]
 	let skillList = [
-		{ name: 'backend', description: 'backend' },
-		{ name: 'frameworks', description: 'frameworks' },
-		{ name: 'api-design', description: 'API designs' },
-		{ name: 'devops', description: 'DevOps' },
-		{ name: 'version-control', description: 'version control' },
-		{ name: 'Testing', description: 'Testing' },
-		{ name: 'soft-skills', description: 'Soft Skills' },
-	]
-	let icons = [
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-		{name: 'figma', img_link: 'https://cdn-icons-png.flaticon.com/512/2990/2990505.png'},
-	]
+		{ name: 'Backend', items: backendFrameworks },
+		{ name: 'Frontend', items: frontend },
+		{ name: 'Database', items: database },
+	];
 </script>
 
 <section class="hero">
 	<p class="title">My knowledge has shaped my ability to create software</p>
 	{#each skillList as skill}
-	<div class="category">
-		<b>{skill.name}</b>
-		<IconCarrousel>
-			{#each icons as icon}
-				<Icon size="8vh">
-					<img src="{icon.img_link}" alt="{icon.name}-icon" />
-					<p class="skill-name">{icon.name}</p>
-				</Icon>
-			{/each}
-		</IconCarrousel>
-	</div>
+		<div class="category">
+			<b>{skill.name}</b>
+			<IconCarrousel>
+				{#each skill.items as icon}
+					<Icon size="8vh">
+						<img src={icon.img_link} alt="{icon.name}-icon" />
+						<p class="skill-name">{icon.name}</p>
+					</Icon>
+				{/each}
+			</IconCarrousel>
+		</div>
 	{/each}
 </section>
 
@@ -90,5 +79,7 @@
 	img {
 		width: 100%;
 		aspect-ratio: 1/1;
+		background-color: white;
+		border-radius: 16px;
 	}
 </style>
