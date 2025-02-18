@@ -3,6 +3,7 @@
 	import { lightIntensity } from '$lib/threeStores';
 	import loader from '$lib/assets/loader.svg';
 	import { started } from '$lib/writables';
+	import DevelopmentBanner from './DevelopmentBanner.svelte';
 
 	function longpress(node) {
 		const TIME_MS = 500;
@@ -72,6 +73,10 @@
 	<img src={loader} alt="Loader" />
 </div>
 
+<DevelopmentBanner
+showBanner={true}
+message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
+/>
 <style>
 	.loader-container {
 		height: 100vh;
@@ -79,10 +84,21 @@
 		display: grid;
 		place-items: center;
 		backdrop-filter: blur(10px);
+		padding-bottom: 2vh;
 	}
 
 	.loader-container img {
 		object-fit: cover;
 		width: 100%;
 	}
+@media (max-width: 768px) {
+	.loader-container {
+		height: 100vh;
+		width: 100%;
+		display: grid;
+		place-items: center;
+		backdrop-filter: blur(10px);
+		padding-bottom: 1vh;
+	}
+}
 </style>

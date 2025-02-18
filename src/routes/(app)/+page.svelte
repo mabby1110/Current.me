@@ -18,7 +18,7 @@
 		$infoStore.scrollY=normalizedScroll;
 	}
 	
-	$: if($infoStore.scrollY <= 30) { // 50% del viewport height
+	$: if($infoStore.scrollY <= 38) { // 50% del viewport height
 		$infoStore.info = "scroll to continue"
 		$sceneNumber = 0;
 	} else if($infoStore.scrollY <= 50) {
@@ -45,7 +45,6 @@
 <div class="home">
 	<Intro/>
 	<MySkills/>
-	<MyWork/>
 </div>
 
 <style>
@@ -53,6 +52,5 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	max-width: 2048px;
 }
 </style>

@@ -19,6 +19,6 @@
         align-items: center;
     }
 	p {
-        writing-mode: vertical-lr;
+        writing-mode: sideways-lr;
 	}
 </style>

@@ -4,6 +4,7 @@
 	import { navState } from '$lib/writables';
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
+	import HeroAnchorCard from './HeroAnchorCard.svelte';
 
 	function closeNav() {
 		navState.set({ visible: false});
@@ -27,9 +28,9 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<header on:click={openNav}>
+<div class="navbar" on:click={openNav}>
 	<h1 in:fade={{ duration: 800, delay: 600 }}>CURRENT.ME</h1>
-</header>
+</div>
 
 <div
 	class:hidden={!$navState.visible}
@@ -50,7 +51,7 @@
 				allow="autoplay"
 			></iframe>
 		</XpCard> -->
-		<XpCard title="About & Skills" top="30vh" left="20vw">
+		<!-- <XpCard title="About & Skills" top="30vh" left="20vw">
 			<HeroLinkCard title="About & Skills" link="skills">
 				<img
 					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
@@ -58,8 +59,8 @@
 					class="hero-image"
 				/>
 			</HeroLinkCard>
-		</XpCard>
-		<XpCard title="Home" top="40vh" left="10vw">
+		</XpCard> -->
+		<XpCard title="Home" top="20vh" left="15vw">
 			<HeroLinkCard title="Home" link="/">
 				<img
 					src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
@@ -68,15 +69,15 @@
 				/>
 			</HeroLinkCard>
 		</XpCard>
-		<!-- <XpCard title="Home" top="40vh" left="10vw">
-				<HeroAnchorCard title="Home">
-					<img
-						src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
-						alt="cv-gif"
-						class="hero-image"
-					/>
-				</HeroAnchorCard>
-			</XpCard> -->
+		<XpCard title="My work" top="35vh" left="10vw">
+			<HeroAnchorCard title="My work">
+				<img
+					src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
+					alt="cv-gif"
+					class="hero-image"
+				/>
+			</HeroAnchorCard>
+		</XpCard>
 	</div>
 </div>
 
@@ -110,8 +111,8 @@
 			opacity 0.6s ease,
 			visibility 0.3s ease;
 	}
-	header {
-		height: 10vh;
+	.navbar {
+		height: 5vh;
 		z-index: 1;
 		width: 100%;
 		display: flex;

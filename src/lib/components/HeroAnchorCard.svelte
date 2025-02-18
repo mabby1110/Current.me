@@ -1,5 +1,6 @@
 <script>
 	import { goto } from "$app/navigation";
+	import { navState } from "$lib/writables";
 
 	export let title = 'HeroLinkCard';
     const anchors = Array(100).fill(0).map((_, index) => index)
@@ -10,6 +11,7 @@
 
 	function handleAnchorClick (event) {
         link = event.currentTarget
+		navState.set({ visible: false});
         anchor = document.getElementById(anchorId)
 		event.preventDefault()
 		window.scrollTo({

@@ -8,7 +8,7 @@
 	// let title = "touch or scroll around to move the light";
 	// Reactive variables using normalized scroll values (0-100)
 	$: h1Animate = $infoStore.scrollY >= 7; // Activar a 30% del viewport
-	$: backgroundAnimate = $infoStore.scrollY >= 30; // Activar a 50% del viewport
+	$: backgroundAnimate = $infoStore.scrollY >= 38; // Activar a 50% del viewport
 </script>
 
 <section
@@ -28,15 +28,16 @@
 
 <style>
 	.hero {
-		height: 100vh;
+		height: 95vh;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: space-between;
 		text-align: center;
 		color: white;
 		border-style: solid;
-		border-width: 0 10vw 10vw;
+		border-width: 0 5vw 5vh;
 		border-color: black;
 		background-color: black;
 		transition: background-color 1s ease;
@@ -47,7 +48,7 @@
 			opacity 0.5s,
 			transform 0.5s;
 		position: sticky;
-		top: 15vh;
+		top: 5vh;
 	}
 
 	h1 {
@@ -62,37 +63,25 @@
 		font-weight: lighter;
 		max-width: 600px;
 		transition:
-		opacity 0.5s,
-		transform 0.5s;
-		position: sticky;
-		top: 35vh;
+			opacity 0.5s,
+			transform 0.5s;
 	}
-	
+
 	.fade-in {
 		opacity: 1;
 		transform: translateY(0);
 	}
-	
+
 	.fade-out {
 		opacity: 0;
 		transform: translateY(-20px);
 	}
-	
+
 	.background-cover-in {
 		background-color: black;
 	}
-	
+
 	.background-cover-out {
 		background-color: transparent;
 	}
-@media (max-width: 768px) {
-	h1 {
-		font-size: 10vw;
-		transition:
-			opacity 0.5s,
-			transform 0.5s;
-		position: sticky;
-		top: 30vh;
-	}
-}
 </style>

@@ -25,10 +25,6 @@
 		</nav>
 		<main>
 			<slot />
-			<DevelopmentBanner
-				showBanner={true}
-				message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
-			/>
 		</main>
 	</div>
 {:else}
@@ -52,6 +48,7 @@
 	/* Habilitar interactividad solo para elementos específicos */
 	main * {
 		pointer-events: auto;
+		width: 100%;
 	}
 	.bg {
 		min-width: 240px;
@@ -63,13 +60,5 @@
 	}
 	.page-container {
 		position: relative;
-	}
-	@media (max-width: 768px) {
-		nav {
-			position: sticky;
-			top: 10vh;
-			z-index: 999;
-			background-color: rgb(0, 0, 0);
-		}
 	}
 </style>

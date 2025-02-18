@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     --primary-color: rgba(21, 21, 22, 0.786);
@@ -23,7 +24,7 @@ body {
 }
 
 /* Tamaños de fuente */
-p, li, a, button { font-size: 1rem; font-weight: 100;color: var(--text-body);} /* 16px */
+p, li, a, button { font-size: 1rem; font-weight: 100;} /* 16px */
 small { font-size: 0.875rem; } /* 14px */
 .title-1 { font-size: 2.5rem; font-weight: 800;} /* 40px */
 .title-2 { font-size: 2rem; font-weight: 400; } /* 32px */
