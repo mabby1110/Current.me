@@ -44,10 +44,17 @@
 
 <div class="home">
 	<Intro/>
+	<span></span>
 	<MySkills/>
 </div>
 
 <style>
+		span {
+		height: 40vh;
+		user-select: none;
+		background-color: black;
+		width: 100%;
+	}
 .home {
 	display: flex;
 	flex-direction: column;
