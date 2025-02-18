@@ -22,7 +22,7 @@
 		$infoStore.info = "scroll to continue"
 		$sceneNumber = 0;
 	} else if($infoStore.scrollY <= 50) {
-		$infoStore.info = "touch or move the mouse around"
+		$infoStore.info = "touch or click around"
 		$lightIntensity = 100
 		$sceneNumber = 1;
 	}
@@ -50,7 +50,7 @@
 
 <style>
 		span {
-		height: 40vh;
+		height: 10vh;
 		user-select: none;
 		background-color: black;
 		width: 100%;

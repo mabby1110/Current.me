@@ -57,7 +57,7 @@
 			opacity 0.5s,
 			transform 0.5s;
 		position: sticky;
-		top: 20vh;
+		top: 45vh;
 	}
 	.relese {
 		font-weight: lighter;

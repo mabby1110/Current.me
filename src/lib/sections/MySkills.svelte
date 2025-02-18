@@ -2,9 +2,9 @@
 	import { projects } from '$lib/writables';
 	import { fade } from 'svelte/transition';
 	$: selectedProject = projects[0];
-	let description = false
-	function toggleInfo(){
-		description = !description
+	let description = false;
+	function toggleInfo() {
+		description = !description;
 	}
 	let backendFrameworks = [
 		{ name: 'Flask', img_link: '/flask-icon.png' },
@@ -32,52 +32,65 @@
 </script>
 
 <section class="hero" id="work-section">
-	<div class="section-nav">
-			<p class="section-description">
-				My knowledge has shaped my ability to create software, this is some of my work:
-			</p>
-			<div class="section-nav-buttons">
-				{#each projects as project, i}
-					<button on:click={() => changeCard(i)}>{project.title}</button>
-				{/each}
-			</div>
-		</div>
-	<div class="project-container">
-		<div class="title">
-			<h1>{selectedProject.title}</h1>
-		</div>
+	<div class="project-slider">
+		{#each projects as project}
+			<div class="project-container">
+				<div class="title">
+					<h1>{selectedProject.title}</h1>
+				</div>
 
-		<div class="info">
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<p>{selectedProject.description}</p>
-			<img src={selectedProject.image} alt="{selectedProject.title}-icon"/>
-			<div class="actions">
-				<button on:click={window.location.href = selectedProject.link}>github</button>
+				<div class="info">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<p>{selectedProject.description}</p>
+					<img src={selectedProject.image} alt="{selectedProject.title}-icon" />
+					<div class="actions">
+						<button on:click={(window.location.href = selectedProject.link)}>github</button>
+					</div>
+				</div>
 			</div>
-		</div>
+		{/each}
 	</div>
 </section>
 
 <style>
-	.section-nav {
-		position: absolute;
-		top: -2.5vh;
-		z-index: 1;
-		text-align: left;
+	.project-slider {
 		display: flex;
-		gap: 1rem;
+		height: 100%;
 		width: 100%;
-		
-		flex-wrap: wrap;
+		overflow-x: auto;
+		overflow-y: hidden;
+
+		backdrop-filter: blur(20px);
+		/* Para Firefox */
+		scrollbar-width: thin;
+		scrollbar-color: rgba(120, 120, 120, 0.5) transparent;
+
+		/* Para IE y Edge */
+		-ms-overflow-style: scrollbar;
 	}
-	.section-nav-buttons {
-		overflow: scroll;
-		display: flex;
-		gap: 1rem;
+
+	/* Para Chrome, Safari, y Opera */
+	.project-slider::-webkit-scrollbar {
+		height: 8px; /* Altura de la scrollbar horizontal */
 	}
-	.section-nav-buttons button {
-		min-width: fit-content;
+
+	.project-slider::-webkit-scrollbar-track {
+		background: transparent; /* Fondo transparente */
+		border-radius: 4px;
+	}
+
+	.project-slider::-webkit-scrollbar-thumb {
+		background-color: rgba(120, 120, 120, 0.5); /* Color semitransparente */
+		border-radius: 4px;
+		border: 2px solid transparent; /* Crea un efecto de padding */
+		background-clip: padding-box;
+	}
+
+	/* Estado hover para hacer la scrollbar más visible al pasar el cursor */
+	.project-slider::-webkit-scrollbar-thumb:hover {
+		background-color: rgba(120, 120, 120, 0.8);
+		background-clip: padding-box;
 	}
 	.hero {
 		height: 95vh;
@@ -92,17 +105,17 @@
 		color: white;
 		transition: background-color 1s ease;
 		position: relative;
+		overflow-x: scroll;
 	}
 	.project-container {
 		padding: 2rem;
 		height: 100%;
-		width: 100%;
+		min-width: 90vw;
 		display: grid;
 		grid-template-rows: 1fr 4fr;
 		place-items: center;
-		backdrop-filter: blur(20px);
 	}
-	.title h1{
+	.title h1 {
 		font-size: 5vw;
 	}
 	.info {
