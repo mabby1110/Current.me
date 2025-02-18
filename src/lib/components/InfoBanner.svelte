@@ -21,4 +21,12 @@
 	p {
         writing-mode: sideways-lr;
 	}
+
+    @media (max-width: 768px) {
+        
+	p {
+        writing-mode: sideways-lr;
+        font-size: 3vw;
+	}
+    }
 </style>
