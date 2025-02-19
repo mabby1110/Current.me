@@ -1,6 +1,6 @@
 <script lang="ts">
     export let showBanner = true;
-    export let message = "🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas.";
+    export let message = "🚧 This page is under development. Some features might be incomplete.";
   </script>
   
   {#if showBanner}

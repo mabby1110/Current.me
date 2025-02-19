@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Intro from '$lib/sections/Intro.svelte';
-	import MyWork from '$lib/sections/MyWork.svelte';
-	import MySkills from '$lib/sections/MySkills.svelte';
 	import { infoStore } from '$lib/writables';
 	import { lightIntensity, sceneNumber } from '$lib/threeStores';
+	import { fade } from 'svelte/transition';
 
 	// Función para normalizar el scroll
 	function getNormalizedScroll(): number {
@@ -15,26 +14,27 @@
 
 	function handleScroll() {
 		const normalizedScroll = getNormalizedScroll();
-		$infoStore.scrollY=normalizedScroll;
+		$infoStore.scrollY = normalizedScroll;
 	}
-	
-	$: if($infoStore.scrollY <= 38) { // 50% del viewport height
-		$infoStore.info = "scroll to continue"
+
+	$: if ($infoStore.scrollY <= 38) {
+		// 50% del viewport height
+		$infoStore.info = 'scroll to continue';
 		$sceneNumber = 0;
-	} else if($infoStore.scrollY <= 50) {
-		$infoStore.info = "touch or click around"
-		$lightIntensity = 100
+	} else if ($infoStore.scrollY <= 50) {
+		$infoStore.info = 'touch or click around';
+		$lightIntensity = 100;
 		$sceneNumber = 1;
 	}
 
 	onMount(() => {
 		// Inicializar el valor del scroll al montar
 		handleScroll();
-		
+
 		window.addEventListener('scroll', handleScroll);
 		// También escuchar cambios de tamaño de ventana
 		window.addEventListener('resize', handleScroll);
-		
+
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 			window.removeEventListener('resize', handleScroll);
@@ -42,22 +42,20 @@
 	});
 </script>
 
+<div class="space-jam" in:fade={{ duration: 500 }}></div>
 <div class="home">
-	<Intro/>
-	<span></span>
-	<MySkills/>
+	<Intro />
 </div>
 
 <style>
-		span {
-		height: 10vh;
+	.space-jam {
+		height: 40vh;
 		user-select: none;
 		background-color: black;
-		width: 100%;
 	}
-.home {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+	.home {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 </style>

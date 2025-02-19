@@ -5,7 +5,6 @@
 	import { started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
-	import DevelopmentBanner from '$lib/components/DevelopmentBanner.svelte';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	import InfoBanner from '$lib/components/InfoBanner.svelte';
 </script>
@@ -18,7 +17,6 @@
 <InfoBanner />
 
 {#if $started}
-	<div class="space-jam" in:fade={{ duration: 500 }}></div>
 	<div class="page-container">
 		<nav in:fade={{ duration: 500 }}>
 			<Navbar />
@@ -33,12 +31,6 @@
 {/if}
 
 <style>
-
-	.space-jam {
-		height: 40vh;
-		user-select: none;
-		background-color: black;
-	}
 	nav {
 		position: sticky;
 		top: 0;

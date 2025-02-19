@@ -36,14 +36,14 @@
 		{#each projects as project}
 			<div class="project-container">
 				<div class="title">
-					<h1>{selectedProject.title}</h1>
+					<h1>{project.title}</h1>
 				</div>
 
 				<div class="info">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<!-- svelte-ignore a11y-no-static-element-interactions -->
-					<p>{selectedProject.description}</p>
-					<img src={selectedProject.image} alt="{selectedProject.title}-icon" />
+					<p>{project.description}</p>
+					<img src={project.image} alt="{project.title}-icon" />
 					<div class="actions">
 						<button on:click={(window.location.href = selectedProject.link)}>github</button>
 					</div>

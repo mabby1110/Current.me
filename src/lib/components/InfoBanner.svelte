@@ -1,10 +1,11 @@
 <script>
-	import { infoStore } from '$lib/writables';
-	export let top = 0;
+	import { infoStore, navState } from '$lib/writables';
+    let nav_instruction = "drag, minimize or close any window. click to navigate"
 </script>
 
 <div class="info-container">
-    <p style="top: {top}vh;">{$infoStore.info} y:{$infoStore.scrollY.toPrecision(3)}</p>
+    <p class="instruction">{$navState.visible?nav_instruction:$infoStore.info}</p>
+    <p class="scroll-y">y:{$infoStore.scrollY.toPrecision(3)}</p>
 </div>
 
 <style>
@@ -16,12 +17,13 @@
         height: 100vh;
         pointer-events: none;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 6vh 0;
     }
 	p {
         writing-mode: sideways-lr;
 	}
-
     @media (max-width: 768px) {
         
 	p {

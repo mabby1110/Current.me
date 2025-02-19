@@ -1,10 +1,9 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { navState } from '$lib/writables';
+	import { infoStore, navState } from '$lib/writables';
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
-	import HeroAnchorCard from './HeroAnchorCard.svelte';
 
 	function closeNav() {
 		navState.set({ visible: false});
@@ -44,22 +43,13 @@
 			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
 		> -->
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-		<!-- <XpCard title="CV" top="20vh" left="30vw">
+		<XpCard title="CV" top="10vh" left="10vw">
 			<iframe
 				src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
 				id="pdf"
 				allow="autoplay"
 			></iframe>
-		</XpCard> -->
-		<!-- <XpCard title="About & Skills" top="30vh" left="20vw">
-			<HeroLinkCard title="About & Skills" link="skills">
-				<img
-					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
-					alt="cv-gif"
-					class="hero-image"
-				/>
-			</HeroLinkCard>
-		</XpCard> -->
+		</XpCard>
 		<XpCard title="Home" top="20vh" left="15vw">
 			<HeroLinkCard title="Home" link="/">
 				<img
@@ -70,13 +60,22 @@
 			</HeroLinkCard>
 		</XpCard>
 		<XpCard title="My work" top="35vh" left="10vw">
-			<HeroAnchorCard title="My work">
+			<HeroLinkCard title="My work" link="work">
 				<img
 					src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
 					alt="cv-gif"
 					class="hero-image"
 				/>
-			</HeroAnchorCard>
+			</HeroLinkCard>
+		</XpCard>
+		<XpCard title="About & Skills" top="40vh" left="20vw">
+			<HeroLinkCard title="About & Skills" link="skills">
+				<img
+					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
+					alt="cv-gif"
+					class="hero-image"
+				/>
+			</HeroLinkCard>
 		</XpCard>
 	</div>
 </div>
@@ -90,10 +89,12 @@
 		top: 5%;
 		right: 8%;
 		background-color: rgb(255, 0, 0);
+		color: white;
+		padding: 5px;
 		z-index: 4;
 	}
 	.screenCover {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100vw;
