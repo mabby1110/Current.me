@@ -45,7 +45,7 @@
 	function handleMouseDown(event: MouseEvent) {
 		const target = event.target as HTMLElement;
 		// Check if click is on title bar but not on buttons
-		if (target.closest('.xp-title-bar') && !target.closest('.xp-controls')) {
+		if (target.closest('.win7-title-bar') && !target.closest('.win7-controls')) {
 			event.preventDefault();
 			startDragging(event.clientX, event.clientY);
 		}
@@ -58,7 +58,7 @@
 	function handleTouchStart(event: TouchEvent) {
 		const target = event.target as HTMLElement;
 		// Check if touch is on title bar but not on buttons
-		if (target.closest('.xp-title-bar') && !target.closest('.xp-controls')) {
+		if (target.closest('.win7-title-bar') && !target.closest('.win7-controls')) {
 			event.preventDefault();
 			const touch = event.touches[0];
 			startDragging(touch.clientX, touch.clientY);
@@ -139,35 +139,44 @@
 {#if !closed}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
-		class="xp-panel"
+		class="win7-panel"
 		style="position: fixed; top:{top}; left:{left}"
 		bind:this={cardElement}
 		on:mousedown={handleMouseDown}
 		on:touchstart={handleTouchStart}
-		transition:fade={{ delay: 100, duration: 500 }}
+		transition:fade={{ delay: 100, duration: 300 }}
 	>
-		<div class="xp-title-bar">
-			<span class="xp-title">{title}</span>
-			<div class="xp-controls">
+		<div class="win7-title-bar">
+			<span class="win7-title">{title}</span>
+			<div class="win7-controls">
 				<button
-					class="xp-minimize"
+					class="win7-minimize"
 					on:click={handleMin}
-					on:touchend|preventDefault|stopPropagation={handleMin}>-</button
+					on:touchend|preventDefault|stopPropagation={handleMin}
+					aria-label="Minimize"
 				>
+					<span class="win7-minimize-icon"></span>
+				</button>
 				<button
-					class="xp-maximize"
+					class="win7-maximize"
 					on:click={handleMax}
-					on:touchend|preventDefault|stopPropagation={handleMax}>□</button
+					on:touchend|preventDefault|stopPropagation={handleMax}
+					aria-label="Maximize"
 				>
+					<span class="win7-maximize-icon"></span>
+				</button>
 				<button
-					class="xp-close"
+					class="win7-close"
 					on:click={handleClose}
-					on:touchend|preventDefault|stopPropagation={handleClose}>×</button
+					on:touchend|preventDefault|stopPropagation={handleClose}
+					aria-label="Close"
 				>
+					<span class="win7-close-icon">×</span>
+				</button>
 			</div>
 		</div>
 		{#if !minimized}
-			<div class="xp-content">
+			<div class="win7-content">
 				<slot />
 			</div>
 		{/if}
@@ -175,90 +184,132 @@
 {/if}
 
 <style>
-	.xp-panel {
-		background-color: rgb(0, 0, 0);
-		border: 1px solid rgb(70, 73, 75);
-		border-radius: 4px;
-		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+	.win7-panel {
+		border: 1px solid #aaa;
+		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
+		backdrop-filter: blur(20px);
+		padding: 0.5%;
+		border-radius: 6px;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 		min-width: 240px;
 		max-width: 90%;
 		user-select: none;
-		z-index: -1;
+		z-index: 1000;
 		touch-action: none;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		overflow: hidden;
 	}
 
 	@media (max-width: 768px) {
-		.xp-panel {
+		.win7-panel {
 			min-width: 200px;
 			max-width: 95%;
 		}
 	}
-	.xp-title-bar,
-	.xp-controls button {
-		pointer-events: auto; /* Habilita eventos de puntero en el título y los botones */
-	}
-	.xp-title-bar {
-		background: rgb(70, 73, 75);
+
+	.win7-title-bar {
 		color: #ffffff;
-		padding: 8px;
+		padding: 8px 12px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		font-size: 14px;
-		font-weight: bold;
+		font-weight: normal;
 		cursor: move;
 		touch-action: none;
+		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+		height: 26px;
+		box-sizing: border-box;
 	}
 
-	.xp-controls {
+	.win7-title {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: calc(100% - 90px);
+	}
+
+	.win7-controls {
 		display: flex;
-		gap: 8px;
+		gap: 2px;
 	}
 
-	.xp-controls button {
-		background-color: rgba(21, 21, 22, 0.786);
-		border: 1px solid rgb(70, 73, 75);
+	.win7-controls button {
+		background: transparent;
+		border: none;
 		color: #ffffff;
-		width: 32px; /* Increased for better touch targets */
-		height: 32px; /* Increased for better touch targets */
+		width: 48px;
+		height: 22px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 16px; /* Slightly larger font for better visibility */
 		cursor: pointer;
-		touch-action: manipulation; /* Improved touch handling */
+		touch-action: manipulation;
 		padding: 0;
 		margin: 0;
+		position: relative;
+		border-radius: 3px;
 	}
 
-	.xp-controls button:hover {
-		background-color: #500efe;
+	.win7-controls button:hover {
+		background: rgba(255, 255, 255, 0.2);
 	}
 
-	.xp-content {
+	.win7-minimize-icon {
+		width: 10px;
+		height: 2px;
+		background-color: white;
+		position: absolute;
+		bottom: 7px;
+	}
+
+	.win7-maximize-icon {
+		width: 10px;
+		height: 10px;
+		border: 1px solid white;
+		position: absolute;
+	}
+
+	.win7-close-icon {
+		font-size: 22px;
+		line-height: 14px;
+		font-weight: bold;
+	}
+
+	.win7-close:hover {
+		background: #e81123;
+	}
+
+	.win7-content {
 		padding: 1rem;
-		color: #ffffff;
+		color: #333;
+		background-color: #f9f9f9;
+		border-top: 1px solid #ddd;
 	}
 
-	:global(.xp-content h1) {
-		color: #500efe;
+	:global(.win7-content h1) {
+		color: #1c5fb0;
 		margin-bottom: 0.6rem;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		font-weight: normal;
 	}
 
-	:global(.xp-content h2),
-	:global(.xp-content h3),
-	:global(.xp-content h4) {
-		color: #ffffff;
+	:global(.win7-content h2),
+	:global(.win7-content h3),
+	:global(.win7-content h4) {
+		color: #333;
 		margin-bottom: 1rem;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		font-weight: normal;
 	}
 
-	:global(.xp-content ul) {
+	:global(.win7-content ul) {
 		margin-bottom: 2rem;
 		padding-left: 1.5rem;
 	}
 
-	:global(.xp-content li) {
+	:global(.win7-content li) {
 		margin-bottom: 0.5rem;
-		color: #ffffff;
+		color: #333;
 	}
 </style>

@@ -37,11 +37,7 @@
 	in:fade={{ duration: 500 }}
 	out:fade={{ duration: 500 }}
 >
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<button class="close-nav" on:click={closeNav}>close</button>
-	<!-- <InstuctionBanner
-			>You can click, drag, minimize, or close any window. Scrolling is only possible outside the windows.</InstuctionBanner
-		> -->
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
 		<XpCard title="CV" top="10vh" left="10vw">
 			<iframe
@@ -78,6 +74,9 @@
 			</HeroLinkCard>
 		</XpCard>
 	</div>
+	<div class="start-bar">
+		<img src="/win7-start-icon.png" alt="">
+	</div>
 </div>
 
 <style>
@@ -93,6 +92,27 @@
 		padding: 5px;
 		z-index: 4;
 	}
+	.start-bar {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 6%;
+		padding: 2vh 2vw;
+		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
+		backdrop-filter: blur(20px);
+		border-style: solid;
+		border-width: 1px 0 0;
+		border-color: rgba(255, 255, 255, 0.4);
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+	}
+	.start-bar img{
+		position: absolute;
+		top: 0;
+		object-fit:scale-down;
+		height: 100%;
+		width: auto;
+
+	}
 	.screenCover {
 		position: fixed;
 		top: 0;
@@ -104,8 +124,7 @@
 		justify-items: center;
 		cursor: default;
 		overflow-x: hidden;
-		background-color: rgba(0, 0, 0, 0.2);
-		backdrop-filter: blur(20px);
+		background-image: url('/win7.jpg');
 		opacity: 1;
 		visibility: visible;
 		transition:
