@@ -6,11 +6,11 @@
 	import HeroLinkCard from './HeroLinkCard.svelte';
 
 	$: navApps = {
-		home: { opened: false, imgURL: '', minimized: false },
-		about: { opened: false, imgURL: '', minimized: false },
-		cv: { opened: false, imgURL: '', minimized: false },
-		work: { opened: false, imgURL: '', minimized: false },
-		Highlights: { opened: false, imgURL: '', minimized: false }
+		home: { opened: false, imgURL: '109.ico', minimized: false },
+		about: { opened: false, imgURL: '99.ico', minimized: false },
+		cv: { opened: false, imgURL: '19.ico', minimized: false },
+		work: { opened: false, imgURL: '112.ico', minimized: false },
+		Highlights: { opened: false, imgURL: '1024.ico', minimized: false }
 	};
 	function closeNav() {
 		navState.set({ visible: false });
@@ -111,18 +111,27 @@
 			</HeroLinkCard>
 		</XpCard>
 	</div>
+
 	<div class="apps">
 		{#each Object.entries(navApps) as [name, info]}
-			<button on:click={handleNavAppsOpen(name, info)}>{name}={info.opened}</button>
+			<button class="desktop-icon" on:click={handleNavAppsOpen(name, info)}>
+				<img src="/OriginalWin7Icons/{info.imgURL}" alt={info.imgURL}>
+				<p>{name}</p>
+			</button>
 		{/each}
 	</div>
+
 	<div class="start-bar">
 		<img src="/win7-start-icon.png" alt="" />
-		{#each Object.entries(navApps) as [name, info]}
-			{#if info.opened || info.minimiezed}
-				<button on:click={handleNavAppsOpen(name, info)}>{name}={info.opened}</button>
-			{/if}
-		{/each}
+		<div class="opened-apps">
+			{#each Object.entries(navApps) as [name, info]}
+				{#if info.opened || info.minimiezed}
+					<button class="desktop-icon" on:click={handleNavAppsOpen(name, info)}>
+						<img src="/OriginalWin7Icons/{info.imgURL}" alt={info.imgURL}>
+					</button>
+				{/if}
+			{/each}
+		</div>
 	</div>
 </div>
 
@@ -130,13 +139,27 @@
 	* {
 		-webkit-tap-highlight-color: transparent;
 	}
+	.desktop-icon {
+		background-color: rgba(255, 255, 255, 0.1);
+		border-width: 0;
+		border-radius: 8px;
+	}
+	.opened-apps {
+		flex-grow: 1;
+		display: flex;
+		gap: 1rem;
+	}
 	.apps {
+		position: fixed;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: 100%;
 		padding: 2rem;
 		display: grid;
 		grid-template-rows: repeat(auto-fit, 60px);
 		grid-auto-columns: 60px;
+		gap: 2.6rem;
 	}
 	.close-nav {
 		position: absolute;
@@ -151,18 +174,18 @@
 		position: absolute;
 		bottom: 0;
 		width: 100%;
-		height: 6%;
-		padding: 2px 2vw;
-		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
+		height: 3rem;
+		padding: 0 2vw;
+		background: linear-gradient(to bottom right, #00000060 30%, rgba(116, 184, 252, 0.25) 100%);
 		backdrop-filter: blur(20px);
 		border-style: solid;
 		border-width: 1px 0 0;
-		border-color: rgba(255, 255, 255, 0.4);
-		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+		border-color: rgba(255, 255, 255, 0.1);
 
 		display: flex;
+		gap: 1rem;
 	}
-	.start-bar img {
+	.start-bar img, .apps img {
 		object-fit: scale-down;
 		height: 100%;
 		width: auto;
@@ -179,6 +202,7 @@
 		cursor: default;
 		overflow-x: hidden;
 		background-image: url('/win7.jpg');
+		background-size: cover;
 		opacity: 1;
 		visibility: visible;
 		transition:
@@ -194,10 +218,6 @@
 		justify-content: center;
 		cursor: pointer;
 		box-sizing: border-box;
-	}
-	img {
-		width: 100%;
-		height: auto;
 	}
 	.hidden {
 		opacity: 0;
