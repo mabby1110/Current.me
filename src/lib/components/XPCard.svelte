@@ -183,12 +183,12 @@
 
 <style>
 	.win7-panel {
-		border: 1px solid #aaa;
+		border: 1px solid #ffffff60;
 		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
 		backdrop-filter: blur(20px);
 		padding: 0.5%;
 		border-radius: 6px;
-		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 6px 12px 6px rgba(0, 0, 0, 0.3);
 		min-width: 240px;
 		max-width: 90%;
 		user-select: none;

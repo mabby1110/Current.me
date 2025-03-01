@@ -5,6 +5,7 @@
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
 
+	// Estado de las aplicaciones de navegación
 	$: navApps = {
 		home: { opened: false, imgURL: '109.ico', minimized: false },
 		about: { opened: false, imgURL: '99.ico', minimized: false },
@@ -12,6 +13,8 @@
 		work: { opened: false, imgURL: '112.ico', minimized: false },
 		Highlights: { opened: false, imgURL: '1024.ico', minimized: false }
 	};
+
+	// Funciones para abrir y cerrar la navegación
 	function closeNav() {
 		navState.set({ visible: false });
 	}
@@ -19,17 +22,18 @@
 	function openNav() {
 		navState.set({ visible: true });
 	}
-	function handleNavAppsOpen(name, info) {
-		console.log('navApps: ', name, info);
+
+	// Manejar la apertura de aplicaciones de navegación
+	function handleNavAppsOpen(name) {
 		navApps[name].opened = true;
 		navApps[name].minimized = false;
 	}
 
+	// Cerrar la navegación al presionar la tecla Escape
 	onMount(() => {
-		const handleKeydown = () => {
-			// @ts-ignore
+		const handleKeydown = (event) => {
 			if (event.key === 'Escape') {
-				navState.set({ visible: false });
+				closeNav();
 			}
 		};
 		window.addEventListener('keydown', handleKeydown);
@@ -37,98 +41,54 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- Barra de navegación -->
 <div class="navbar" on:click={openNav}>
 	<h1 in:fade={{ duration: 800, delay: 600 }}>CURRENT.ME</h1>
 </div>
 
-<div
-	class:hidden={!$navState.visible}
-	class="screenCover"
-	in:fade={{ duration: 500 }}
-	out:fade={{ duration: 500 }}
->
+<!-- Pantalla de navegación -->
+<div class:hidden={!$navState.visible} class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
 	<button class="close-nav" on:click={closeNav}>close</button>
-
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-		<XpCard
-			title="CV"
-			bind:opened={navApps.cv.opened}
-			bind:minimized={navApps.cv.minimized}
-			top="10vh"
-			left="10vw"
-		>
-			<iframe
-				src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
-				id="pdf"
-				allow="autoplay"
-			></iframe>
+		<!-- Tarjetas de aplicaciones -->
+		<XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="10vw">
+			<iframe src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview" id="pdf" allow="autoplay"></iframe>
 		</XpCard>
-		<XpCard
-			title="Home"
-			bind:opened={navApps.home.opened}
-			bind:minimized={navApps.home.minimized}
-			top="20vh"
-			left="15vw"
-		>
+		<XpCard title="Home" bind:opened={navApps.home.opened} bind:minimized={navApps.home.minimized} top="20vh" left="15vw">
 			<HeroLinkCard title="Home" link="/">
-				<img
-					src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
-					alt="cv-gif"
-					class="hero-image"
-				/>
+				<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard
-			title="My work"
-			bind:opened={navApps.work.opened}
-			bind:minimized={navApps.work.minimized}
-			top="35vh"
-			left="10vw"
-		>
+		<XpCard title="My work" bind:opened={navApps.work.opened} bind:minimized={navApps.work.minimized} top="35vh" left="10vw">
 			<HeroLinkCard title="My work" link="work">
-				<img
-					src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
-					alt="cv-gif"
-					class="hero-image"
-				/>
+				<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard
-			title="About & Skills"
-			bind:opened={navApps.about.opened}
-			bind:minimized={navApps.about.minimized}
-			top="40vh"
-			left="20vw"
-		>
+		<XpCard title="About & Skills" bind:opened={navApps.about.opened} bind:minimized={navApps.about.minimized} top="40vh" left="20vw">
 			<HeroLinkCard title="About & Skills" link="skills">
-				<img
-					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
-					alt="cv-gif"
-					class="hero-image"
-				/>
+				<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
 		</XpCard>
 	</div>
 
+	<!-- Iconos de aplicaciones -->
 	<div class="apps">
 		{#each Object.entries(navApps) as [name, info]}
-			<button class="desktop-icon" on:click={handleNavAppsOpen(name, info)}>
-				<img src="/OriginalWin7Icons/{info.imgURL}" alt={info.imgURL}>
+			<button class="desktop-icon" on:click={() => handleNavAppsOpen(name)}>
+				<img src={`/OriginalWin7Icons/${info.imgURL}`} alt={info.imgURL}>
 				<p>{name}</p>
 			</button>
 		{/each}
 	</div>
 
+	<!-- Barra de inicio -->
 	<div class="start-bar">
 		<img src="/win7-start-icon.png" alt="" />
 		<div class="opened-apps">
 			{#each Object.entries(navApps) as [name, info]}
-				{#if info.opened || info.minimiezed}
-					<button class="desktop-icon" on:click={handleNavAppsOpen(name, info)}>
-						<img src="/OriginalWin7Icons/{info.imgURL}" alt={info.imgURL}>
-						{name}
+				{#if info.opened || info.minimized}
+					<button class="desktop-icon" on:click={() => handleNavAppsOpen(name)}>
+						<img src={`/OriginalWin7Icons/${info.imgURL}`} alt={info.imgURL}>
 					</button>
 				{/if}
 			{/each}
@@ -141,9 +101,19 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 	.desktop-icon {
-		background-color: transparent;
+		background: transparent;
 		border-width: 0;
-		border-radius: 8px;
+		border-radius: 4px;
+		padding: 0.2rem 0.6rem;
+		color: var(--color-title);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-items: center;
+		gap: 2px;
+	}
+	.desktop-icon:hover {
+		background: linear-gradient(to bottom right, #ffffff75 20%, #ffffff35 80%);
 	}
 	.opened-apps {
 		flex-grow: 1;
@@ -151,7 +121,7 @@
 		gap: 1rem;
 	}
 	.opened-apps button {
-		background-color: rgba(255, 255, 255, 0.1);
+		background: linear-gradient(to bottom right, #ffffff40 20%, #0080ff00 80%);
 	}
 	.apps {
 		position: fixed;
@@ -185,7 +155,6 @@
 		border-style: solid;
 		border-width: 1px 0 0;
 		border-color: rgba(255, 255, 255, 0.1);
-
 		display: flex;
 		gap: 1rem;
 	}
@@ -209,12 +178,9 @@
 		background-size: cover;
 		opacity: 1;
 		visibility: visible;
-		transition:
-			opacity 0.6s ease,
-			visibility 0.3s ease;
+		transition: opacity 0.6s ease, visibility 0.3s ease;
 	}
 	.navbar {
-		height: 5vh;
 		z-index: 1;
 		width: 100%;
 		display: flex;
@@ -229,7 +195,6 @@
 		pointer-events: none;
 	}
 	h1 {
-		margin: 0;
-		padding: 0;
+		margin: 2rem 0 1rem;
 	}
 </style>

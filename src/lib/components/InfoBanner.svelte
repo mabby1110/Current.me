@@ -11,22 +11,18 @@
 <style>
     .info-container {
         position: fixed;
-        bottom: 0;
+        left: 0;
+        top:0;
         width: 100%;
         z-index: 999;
         pointer-events: none;
         display: flex;
-        padding: 1%;
         justify-content: center;
     }
-	p {
-        /* writing-mode: sideways-lr; */
-	}
-    /* @media (max-width: 768px) {
+    @media (max-width: 768px) {
         
 	p {
-        writing-mode: sideways-lr;
         font-size: 3vw;
 	}
-    } */
+    }
 </style>
