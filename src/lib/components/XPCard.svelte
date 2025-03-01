@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let title: string = 'Window Title';
+	export let open = true;
 	export let top: string = '0vh';
 	export let left: string = '0vw';
 
@@ -110,10 +111,9 @@
 		minimized = false;
 	}
 
-	let closed = false;
 	function handleClose(event: Event) {
 		event.stopPropagation(); // Prevent event bubbling
-		closed = true;
+		open = false;
 	}
 
 	import { onMount, onDestroy } from 'svelte';
@@ -136,7 +136,7 @@
 	});
 </script>
 
-{#if !closed}
+{#if open}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="win7-panel"
