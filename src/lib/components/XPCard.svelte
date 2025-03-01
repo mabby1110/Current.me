@@ -147,10 +147,10 @@
 		transition:fade={{ delay: 100, duration: 300 }}
 	>
 		<div class="win7-title-bar">
-			<span class="win7-title">{title}</span>
+			<p class="win7-title">{title}</p>
 			<div class="win7-controls">
 				<button
-					class="win7-minimize"
+					class="win7-minimize window-icon"
 					on:click={handleMin}
 					on:touchend|preventDefault|stopPropagation={handleMin}
 					aria-label="Minimize"
@@ -158,7 +158,7 @@
 					<span class="win7-minimize-icon"></span>
 				</button>
 				<button
-					class="win7-maximize"
+					class="win7-maximize window-icon"
 					on:click={handleMax}
 					on:touchend|preventDefault|stopPropagation={handleMax}
 					aria-label="Maximize"
@@ -166,7 +166,7 @@
 					<span class="win7-maximize-icon"></span>
 				</button>
 				<button
-					class="win7-close"
+					class="win7-close window-icon"
 					on:click={handleClose}
 					on:touchend|preventDefault|stopPropagation={handleClose}
 					aria-label="Close"
@@ -206,7 +206,7 @@
 	}
 
 	.win7-title-bar {
-		color: #ffffff;
+		color: black;
 		padding: 8px 12px;
 		display: flex;
 		justify-content: space-between;
@@ -231,39 +231,20 @@
 		display: flex;
 		gap: 2px;
 	}
-
 	.win7-controls button {
-		background: transparent;
-		border: none;
-		color: #ffffff;
-		width: 48px;
-		height: 22px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		touch-action: manipulation;
-		padding: 0;
-		margin: 0;
-		position: relative;
-		border-radius: 3px;
+		width: 3vw;
+		min-width: 1.6rem;
 	}
 
 	.win7-controls button:hover {
 		background: rgba(255, 255, 255, 0.2);
 	}
-
 	.win7-minimize-icon {
-		width: 10px;
-		height: 2px;
-		background-color: white;
 		position: absolute;
 		bottom: 7px;
 	}
 
 	.win7-maximize-icon {
-		width: 10px;
-		height: 10px;
 		border: 1px solid white;
 		position: absolute;
 	}
@@ -277,37 +258,9 @@
 	.win7-close:hover {
 		background: #e81123;
 	}
-
 	.win7-content {
-		padding: 1rem;
-		color: #333;
-		background-color: #f9f9f9;
-		border-top: 1px solid #ddd;
-	}
-
-	:global(.win7-content h1) {
-		color: #1c5fb0;
-		margin-bottom: 0.6rem;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		font-weight: normal;
-	}
-
-	:global(.win7-content h2),
-	:global(.win7-content h3),
-	:global(.win7-content h4) {
-		color: #333;
-		margin-bottom: 1rem;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		font-weight: normal;
-	}
-
-	:global(.win7-content ul) {
-		margin-bottom: 2rem;
-		padding-left: 1.5rem;
-	}
-
-	:global(.win7-content li) {
-		margin-bottom: 0.5rem;
-		color: #333;
+		width: 100%;
+		height: 100%;
+		background-color: #ffffff;
 	}
 </style>

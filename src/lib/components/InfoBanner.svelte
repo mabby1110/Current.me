@@ -1,6 +1,6 @@
 <script>
 	import { infoStore, navState } from '$lib/writables';
-    let nav_instruction = "drag, minimize or close any window. click to navigate"
+    let nav_instruction = "you already know this."
 </script>
 
 <div class="info-container">

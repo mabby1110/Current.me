@@ -52,7 +52,7 @@
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
 		<!-- Tarjetas de aplicaciones -->
 		<XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="10vw">
-			<iframe src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview" id="pdf" allow="autoplay"></iframe>
+			<iframe src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
 		</XpCard>
 		<XpCard title="Home" bind:opened={navApps.home.opened} bind:minimized={navApps.home.minimized} top="20vh" left="15vw">
 			<HeroLinkCard title="Home" link="/">
@@ -72,7 +72,7 @@
 	</div>
 
 	<!-- Iconos de aplicaciones -->
-	<div class="apps">
+	<div class="desktop">
 		{#each Object.entries(navApps) as [name, info]}
 			<button class="desktop-icon" on:click={() => handleNavAppsOpen(name)}>
 				<img src={`/OriginalWin7Icons/${info.imgURL}`} alt={info.imgURL}>
@@ -97,9 +97,6 @@
 </div>
 
 <style>
-	* {
-		-webkit-tap-highlight-color: transparent;
-	}
 	.desktop-icon {
 		background: transparent;
 		border-width: 0;
@@ -123,16 +120,15 @@
 	.opened-apps button {
 		background: linear-gradient(to bottom right, #ffffff40 20%, #0080ff00 80%);
 	}
-	.apps {
+	.desktop {
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100%;
 		height: 100%;
 		padding: 2rem;
-		display: grid;
-		grid-template-rows: repeat(auto-fit, 60px);
-		grid-auto-columns: 60px;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
 		gap: 2.6rem;
 	}
 	.close-nav {
@@ -158,10 +154,10 @@
 		display: flex;
 		gap: 1rem;
 	}
-	.start-bar img, .apps img {
+	.start-bar img, .desktop img {
 		object-fit: scale-down;
+		max-width: 60px;
 		height: 100%;
-		width: auto;
 	}
 	.screenCover {
 		position: fixed;

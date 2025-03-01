@@ -19,7 +19,7 @@
 
 	$: if ($infoStore.scrollY <= 38) {
 		// 50% del viewport height
-		$infoStore.info = 'scroll to continue';
+		$infoStore.info = 'press logo or scroll to continue';
 		$sceneNumber = 0;
 	} else if ($infoStore.scrollY <= 50) {
 		$infoStore.info = 'touch or click around';
