@@ -155,7 +155,7 @@
 					on:touchend|preventDefault|stopPropagation={handleMin}
 					aria-label="Minimize"
 				>
-					<span class="win7-minimize-icon"></span>
+				🗕
 				</button>
 				<button
 					class="win7-maximize window-icon"
@@ -163,7 +163,7 @@
 					on:touchend|preventDefault|stopPropagation={handleMax}
 					aria-label="Maximize"
 				>
-					<span class="win7-maximize-icon"></span>
+				🗖
 				</button>
 				<button
 					class="win7-close window-icon"
@@ -171,7 +171,7 @@
 					on:touchend|preventDefault|stopPropagation={handleClose}
 					aria-label="Close"
 				>
-					<span class="win7-close-icon">×</span>
+					x
 				</button>
 			</div>
 		</div>
@@ -186,10 +186,10 @@
 		border: 1px solid #ffffff60;
 		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
 		backdrop-filter: blur(20px);
-		padding: 0.5%;
+		padding: 0 0.5% 0.5%;
 		border-radius: 6px;
 		box-shadow: 0 6px 12px 6px rgba(0, 0, 0, 0.3);
-		min-width: 240px;
+		min-width: 320px;
 		max-width: 90%;
 		user-select: none;
 		z-index: 1000;
@@ -200,23 +200,21 @@
 
 	@media (max-width: 768px) {
 		.win7-panel {
-			min-width: 200px;
+			min-width: 320px;
 			max-width: 95%;
 		}
 	}
 
 	.win7-title-bar {
 		color: black;
-		padding: 8px 12px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 14px;
 		font-weight: normal;
 		cursor: move;
 		touch-action: none;
-		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-		height: 26px;
+		height: 2rem;
+		margin-bottom: 0.5%;
 		box-sizing: border-box;
 	}
 
@@ -224,40 +222,45 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		max-width: calc(100% - 90px);
+		margin-left: 1%;
+		text-shadow: 
+			rgb(255, 255, 255) -1px -1px 2px,
+			rgb(255, 255, 255) 1px 1px 2px;
+		padding: 0 2px;
 	}
 
 	.win7-controls {
+		position: absolute;
+		top: 0;
+		right: 0.5vw;
 		display: flex;
-		gap: 2px;
+		border: solid 1px rgba(255, 255, 255, 0.1);
+		border-radius: 0 0 6px 6px;
+		overflow: hidden;
 	}
 	.win7-controls button {
-		width: 3vw;
-		min-width: 1.6rem;
+		width: 100%;
+		min-width: 2.2rem;
+		background-color: transparent;
+		border-width: 1px;
+		border-style: none solid solid;
+		border-color: rgba(0, 0, 0, 0.1);
+		border-radius: 2px;
+		color: white;
 	}
-
-	.win7-controls button:hover {
-		background: rgba(255, 255, 255, 0.2);
+	.window-icon {
+		background: linear-gradient(to bottom right, #ffffff40 20%, #0080ff00 80%);
 	}
-	.win7-minimize-icon {
-		position: absolute;
-		bottom: 7px;
+	.window-icon:hover {
+		background: linear-gradient(to bottom right, #ffffff75 20%, #ffffff35 80%);
 	}
-
-	.win7-maximize-icon {
-		border: 1px solid white;
-		position: absolute;
+	.win7-close {
+		background: linear-gradient(to bottom, #fba3a3 10%, #c80000 100%);
 	}
-
-	.win7-close-icon {
-		font-size: 22px;
-		line-height: 14px;
-		font-weight: bold;
-	}
-
 	.win7-close:hover {
-		background: #e81123;
+		background: linear-gradient(to bottom, #fba3a3 10%, #ff0000 100%);
 	}
+	
 	.win7-content {
 		width: 100%;
 		height: 100%;

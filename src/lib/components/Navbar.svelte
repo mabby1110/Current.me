@@ -51,20 +51,20 @@
 	<button class="close-nav" on:click={closeNav}>close</button>
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
 		<!-- Tarjetas de aplicaciones -->
-		<XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="10vw">
-			<iframe src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
+		<XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="0vw">
+			<iframe src="https://docs.google.com/document/d/1fgmda0oWl42nsz4cBR3z0VBMphA0ou5Me1VgSmXok-k/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
 		</XpCard>
-		<XpCard title="Home" bind:opened={navApps.home.opened} bind:minimized={navApps.home.minimized} top="20vh" left="15vw">
+		<XpCard title="Home" bind:opened={navApps.home.opened} bind:minimized={navApps.home.minimized} top="20vh" left="2vw">
 			<HeroLinkCard title="Home" link="/">
 				<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard title="My work" bind:opened={navApps.work.opened} bind:minimized={navApps.work.minimized} top="35vh" left="10vw">
+		<XpCard title="My work" bind:opened={navApps.work.opened} bind:minimized={navApps.work.minimized} top="35vh" left="4vw">
 			<HeroLinkCard title="My work" link="work">
 				<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard title="About & Skills" bind:opened={navApps.about.opened} bind:minimized={navApps.about.minimized} top="40vh" left="20vw">
+		<XpCard title="About & Skills" bind:opened={navApps.about.opened} bind:minimized={navApps.about.minimized} top="40vh" left="6vw">
 			<HeroLinkCard title="About & Skills" link="skills">
 				<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif" alt="cv-gif" class="hero-image" />
 			</HeroLinkCard>
