@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let title: string = 'Window Title';
-	export let open = true;
+	export let opened = true;
+	export let minimized = true;
 	export let top: string = '0vh';
 	export let left: string = '0vw';
 
@@ -74,7 +75,6 @@
 		}
 	}
 
-	let minimized = false;
 	function handleMin(event: Event) {
 		event.stopPropagation(); // Prevent event bubbling
 		minimized = !minimized;
@@ -113,7 +113,7 @@
 
 	function handleClose(event: Event) {
 		event.stopPropagation(); // Prevent event bubbling
-		open = false;
+		opened = false;
 	}
 
 	import { onMount, onDestroy } from 'svelte';
@@ -136,7 +136,7 @@
 	});
 </script>
 
-{#if open}
+{#if opened && !minimized}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="win7-panel"
@@ -175,11 +175,9 @@
 				</button>
 			</div>
 		</div>
-		{#if !minimized}
-			<div class="win7-content">
-				<slot />
-			</div>
-		{/if}
+		<div class="win7-content">
+			<slot />
+		</div>
 	</div>
 {/if}
 

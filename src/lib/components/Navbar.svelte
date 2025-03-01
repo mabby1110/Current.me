@@ -6,11 +6,11 @@
 	import HeroLinkCard from './HeroLinkCard.svelte';
 
 	$: navApps = {
-		home: { opened: false, imgURL: '' },
-		about: { opened: false, imgURL: '' },
-		cv: { opened: false, imgURL: '' },
-		work: { opened: false, imgURL: '' },
-		Highlights: { opened: false, imgURL: '' }
+		home: { opened: false, imgURL: '', minimized: false },
+		about: { opened: false, imgURL: '', minimized: false },
+		cv: { opened: false, imgURL: '', minimized: false },
+		work: { opened: false, imgURL: '', minimized: false },
+		Highlights: { opened: false, imgURL: '', minimized: false }
 	};
 	function closeNav() {
 		navState.set({ visible: false });
@@ -22,6 +22,7 @@
 	function handleNavAppsOpen(name, info) {
 		console.log('navApps: ', name, info);
 		navApps[name].opened = true;
+		navApps[name].minimized = false;
 	}
 
 	onMount(() => {
@@ -51,14 +52,26 @@
 	<button class="close-nav" on:click={closeNav}>close</button>
 
 	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-		<XpCard title="CV" bind:open={navApps.cv.opened} top="10vh" left="10vw">
+		<XpCard
+			title="CV"
+			bind:opened={navApps.cv.opened}
+			bind:minimized={navApps.cv.minimized}
+			top="10vh"
+			left="10vw"
+		>
 			<iframe
 				src="https://drive.google.com/file/d/111sMnlGyCAxB_1uA059P_NYDM28nSUJ9/preview"
 				id="pdf"
 				allow="autoplay"
 			></iframe>
 		</XpCard>
-		<XpCard title="Home" bind:open={navApps.home.opened} top="20vh" left="15vw">
+		<XpCard
+			title="Home"
+			bind:opened={navApps.home.opened}
+			bind:minimized={navApps.home.minimized}
+			top="20vh"
+			left="15vw"
+		>
 			<HeroLinkCard title="Home" link="/">
 				<img
 					src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
@@ -67,7 +80,13 @@
 				/>
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard title="My work" bind:open={navApps.work.opened} top="35vh" left="10vw">
+		<XpCard
+			title="My work"
+			bind:opened={navApps.work.opened}
+			bind:minimized={navApps.work.minimized}
+			top="35vh"
+			left="10vw"
+		>
 			<HeroLinkCard title="My work" link="work">
 				<img
 					src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif"
@@ -76,7 +95,13 @@
 				/>
 			</HeroLinkCard>
 		</XpCard>
-		<XpCard title="About & Skills" bind:open={navApps.about.opened} top="40vh" left="20vw">
+		<XpCard
+			title="About & Skills"
+			bind:opened={navApps.about.opened}
+			bind:minimized={navApps.about.minimized}
+			top="40vh"
+			left="20vw"
+		>
 			<HeroLinkCard title="About & Skills" link="skills">
 				<img
 					src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif"
@@ -93,6 +118,11 @@
 	</div>
 	<div class="start-bar">
 		<img src="/win7-start-icon.png" alt="" />
+		{#each Object.entries(navApps) as [name, info]}
+			{#if info.opened || info.minimiezed}
+				<button on:click={handleNavAppsOpen(name, info)}>{name}={info.opened}</button>
+			{/if}
+		{/each}
 	</div>
 </div>
 
@@ -104,9 +134,9 @@
 		width: 100%;
 		height: 100%;
 		padding: 2rem;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
+		display: grid;
+		grid-template-rows: repeat(auto-fit, 60px);
+		grid-auto-columns: 60px;
 	}
 	.close-nav {
 		position: absolute;
@@ -122,17 +152,17 @@
 		bottom: 0;
 		width: 100%;
 		height: 6%;
-		padding: 2vh 2vw;
+		padding: 2px 2vw;
 		background: linear-gradient(to bottom, #74b8fc40 0%, #74b8fc40 100%);
 		backdrop-filter: blur(20px);
 		border-style: solid;
 		border-width: 1px 0 0;
 		border-color: rgba(255, 255, 255, 0.4);
 		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+		display: flex;
 	}
 	.start-bar img {
-		position: absolute;
-		top: 0;
 		object-fit: scale-down;
 		height: 100%;
 		width: auto;
