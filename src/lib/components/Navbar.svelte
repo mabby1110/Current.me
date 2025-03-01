@@ -128,6 +128,7 @@
 				{#if info.opened || info.minimiezed}
 					<button class="desktop-icon" on:click={handleNavAppsOpen(name, info)}>
 						<img src="/OriginalWin7Icons/{info.imgURL}" alt={info.imgURL}>
+						{name}
 					</button>
 				{/if}
 			{/each}
@@ -140,7 +141,7 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 	.desktop-icon {
-		background-color: rgba(255, 255, 255, 0.1);
+		background-color: transparent;
 		border-width: 0;
 		border-radius: 8px;
 	}
@@ -148,6 +149,9 @@
 		flex-grow: 1;
 		display: flex;
 		gap: 1rem;
+	}
+	.opened-apps button {
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 	.apps {
 		position: fixed;
@@ -195,13 +199,13 @@
 		top: 0;
 		left: 0;
 		width: 100vw;
-		height: 100vh;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-items: center;
 		cursor: default;
 		overflow-x: hidden;
-		background-image: url('/win7.jpg');
+		background-image: url('/frutiger.png');
 		background-size: cover;
 		opacity: 1;
 		visibility: visible;
