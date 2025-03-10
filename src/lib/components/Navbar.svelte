@@ -1,17 +1,26 @@
 <script>
-	import { fade } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { navState } from '$lib/writables';
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
+	import { applyAction } from '$app/forms';
+
+	let windowsButton = true;
 
 	// Estado de las aplicaciones de navegación
-	$: navApps = {
-		home: { opened: false, imgURL: '109.ico', minimized: false },
-		about: { opened: false, imgURL: '99.ico', minimized: false },
-		cv: { opened: false, imgURL: '19.ico', minimized: false },
-		work: { opened: false, imgURL: '112.ico', minimized: false },
-		Highlights: { opened: false, imgURL: '1024.ico', minimized: false }
+	let navApps = {
+		home: { title: 'home', opened: false, img_url: '109.ico', minimized: false, nav_link: '/' },
+		about: { title: 'about', opened: false, img_url: '99.ico', minimized: false, nav_link: '/about' },
+		// cv: { title:"cv", opened: false, link_url: '19.ico', minimized: false, nav_link: "/" },
+		work: { title: 'work', opened: false, img_url: '112.ico', minimized: false, nav_link: '/work' },
+		Highlights: {
+			title: 'Highlights',
+			opened: false,
+			img_url: '1024.ico',
+			minimized: false,
+			link: '/highlights'
+		}
 	};
 
 	// Funciones para abrir y cerrar la navegación
@@ -47,48 +56,56 @@
 </div>
 
 <!-- Pantalla de navegación -->
-<div class:hidden={!$navState.visible} class="screenCover" in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
+<div
+	class:hidden={!$navState.visible}
+	class="screenCover"
+	in:fade={{ duration: 500 }}
+	out:fade={{ duration: 500 }}
+>
 	<button class="close-nav" on:click={closeNav}>close</button>
-	<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-		<!-- Tarjetas de aplicaciones -->
-		<XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="0vw">
-			<iframe src="https://docs.google.com/document/d/1fgmda0oWl42nsz4cBR3z0VBMphA0ou5Me1VgSmXok-k/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
-		</XpCard>
-		<XpCard title="Home" bind:opened={navApps.home.opened} bind:minimized={navApps.home.minimized} top="20vh" left="2vw">
-			<HeroLinkCard title="Home" link="/">
-				<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
-			</HeroLinkCard>
-		</XpCard>
-		<XpCard title="My work" bind:opened={navApps.work.opened} bind:minimized={navApps.work.minimized} top="35vh" left="4vw">
-			<HeroLinkCard title="My work" link="work">
-				<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzVmenEwbnc3Z293Mnc1MXE5NzR5Y2Y4N3RpOTk4eTJ1ZWV2eGZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YAy9NNu16pYYg/giphy.gif" alt="cv-gif" class="hero-image" />
-			</HeroLinkCard>
-		</XpCard>
-		<XpCard title="About & Skills" bind:opened={navApps.about.opened} bind:minimized={navApps.about.minimized} top="40vh" left="6vw">
-			<HeroLinkCard title="About & Skills" link="skills">
-				<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnVoOXNkazA1cjBxN3VyZHkzZzNwYWRkdDIxNGgzaG42bW0zaDBucCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TTZnnuZ65qD1C/giphy.gif" alt="cv-gif" class="hero-image" />
-			</HeroLinkCard>
-		</XpCard>
-	</div>
+	{#each Object.entries(navApps) as [k, v]}
+		
+		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
+			<!-- <XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="0vw">
+				<iframe src="https://docs.google.com/document/d/1fgmda0oWl42nsz4cBR3z0VBMphA0ou5Me1VgSmXok-k/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
+			</XpCard> -->
+			<XpCard title={v.title} bind:opened={navApps[k].opened} bind:minimized={navApps[k].minimized} top="20vh" left="2vw">
+				<HeroLinkCard title={v.title} link={v.nav_link}>
+					<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
+				</HeroLinkCard>
+			</XpCard>
+		</div>
+	{/each}
 
 	<!-- Iconos de aplicaciones -->
 	<div class="desktop">
-		{#each Object.entries(navApps) as [name, info]}
-			<button class="desktop-icon" on:click={() => handleNavAppsOpen(name)}>
-				<img src={`/OriginalWin7Icons/${info.imgURL}`} alt={info.imgURL}>
-				<p>{name}</p>
+		{#each Object.entries(navApps) as [k, v]}
+			<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
+				<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
 			</button>
 		{/each}
 	</div>
 
 	<!-- Barra de inicio -->
+	{#if windowsButton}
+		<div class="windows-start-menu" transition:fly={{ duration: 200 }}>
+			<div class="app-list">
+				<div class="app-list-item">
+					<img src="" alt="" />
+					<div class="app-name"></div>
+					<div class="is-folder"></div>
+				</div>
+			</div>
+			<div class="options-list">options</div>
+		</div>
+	{/if}
 	<div class="start-bar">
-		<img src="/win7-start-icon.png" alt="" />
+		<img src="/win7-start-icon.png" alt="" on:click={() => (windowsButton = !windowsButton)} />
 		<div class="opened-apps">
-			{#each Object.entries(navApps) as [name, info]}
-				{#if info.opened || info.minimized}
-					<button class="desktop-icon" on:click={() => handleNavAppsOpen(name)}>
-						<img src={`/OriginalWin7Icons/${info.imgURL}`} alt={info.imgURL}>
+			{#each Object.entries(navApps) as [k, v]}
+				{#if v.opened || v.minimized}
+					<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
+						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
 					</button>
 				{/if}
 			{/each}
@@ -154,10 +171,32 @@
 		display: flex;
 		gap: 1rem;
 	}
-	.start-bar img, .desktop img {
+	.start-bar img,
+	.desktop img {
 		object-fit: scale-down;
 		max-width: 60px;
 		height: 100%;
+	}
+	.windows-start-menu {
+		background: linear-gradient(to bottom, #0f3d6bf6 0%, #56595dd8 100%);
+		position: absolute;
+		bottom: 3rem;
+		width: 40vw;
+		height: 60vh;
+		padding: 0.6rem;
+		border-radius: 0 8px 0 0;
+
+		display: grid;
+		grid-template-columns: 4fr 2fr;
+	}
+	.app-list {
+		background-color: rgb(255, 255, 255);
+		border-radius: 8px;
+		padding: 0.6rem;
+	}
+	.options-list {
+		background-color: transparent;
+		padding: 0.6rem;
 	}
 	.screenCover {
 		position: fixed;
@@ -174,7 +213,9 @@
 		background-size: cover;
 		opacity: 1;
 		visibility: visible;
-		transition: opacity 0.6s ease, visibility 0.3s ease;
+		transition:
+			opacity 0.6s ease,
+			visibility 0.3s ease;
 	}
 	.navbar {
 		z-index: 1;
