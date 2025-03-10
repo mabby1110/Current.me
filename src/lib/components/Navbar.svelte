@@ -344,6 +344,8 @@
 	.navbar {
 		z-index: 1;
 		width: 100%;
+		height: 8vh;
+		max-height: 80px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -354,8 +356,5 @@
 		opacity: 0;
 		visibility: hidden;
 		pointer-events: none;
-	}
-	h1 {
-		margin: 2rem 0 1rem;
 	}
 </style>
