@@ -2,16 +2,27 @@
 	import '$lib/main.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 
-	import { started } from '$lib/writables';
+	import { release, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	import InfoBanner from '$lib/components/InfoBanner.svelte';
+	import { page } from '$app/state';
+	import SphereVoidBackground from '$lib/scenes/SphereVoidBackground.svelte';
+	import WorkScene from '$lib/scenes/workScene.svelte';
+
+	$: currentPage = page.url.pathname;
+	$: console.log(currentPage)
+
 </script>
 
 <div class="bg">
-	<!-- <Background release={$release} started={$started} /> -->
+	{#if currentPage == "/"}
 	<EyeballScene />
+	{:else if currentPage == "/work"}
+	<!-- svelte-ignore missing-declaration -->
+	<WorkScene/>
+	{/if}
 </div>
 
 <InfoBanner />

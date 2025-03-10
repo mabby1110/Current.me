@@ -15,12 +15,12 @@ type Project = {
 
 export const projects = [
 	{
-		title: 'Current me',
+		title: "don't click here",
 		image: '/OriginalWin7Icons/47.ico', // Replace with the actual path
 		description:
-			'This web pages is current me, call me +52 669 159 72 09 or email me bernardoa.marquezg@gmail.com',
+			'This page was made from scratch. call +52 669 159 72 09 or email me bernardoa.marquezg@gmail.com for custom software pieces',
 		link: 'https://github.com/mabby1110/Current.me',
-		color: 'black'
+		color: 'transparent'
 	},
 	{
 		title: 'HoneyHost',

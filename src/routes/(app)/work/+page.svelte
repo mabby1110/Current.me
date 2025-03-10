@@ -45,6 +45,7 @@
 		height: fit-content;
 		transition: all 0.3s ease-in-out;
 		overflow: scroll;
+		pointer-events: auto;
 	}
 	.project-container.groww {
 		flex-grow: 1;
