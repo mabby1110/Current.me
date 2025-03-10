@@ -235,12 +235,11 @@
 		position: absolute;
 		bottom: 3rem;
 		left: 0;
-		width: 40vw;
 		height: 60vh;
 		padding: 0.6rem;
 		border-radius: 0 8px 0 0;
 		display: grid;
-		grid-template-columns: 60% 40%;
+		grid-template-columns: minmax(180px, 60%) auto;
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 		z-index: 150;
 	}
