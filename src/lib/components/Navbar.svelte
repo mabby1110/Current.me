@@ -6,7 +6,7 @@
 	import HeroLinkCard from './HeroLinkCard.svelte';
 	import { applyAction } from '$app/forms';
 
-	let windowsButton = true;
+	let windowsButton = false;
 
 	// Estado de las aplicaciones de navegación
 	let navApps = {
@@ -26,6 +26,7 @@
 	// Funciones para abrir y cerrar la navegación
 	function closeNav() {
 		navState.set({ visible: false });
+		windowsButton = false;
 	}
 
 	function openNav() {
@@ -48,6 +49,11 @@
 		window.addEventListener('keydown', handleKeydown);
 		return () => window.removeEventListener('keydown', handleKeydown);
 	});
+
+	// Función para alternar el menú de inicio
+	function toggleStartMenu() {
+		windowsButton = !windowsButton;
+	}
 </script>
 
 <!-- Barra de navegación -->
@@ -62,13 +68,16 @@
 	in:fade={{ duration: 500 }}
 	out:fade={{ duration: 500 }}
 >
-	<button class="close-nav" on:click={closeNav}>close</button>
+	<div class="desktop">
+		{#each Object.entries(navApps).slice(0,1) as [k, v]}
+			<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
+				<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
+			</button>
+		{/each}
+	</div>
+
 	{#each Object.entries(navApps) as [k, v]}
-		
 		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-			<!-- <XpCard title="CV" bind:opened={navApps.cv.opened} bind:minimized={navApps.cv.minimized} top="10vh" left="0vw">
-				<iframe src="https://docs.google.com/document/d/1fgmda0oWl42nsz4cBR3z0VBMphA0ou5Me1VgSmXok-k/preview" id="pdf" allow="autoplay" height="100%" width="100%"></iframe>
-			</XpCard> -->
 			<XpCard title={v.title} bind:opened={navApps[k].opened} bind:minimized={navApps[k].minimized} top="20vh" left="2vw">
 				<HeroLinkCard title={v.title} link={v.nav_link}>
 					<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
@@ -77,38 +86,56 @@
 		</div>
 	{/each}
 
-	<!-- Iconos de aplicaciones -->
-	<div class="desktop">
-		{#each Object.entries(navApps) as [k, v]}
-			<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
-				<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
-			</button>
-		{/each}
-	</div>
-
-	<!-- Barra de inicio -->
+	<!-- Menú de inicio de Windows -->
 	{#if windowsButton}
 		<div class="windows-start-menu" transition:fly={{ duration: 200 }}>
 			<div class="app-list">
-				<div class="app-list-item">
-					<img src="" alt="" />
-					<div class="app-name"></div>
-					<div class="is-folder"></div>
+				{#each Object.entries(navApps) as [k, v]}
+					<div class="app-list-item" on:click={() => handleNavAppsOpen(k)}>
+						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={`${v.title}_icon`} />
+						<div class="app-name">{v.title}</div>
+					</div>
+				{/each}
+				
+				<!-- Botón para cerrar la navegación desde el menú de inicio -->
+				<div class="app-list-item shutdown" on:click={closeNav}>
+					<img src="/OriginalWin7Icons/28.ico" alt="shutdown_icon" />
+					<div class="app-name">Close Navigation</div>
 				</div>
 			</div>
-			<div class="options-list">options</div>
+			<div class="options-list">
+				<div class="user-profile">
+					<img src="/OriginalWin7Icons/user.ico" alt="user_profile" />
+					<span>User</span>
+				</div>
+				<div class="system-options">
+					<div class="system-option">Documents</div>
+					<div class="system-option">Pictures</div>
+					<div class="system-option">Music</div>
+					<div class="system-option">Control Panel</div>
+					<div class="system-option">Devices</div>
+				</div>
+			</div>
 		</div>
 	{/if}
+	
+	<!-- Barra de inicio de Windows -->
 	<div class="start-bar">
-		<img src="/win7-start-icon.png" alt="" on:click={() => (windowsButton = !windowsButton)} />
+		<button class="win-button" class:active={windowsButton} on:click={toggleStartMenu}>
+			<img src="/win7-start-icon.png" alt="windows start" />
+		</button>
 		<div class="opened-apps">
 			{#each Object.entries(navApps) as [k, v]}
 				{#if v.opened || v.minimized}
-					<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
+					<button class="desktop-icon" class:active={v.opened && !v.minimized} on:click={() => handleNavAppsOpen(k)}>
 						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
+						<span>{v.title}</span>
 					</button>
 				{/if}
 			{/each}
+		</div>
+		<div class="notification-area">
+			<div class="time">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
 		</div>
 	</div>
 </div>
@@ -125,17 +152,30 @@
 		align-items: center;
 		justify-items: center;
 		gap: 2px;
+		cursor: pointer;
 	}
 	.desktop-icon:hover {
 		background: linear-gradient(to bottom right, #ffffff75 20%, #ffffff35 80%);
+	}
+	.desktop-icon.active {
+		background: linear-gradient(to bottom right, #ffffff90 20%, #ffffff50 80%);
+		box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
 	}
 	.opened-apps {
 		flex-grow: 1;
 		display: flex;
 		gap: 1rem;
+		align-items: center;
+		margin-left: 10px;
 	}
 	.opened-apps button {
 		background: linear-gradient(to bottom right, #ffffff40 20%, #0080ff00 80%);
+		flex-direction: row;
+		height: 80%;
+	}
+	.opened-apps button span {
+		margin-left: 5px;
+		color: white;
 	}
 	.desktop {
 		position: fixed;
@@ -147,15 +187,6 @@
 		flex-direction: column;
 		flex-wrap: wrap;
 		gap: 2.6rem;
-	}
-	.close-nav {
-		position: absolute;
-		top: 5%;
-		right: 8%;
-		background-color: rgb(255, 0, 0);
-		color: white;
-		padding: 5px;
-		z-index: 4;
 	}
 	.start-bar {
 		position: absolute;
@@ -169,7 +200,29 @@
 		border-width: 1px 0 0;
 		border-color: rgba(255, 255, 255, 0.1);
 		display: flex;
+		align-items: center;
 		gap: 1rem;
+		z-index: 100;
+	}
+	.win-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border-width: 0;
+		border-radius: 50%;
+		width: 2.5rem;
+		height: 2.5rem;
+		margin: 0;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+	}
+	.win-button:hover {
+		box-shadow: 0 0 10px rgba(77, 179, 255, 0.8);
+	}
+	.win-button.active {
+		background: radial-gradient(circle, #73c5ff 0%, #0069c0 100%);
+		box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 	}
 	.start-bar img,
 	.desktop img {
@@ -181,22 +234,94 @@
 		background: linear-gradient(to bottom, #0f3d6bf6 0%, #56595dd8 100%);
 		position: absolute;
 		bottom: 3rem;
+		left: 0;
 		width: 40vw;
 		height: 60vh;
 		padding: 0.6rem;
 		border-radius: 0 8px 0 0;
-
 		display: grid;
-		grid-template-columns: 4fr 2fr;
+		grid-template-columns: 60% 40%;
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+		z-index: 150;
 	}
 	.app-list {
 		background-color: rgb(255, 255, 255);
 		border-radius: 8px;
 		padding: 0.6rem;
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+	}
+	.app-list-item {
+		color: rgba(0, 0, 0, 0.697);
+		max-height: 4rem;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.6rem;
+		cursor: pointer;
+		border-radius: 4px;
+	}
+	.app-list-item:hover {
+		background: linear-gradient(to bottom, #3798f935 0%, #3798f935 100%);
+	}
+	.app-list-item.shutdown {
+		margin-top: auto;
+		border-top: 1px solid #e0e0e0;
+	}
+	.app-list-item.shutdown:hover {
+		background: linear-gradient(to bottom, #ff000020 0%, #ff000020 100%);
+	}
+	.app-list-item img {
+		height: 32px;
+		width: 32px;
 	}
 	.options-list {
-		background-color: transparent;
+		background-color: rgba(43, 87, 124, 0.8);
 		padding: 0.6rem;
+		color: white;
+		display: flex;
+		flex-direction: column;
+	}
+	.user-profile {
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		gap: 10px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		margin-bottom: 10px;
+	}
+	.user-profile img {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background-color: white;
+		padding: 2px;
+	}
+	.system-options {
+		display: flex;
+		flex-direction: column;
+	}
+	.system-option {
+		padding: 8px;
+		cursor: pointer;
+		border-radius: 4px;
+	}
+	.system-option:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+	.notification-area {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+		padding-right: 10px;
+		color: white;
+	}
+	.time {
+		font-size: 0.8rem;
+		background-color: rgba(0, 0, 0, 0.2);
+		padding: 4px 8px;
+		border-radius: 4px;
 	}
 	.screenCover {
 		position: fixed;
