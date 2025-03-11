@@ -11,16 +11,16 @@
 	// Estado de las aplicaciones de navegación
 	let navApps = {
 		home: { title: 'home', opened: false, img_url: '109.ico', minimized: false, nav_link: '/' },
-		about: { title: 'about', opened: false, img_url: '99.ico', minimized: false, nav_link: '/about' },
+		// about: { title: 'about', opened: false, img_url: '99.ico', minimized: false, nav_link: '/about' },
 		// cv: { title:"cv", opened: false, link_url: '19.ico', minimized: false, nav_link: "/" },
 		work: { title: 'work', opened: false, img_url: '112.ico', minimized: false, nav_link: '/work' },
-		Highlights: {
-			title: 'Highlights',
-			opened: false,
-			img_url: '1024.ico',
-			minimized: false,
-			link: '/highlights'
-		}
+		// Highlights: {
+		// 	title: 'Highlights',
+		// 	opened: false,
+		// 	img_url: '1024.ico',
+		// 	minimized: false,
+		// 	link: '/highlights'
+		// }
 	};
 	function handleNav(p) {
 		console.log(p);
