@@ -22,7 +22,10 @@
 			link: '/highlights'
 		}
 	};
-
+	function handleNav(p) {
+		console.log(p);
+		window.location.href = `${p}`
+	}
 	// Funciones para abrir y cerrar la navegación
 	function closeNav() {
 		navState.set({ visible: false });
@@ -91,7 +94,7 @@
 		<div class="windows-start-menu" transition:fly={{ duration: 200 }}>
 			<div class="app-list">
 				{#each Object.entries(navApps) as [k, v]}
-					<div class="app-list-item" on:click={() => handleNavAppsOpen(k)}>
+					<div class="app-list-item" on:click={() => handleNav(v["nav_link"])}>
 						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={`${v.title}_icon`} />
 						<div class="app-name">{v.title}</div>
 					</div>
