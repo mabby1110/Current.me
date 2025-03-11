@@ -61,7 +61,6 @@
 	.expanded-title {
 		font-size: 8em;
 		padding: 1.5rem 1rem !important;
-		background-color: transparent;
 	}
 	@media (max-width: 600px) {
 		.expanded-title {

@@ -27,14 +27,19 @@
 
 <InfoBanner />
 
-<div class="page-container">
-	<nav in:fade={{ duration: 500 }}>
-		<Navbar />
-	</nav>
-	<main>
-		<slot />
-	</main>
-</div>
+{#if $started}
+	<div class="page-container">
+		<nav in:fade={{ duration: 500 }}>
+			<Navbar />
+		</nav>
+		<main>
+			<slot />
+		</main>
+	</div>
+{:else}
+	<!-- <InstuctionBanner>Move or touch around, keep pressing to enter</InstuctionBanner> -->
+	<Loader />
+{/if}
 
 <style>
 	nav {
@@ -58,7 +63,5 @@
 	}
 	.page-container {
 		position: relative;
-		width: 100vw;
-		height: 100vh;
 	}
 </style>

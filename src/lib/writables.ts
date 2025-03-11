@@ -18,7 +18,7 @@ export const projects = [
 		title: "don't click here",
 		image: '/OriginalWin7Icons/47.ico', // Replace with the actual path
 		description:
-			'This page was made from scratch with love, enjoy ⊂(◉‿◉). contact me for custom software pieces: +52 669 159 72 09 or email, bernardoa.marquezg@gmail.com',
+			'This page was made from scratch. call +52 669 159 72 09 or email me bernardoa.marquezg@gmail.com for custom software pieces',
 		link: 'https://github.com/mabby1110/Current.me',
 		color: 'transparent'
 	},

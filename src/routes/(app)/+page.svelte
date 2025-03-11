@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Intro from '$lib/sections/Intro.svelte';
-	import { infoStore, started } from '$lib/writables';
+	import { infoStore } from '$lib/writables';
 	import { lightIntensity, sceneNumber } from '$lib/threeStores';
 	import { fade } from 'svelte/transition';
-	import Loader from '$lib/components/Loader.svelte';
 
 	// Función para normalizar el scroll
 	function getNormalizedScroll(): number {
@@ -43,14 +42,10 @@
 	});
 </script>
 
-{#if !$started}
-<Loader/>
-{:else}
 <div class="space-jam" in:fade={{ duration: 500 }}></div>
 <div class="home">
 	<Intro />
 </div>
-{/if}
 
 <style>
 	.space-jam {
