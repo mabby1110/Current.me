@@ -74,12 +74,15 @@
 </div>
 
 <DevelopmentBanner
-showBanner={true}
-message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
+	showBanner={true}
+	message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
 />
+
 <style>
 	.loader-container {
-		height: 100vh;
+		position: absolute;
+		top: 0;
+		bottom: 0;
 		width: 100%;
 		display: grid;
 		place-items: center;
@@ -91,14 +94,14 @@ message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar
 		object-fit: cover;
 		width: 100%;
 	}
-@media (max-width: 768px) {
-	.loader-container {
-		height: 100vh;
-		width: 100%;
-		display: grid;
-		place-items: center;
-		backdrop-filter: blur(10px);
-		padding-bottom: 1vh;
+	@media (max-width: 768px) {
+		.loader-container {
+			height: 100vh;
+			width: 100%;
+			display: grid;
+			place-items: center;
+			backdrop-filter: blur(10px);
+			padding-bottom: 1vh;
+		}
 	}
-}
 </style>
