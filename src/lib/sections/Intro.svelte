@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, slide } from 'svelte/transition';
 	import { infoStore } from '$lib/writables';
-	let title = 'A handpicked collection of software pieces';
+	let title = 'This is a handpicked collection of software pieces';
 	let subtitle = 'welcome';
 	let description =
 		'This is my journey into the world of art, design, and immersive digital experiences';
@@ -28,7 +28,7 @@
 
 <style>
 	.hero {
-		height: 95vh;
+		height: 92vh;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -48,7 +48,7 @@
 			opacity 0.5s,
 			transform 0.5s;
 		position: sticky;
-		top: 5vh;
+		top: 10vh;
 	}
 
 	h1 {

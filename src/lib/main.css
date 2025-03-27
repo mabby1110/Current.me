@@ -11,6 +11,9 @@
     --accent-color-2: #ffee00;
     --text-body: #ffffff;
 }
+html {
+	forced-color-adjust: none;
+}
 body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;

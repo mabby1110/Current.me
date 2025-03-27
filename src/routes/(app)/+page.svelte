@@ -22,7 +22,7 @@
 		$infoStore.info = 'press logo or scroll to continue';
 		$sceneNumber = 0;
 	} else if ($infoStore.scrollY <= 50) {
-		$infoStore.info = 'touch or click around';
+		$infoStore.info = 'Light will follow, touch or click on welcome! ';
 		$lightIntensity = 100;
 		$sceneNumber = 1;
 	}
@@ -46,7 +46,6 @@
 <div class="home">
 	<Intro />
 </div>
-
 <style>
 	.space-jam {
 		height: 40vh;

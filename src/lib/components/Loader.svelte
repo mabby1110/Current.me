@@ -75,7 +75,7 @@
 
 <DevelopmentBanner
 showBanner={true}
-message="🚧 Esta página está en desarrollo. Algunas funciones podrían estar incompletas."
+message="🚧 This page is under development. Close to see instructions"
 />
 <style>
 	.loader-container {
