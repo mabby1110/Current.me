@@ -74,9 +74,10 @@
 </div>
 
 <DevelopmentBanner
-showBanner={true}
-message="🚧 This page is under development. Close to see instructions"
+	showBanner={true}
+	message="🚧 This page is under development. Close to see instructions"
 />
+
 <style>
 	.loader-container {
 		height: 100vh;
@@ -91,14 +92,14 @@ message="🚧 This page is under development. Close to see instructions"
 		object-fit: cover;
 		width: 100%;
 	}
-@media (max-width: 768px) {
-	.loader-container {
-		height: 100vh;
-		width: 100%;
-		display: grid;
-		place-items: center;
-		backdrop-filter: blur(10px);
-		padding-bottom: 1vh;
+	@media (max-width: 768px) {
+		.loader-container {
+			height: 100vh;
+			width: 100%;
+			display: grid;
+			place-items: center;
+			backdrop-filter: blur(10px);
+			padding-bottom: 1vh;
+		}
 	}
-}
 </style>
