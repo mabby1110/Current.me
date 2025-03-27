@@ -85,7 +85,7 @@
 		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
 			<XpCard title={v.title} bind:opened={navApps[k].opened} bind:minimized={navApps[k].minimized} top="20vh" left="2vw">
 				<HeroLinkCard title={v.title} link={v.nav_link}>
-					<img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif" alt="cv-gif" class="hero-image" />
+					<img  alt="cv-gif" class="hero-image" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"/>
 				</HeroLinkCard>
 			</XpCard>
 		</div>
@@ -146,6 +146,9 @@
 </div>
 
 <style>
+	.hero-image {
+		z-index: 0;
+	}
 	.desktop-icon {
 		background: transparent;
 		border-width: 0;
