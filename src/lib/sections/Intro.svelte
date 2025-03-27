@@ -25,7 +25,6 @@
 				if (elapsedTime >= TIME_MS) {
 					clearInterval(intervalPtr);
 					$started = true;
-					$lightIntensity = 0;
 				}
 			}, 1);
 		}
