@@ -5,6 +5,7 @@
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
 	import { applyAction } from '$app/forms';
+	import Mouse from './mouse.svelte';
 
 	let windowsButton = false;
 
@@ -71,6 +72,7 @@
 	in:fade={{ duration: 500 }}
 	out:fade={{ duration: 500 }}
 >
+	<Mouse/>
 	<div class="desktop">
 		{#each Object.entries(navApps).slice(0,1) as [k, v]}
 			<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
