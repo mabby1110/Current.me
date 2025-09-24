@@ -23,28 +23,36 @@
 	{/if}
 </div>
 
-<InfoBanner />
+<!-- <InfoBanner /> -->
 
 {#if $started}
 	<div class="page-container">
+		<div class="space-jam" in:fade={{ duration: 500 }}></div>
 		<nav in:fade={{ duration: 500 }}>
 			<Navbar />
 		</nav>
 		<main>
 			<slot />
 		</main>
+		<footer>
+			<div class="contact-container">
+				<p>CONTACTO 6691597209 BERNARDOA.MARQUEZG@GMAIL.COM</p>
+			</div>
+		</footer>
 	</div>
 {:else}
 	<Loader />
 {/if}
 
 <style>
+	.space-jam {
+		height: 40vh;
+		user-select: none;
+		background-color: black;
+	}
 	.page-container {
-		position: relative;
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
-		overscroll-behavior: contain;
+		flex-grow: 1;
+		scroll-behavior: smooth;
 	}
 
 	nav {
@@ -55,10 +63,15 @@
 	}
 
 	main {
-		flex-grow: 1;
 		touch-action: pan-y; /* Permite solo el scroll vertical */
+		height: 90vh;
+		scroll-snap-align: end;
 	}
-
+	footer {
+		background-color: black;
+		height: 90vh;
+		scroll-snap-align: end;
+	}
 	/* Habilitar interactividad solo para elementos específicos */
 	main * {
 		pointer-events: auto;

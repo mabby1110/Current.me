@@ -42,16 +42,10 @@
 	});
 </script>
 
-<div class="space-jam" in:fade={{ duration: 500 }}></div>
 <div class="home">
 	<Intro />
 </div>
 <style>
-	.space-jam {
-		height: 40vh;
-		user-select: none;
-		background-color: black;
-	}
 	.home {
 		display: flex;
 		flex-direction: column;
