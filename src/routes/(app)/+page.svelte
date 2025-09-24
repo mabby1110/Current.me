@@ -42,11 +42,11 @@
 	});
 </script>
 
-<div class="home">
+<div class="page-container">
 	<Intro />
 </div>
 <style>
-	.home {
+	.page-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;

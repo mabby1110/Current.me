@@ -10,10 +10,14 @@
 	--accent-color: #500efe;
 	--accent-color-2: #ffee00;
 	--text-body: #ffffff;
+	--glass-color:rgba(0, 0, 0, 0.30);
 }
 html {
 	forced-color-adjust: none;
-	scroll-snap-type: y proximity;
+	width: 100vw;
+	height: 100vh;
+	scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
 }
 body {
 	-webkit-overflow-scrolling: touch;

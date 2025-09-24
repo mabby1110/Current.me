@@ -2,16 +2,48 @@
 	import '$lib/main.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 
-	import { started } from '$lib/writables';
+	import { infoStore, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
 	import { fade } from 'svelte/transition';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	import InfoBanner from '$lib/components/InfoBanner.svelte';
 	import { page } from '$app/state';
 	import WorkScene from '$lib/scenes/workScene.svelte';
+	import Contact from '$lib/sections/Contact.svelte';
+	import { onMount } from 'svelte';
 
 	$: currentPage = page.url.pathname;
 	$: console.log(currentPage);
+	let footer: HTMLElement;
+	let isFooterSnapped = false;
+
+	onMount(() => {
+		// Definimos el observador
+		const observer = new IntersectionObserver(
+			(entries) => {
+				// La propiedad 'isIntersecting' es true cuando el elemento entra en la vista
+				isFooterSnapped = entries[0].isIntersecting;
+			},
+			{
+				// El 'root' es el contenedor del scroll. Aquí es el `body` por defecto
+				// La propiedad 'threshold' define el porcentaje del elemento que debe estar visible
+				// 1.0 significa que el 100% del elemento debe ser visible para que se active
+				threshold: 0.8
+			}
+		);
+
+		// Si el elemento del footer existe, lo observamos
+		if (footer) {
+			observer.observe(footer);
+		}
+
+		// Limpiamos el observador cuando el componente se destruye
+		return () => {
+			if (observer) {
+				observer.disconnect();
+			}
+		};
+	});
 </script>
 
 <div class="bg">
@@ -34,10 +66,8 @@
 		<main>
 			<slot />
 		</main>
-		<footer>
-			<div class="contact-container">
-				<p>CONTACTO 6691597209 BERNARDOA.MARQUEZG@GMAIL.COM</p>
-			</div>
+		<footer bind:this={footer} class={isFooterSnapped ? 'hide' : ''}>
+			<Contact />
 		</footer>
 	</div>
 {:else}
@@ -49,33 +79,33 @@
 		height: 40vh;
 		user-select: none;
 		background-color: black;
+		scroll-snap-align: center;
+		scroll-snap-stop: normal;
 	}
 	.page-container {
 		flex-grow: 1;
-		scroll-behavior: smooth;
 	}
 
 	nav {
 		position: sticky;
 		top: 0;
+		height: fit-content;
 		z-index: 998;
 		background-color: black;
 	}
 
 	main {
 		touch-action: pan-y; /* Permite solo el scroll vertical */
-		height: 90vh;
-		scroll-snap-align: end;
+		flex-grow: 1;
+		scroll-snap-align: center;
+		scroll-snap-stop: normal;
 	}
 	footer {
-		background-color: black;
-		height: 90vh;
+		flex-grow: 1;
 		scroll-snap-align: end;
-	}
-	/* Habilitar interactividad solo para elementos específicos */
-	main * {
-		pointer-events: auto;
-		width: 100%;
+		scroll-snap-stop: normal;
+		height: 100vh;
+		background-color: black;
 	}
 
 	.bg {
