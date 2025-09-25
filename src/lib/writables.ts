@@ -63,7 +63,7 @@ function interpolateColor(value, startColor, endColor) {
 
 export const lightControl = writable({
 	color: 0x4400ff,
-	intensity: 8,
+	intensity: 150,
 	position: { x: 0, y: 2.05, z: 0 },
 	smoothness: 0.06
 });

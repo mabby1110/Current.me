@@ -1,7 +1,7 @@
 <script>
 	import { fade, fly, slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { navState } from '$lib/writables';
+	import { navState, started } from '$lib/writables';
 	import XpCard from './XPCard.svelte';
 	import HeroLinkCard from './HeroLinkCard.svelte';
 	import { applyAction } from '$app/forms';
@@ -14,7 +14,7 @@
 		home: { title: 'home', opened: false, img_url: '109.ico', minimized: false, nav_link: '/' },
 		// about: { title: 'about', opened: false, img_url: '99.ico', minimized: false, nav_link: '/about' },
 		// cv: { title:"cv", opened: false, link_url: '19.ico', minimized: false, nav_link: "/" },
-		work: { title: 'work', opened: false, img_url: '112.ico', minimized: false, nav_link: '/work' },
+		work: { title: 'work', opened: false, img_url: '112.ico', minimized: false, nav_link: '/work' }
 		// Highlights: {
 		// 	title: 'Highlights',
 		// 	opened: false,
@@ -25,7 +25,7 @@
 	};
 	function handleNav(p) {
 		console.log(p);
-		window.location.href = `${p}`
+		window.location.href = `${p}`;
 	}
 	// Funciones para abrir y cerrar la navegación
 	function closeNav() {
@@ -66,84 +66,102 @@
 </div>
 
 <!-- Pantalla de navegación -->
-<div
-	class:hidden={!$navState.visible}
-	class="screenCover"
-	in:fade={{ duration: 500 }}
-	out:fade={{ duration: 500 }}
->
-	<Mouse/>
-	<div class="desktop">
-		{#each Object.entries(navApps).slice(0,1) as [k, v]}
-			<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
-				<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
-			</button>
-		{/each}
-	</div>
-
-	{#each Object.entries(navApps) as [k, v]}
-		<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
-			<XpCard title={v.title} bind:opened={navApps[k].opened} bind:minimized={navApps[k].minimized} top="20vh" left="2vw">
-				<HeroLinkCard title={v.title} link={v.nav_link}>
-					<img  alt="cv-gif" class="hero-image" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"/>
-				</HeroLinkCard>
-			</XpCard>
-		</div>
-	{/each}
-
-	<!-- Menú de inicio de Windows -->
-	{#if windowsButton}
-		<div class="windows-start-menu" transition:fly={{ duration: 200 }}>
-			<div class="app-list">
-				{#each Object.entries(navApps) as [k, v]}
-					<div class="app-list-item" on:click={() => handleNav(v["nav_link"])}>
-						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={`${v.title}_icon`} />
-						<div class="app-name">{v.title}</div>
-					</div>
-				{/each}
-				
-				<!-- Botón para cerrar la navegación desde el menú de inicio -->
-				<div class="app-list-item shutdown" on:click={closeNav}>
-					<img src="/OriginalWin7Icons/28.ico" alt="shutdown_icon" />
-					<div class="app-name">Close Navigation</div>
-				</div>
-			</div>
-			<div class="options-list">
-				<div class="user-profile">
-					<img src="/OriginalWin7Icons/user.ico" alt="user_profile" />
-					<span>User</span>
-				</div>
-				<div class="system-options">
-					<div class="system-option">Documents</div>
-					<div class="system-option">Pictures</div>
-					<div class="system-option">Music</div>
-					<div class="system-option">Control Panel</div>
-					<div class="system-option">Devices</div>
-				</div>
-			</div>
-		</div>
-	{/if}
-	
-	<!-- Barra de inicio de Windows -->
-	<div class="start-bar">
-		<button class="win-button" class:active={windowsButton} on:click={toggleStartMenu}>
-			<img src="/win7-start-icon.png" alt="windows start" />
-		</button>
-		<div class="opened-apps">
-			{#each Object.entries(navApps) as [k, v]}
-				{#if v.opened || v.minimized}
-					<button class="desktop-icon" class:active={v.opened && !v.minimized} on:click={() => handleNavAppsOpen(k)}>
-						<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
-						<span>{v.title}</span>
-					</button>
-				{/if}
+{#if $started}
+	<div
+		class:hidden={!$navState.visible}
+		class="screenCover"
+		in:fade={{ duration: 500 }}
+		out:fade={{ duration: 500 }}
+	>
+		<Mouse />
+		<div class="desktop">
+			{#each Object.entries(navApps).slice(0, 1) as [k, v]}
+				<button class="desktop-icon" on:click={() => handleNavAppsOpen(v.title)}>
+					<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
+				</button>
 			{/each}
 		</div>
-		<div class="notification-area">
-			<div class="time">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+
+		{#each Object.entries(navApps) as [k, v]}
+			<div class="navlink" transition:fade={{ delay: 100, duration: 500 }}>
+				<XpCard
+					title={v.title}
+					bind:opened={navApps[k].opened}
+					bind:minimized={navApps[k].minimized}
+					top="20vh"
+					left="2vw"
+				>
+					<HeroLinkCard title={v.title} link={v.nav_link}>
+						<img
+							alt="cv-gif"
+							class="hero-image"
+							src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZThyamJueW1ncHY3ZnU4bjA4MDFrNGh0cnV1dW9mdHk0NDhwZnU4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NrqGp5pu4lTHy/giphy.gif"
+						/>
+					</HeroLinkCard>
+				</XpCard>
+			</div>
+		{/each}
+
+		<!-- Menú de inicio de Windows -->
+		{#if windowsButton}
+			<div class="windows-start-menu" transition:fly={{ duration: 200 }}>
+				<div class="app-list">
+					{#each Object.entries(navApps) as [k, v]}
+						<div class="app-list-item" on:click={() => handleNav(v['nav_link'])}>
+							<img src={`/OriginalWin7Icons/${v.img_url}`} alt={`${v.title}_icon`} />
+							<div class="app-name">{v.title}</div>
+						</div>
+					{/each}
+
+					<!-- Botón para cerrar la navegación desde el menú de inicio -->
+					<div class="app-list-item shutdown" on:click={closeNav}>
+						<img src="/OriginalWin7Icons/28.ico" alt="shutdown_icon" />
+						<div class="app-name">Close Navigation</div>
+					</div>
+				</div>
+				<div class="options-list">
+					<div class="user-profile">
+						<img src="/OriginalWin7Icons/user.ico" alt="user_profile" />
+						<span>User</span>
+					</div>
+					<div class="system-options">
+						<div class="system-option">Documents</div>
+						<div class="system-option">Pictures</div>
+						<div class="system-option">Music</div>
+						<div class="system-option">Control Panel</div>
+						<div class="system-option">Devices</div>
+					</div>
+				</div>
+			</div>
+		{/if}
+
+		<!-- Barra de inicio de Windows -->
+		<div class="start-bar">
+			<button class="win-button" class:active={windowsButton} on:click={toggleStartMenu}>
+				<img src="/win7-start-icon.png" alt="windows start" />
+			</button>
+			<div class="opened-apps">
+				{#each Object.entries(navApps) as [k, v]}
+					{#if v.opened || v.minimized}
+						<button
+							class="desktop-icon"
+							class:active={v.opened && !v.minimized}
+							on:click={() => handleNavAppsOpen(k)}
+						>
+							<img src={`/OriginalWin7Icons/${v.img_url}`} alt={v.img_url} />
+							<span>{v.title}</span>
+						</button>
+					{/if}
+				{/each}
+			</div>
+			<div class="notification-area">
+				<div class="time">
+					{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.hero-image {
@@ -360,7 +378,7 @@
 		cursor: pointer;
 		box-sizing: border-box;
 	}
-	.navbar h1{
+	.navbar h1 {
 		font-size: 3rem;
 	}
 	.hidden {

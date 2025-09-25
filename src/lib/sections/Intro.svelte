@@ -22,56 +22,33 @@
 	});
 
 	function longpress(node) {
-		const TIME_MS = 500;
-		let intervalPtr;
+		let intervalPtr: number | undefined;
 		let elapsedTime = 0;
 
-		function startPress() {
+		function startPress(e) {
+			e.preventDefault()
+			elapsedTime = 0;
 			intervalPtr = setInterval(() => {
 				elapsedTime += 1;
-				$lightIntensity += elapsedTime / 100;
+				$lightIntensity += (elapsedTime / 100) * 20;
 				console.log(elapsedTime + ' ms');
-				if (elapsedTime >= TIME_MS) {
-					clearInterval(intervalPtr);
-					$started = true;
-				}
 			}, 1);
 		}
 
-		function stopPress() {
-			clearInterval(intervalPtr);
+		function stopPress(e) {
+			e.preventDefault()
 			elapsedTime = 0;
-			$lightIntensity = 100;
+			$lightIntensity = 200;
+			clearInterval(intervalPtr);
 		}
 
-		function handleMouseDown(e) {
-			startPress();
-		}
-
-		function handleMouseUp(e) {
-			stopPress();
-		}
-
-		function handleTouchStart(e) {
-			e.preventDefault();
-			startPress();
-		}
-
-		function handleTouchEnd(e) {
-			stopPress();
-		}
-
-		node.addEventListener('mousedown', handleMouseDown);
-		node.addEventListener('mouseup', handleMouseUp);
-		node.addEventListener('touchstart', handleTouchStart);
-		node.addEventListener('touchend', handleTouchEnd);
+		node.addEventListener('pointerdown', startPress);
+		window.addEventListener('pointerup', stopPress);
 
 		return {
 			destroy: () => {
-				node.removeEventListener('mousedown', handleMouseDown);
-				node.removeEventListener('mouseup', handleMouseUp);
-				node.removeEventListener('touchstart', handleTouchStart);
-				node.removeEventListener('touchend', handleTouchEnd);
+				node.removeEventListener('pointerdown', startPress);
+				window.removeEventListener('pointerup', stopPress);
 			}
 		};
 	}
@@ -83,19 +60,21 @@
 	in:fade={{ duration: 500 }}
 >
 	<div class="subtitle">
-		<h2 transition:fade>Desarrollo de software</h2>
-		{#if !pre}
-			<p transition:slide={{ axis: 'x' }}>por Bernardo Márquez</p>
-		{/if}
+		<h2 transition:fade={{ delay: 400 }}>Desarrollo de software</h2>
+		<p transition:slide={{ delay: 800, axis: 'x' }}>por Bernardo Márquez</p>
 	</div>
 	<div
-		class="title liquid-glass-card-by-mabby {pre ? 'fade-out' : 'fade-in'}"
+		class="title {pre ? 'fade-out' : 'fade-in'}"
 		use:longpress
 		on:contextmenu|preventDefault={() => console.log('?')}
 	>
 		<h1>
 			{#key heroMessage[currentIndex]}
-				<span in:slide={{ duration: 500 }} out:slide={{ duration: 500 }}>
+				<span
+					class="liquid-glass-card-by-mabby"
+					in:slide={{ duration: 500, axis: 'x' }}
+					out:fade={{ duration: 500 }}
+				>
 					{heroMessage[currentIndex]}
 				</span>
 			{/key}
@@ -155,7 +134,6 @@
 
 	.background-cover-out {
 		background-color: transparent;
-		padding-top: 5rem;
 	}
 	.subtitle {
 		display: flex;
@@ -163,6 +141,5 @@
 		overflow: hidden;
 		word-break: normal;
 		white-space: pre;
-		gap: 1rem;
 	}
 </style>

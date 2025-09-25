@@ -14,6 +14,9 @@
 
 	$: currentPage = page.url.pathname;
 	$: console.log(currentPage);
+
+	$: backgroundAnimate = ($infoStore.scrollY >= 38 && $started);
+	$: console.log(backgroundAnimate);
 	let footer: HTMLElement;
 	let isFooterSnapped = false;
 
@@ -57,41 +60,48 @@
 
 <InfoBanner />
 
-{#if $started}
-	<div class="page-container">
-		<div class="space-jam" in:fade={{ duration: 500 }}></div>
-		<nav in:fade={{ duration: 500 }}>
-			<Navbar />
-		</nav>
+<div class="page-container">
+	{#if !$started}
+		<Loader />
+	{/if}
+	<div class="space-jam  {$started ? 'background-cover-in':'background-cover-out'}"></div>
+	<nav class="{$started ? 'background-cover-in':'background-cover-out'}">
+		<Navbar />
+	</nav>
+	{#if $started}
 		<main>
 			<slot />
 		</main>
 		<footer bind:this={footer} class={isFooterSnapped ? 'hide' : ''}>
 			<Contact />
 		</footer>
-	</div>
-{:else}
-	<Loader />
-{/if}
+	{/if}
+</div>
 
 <style>
 	.space-jam {
 		height: 40vh;
 		user-select: none;
-		background-color: black;
 		scroll-snap-align: center;
 		scroll-snap-stop: normal;
 	}
 	.page-container {
 		flex-grow: 1;
 	}
+	.background-cover-in {
+		background-color: black;
+	}
 
+	.background-cover-out {
+		background-color: transparent;
+	}
 	nav {
 		position: sticky;
 		top: 0;
 		height: fit-content;
-		z-index: 998;
+		z-index: 88;
 		background-color: black;
+
 	}
 
 	main {

@@ -59,11 +59,11 @@
 
 		const targetPosition = new THREE.Vector3(0, 0, 1);
 		const smoothness = $lightControl.smoothness;
-		const lightSphereGeometry = new THREE.SphereGeometry(0.08, 32, 32);
+		const lightSphereGeometry = new THREE.SphereGeometry(0.8, 32, 32);
 		const lightSphereMaterial = new THREE.MeshBasicMaterial({
 			color: $lightControl.color,
 			emissive: 0xfff000,
-			emissiveIntensity: 2
+			emissiveIntensity: $lightIntensity
 		});
 		const lightSphere = new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
 

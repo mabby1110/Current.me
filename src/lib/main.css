@@ -10,7 +10,7 @@
 	--accent-color: #500efe;
 	--accent-color-2: #ffee00;
 	--text-body: #ffffff;
-	--glass-color:rgba(0, 0, 0, 0.30);
+	--glass-color:rgba(0, 0, 0, 0.121);
 }
 html {
 	forced-color-adjust: none;
@@ -35,6 +35,7 @@ body {
 	background-color: var(--glass-color);
 	backdrop-filter: blur(16px);
 	border-radius: 16px;
+	padding: 1rem;
 }
 /* Tamaños de fuente */
 p,

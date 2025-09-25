@@ -5,6 +5,8 @@
 	import { started } from '$lib/writables';
 	import DevelopmentBanner from './DevelopmentBanner.svelte';
 
+	let blurAmount = 16;
+
 	function longpress(node) {
 		const TIME_MS = 500;
 		let intervalPtr;
@@ -14,7 +16,8 @@
 			intervalPtr = setInterval(() => {
 				elapsedTime += 1;
 				$lightIntensity += elapsedTime / 100;
-				console.log(elapsedTime + ' ms');
+				// Calcula el nuevo valor de blur según el progreso
+				blurAmount = 16 * (1 - (elapsedTime*0.5) / TIME_MS);
 				if (elapsedTime >= TIME_MS) {
 					clearInterval(intervalPtr);
 					$started = true;
@@ -27,6 +30,7 @@
 			clearInterval(intervalPtr);
 			elapsedTime = 0;
 			$lightIntensity = 8;
+			blurAmount = 16; // Restablece el blur
 		}
 
 		function handleMouseDown(e) {
@@ -38,7 +42,7 @@
 		}
 
 		function handleTouchStart(e) {
-			e.preventDefault(); // Prevents ghost clicks
+			e.preventDefault();
 			startPress();
 		}
 
@@ -69,37 +73,34 @@
 	class="loader-container"
 	use:longpress
 	on:contextmenu|preventDefault={() => console.log('?')}
+	style="--blur-amount: {blurAmount}px"
 >
-	<img src={loader} alt="Loader" />
 </div>
 
-<DevelopmentBanner
-	showBanner={true}
-	message="🚧 En Desarrollo"
-/>
+<DevelopmentBanner showBanner={true} message="🚧 En Desarrollo" />
 
 <style>
 	.loader-container {
 		height: 100vh;
 		width: 100%;
+		z-index: 100;
 		display: grid;
 		place-items: center;
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(var(--blur-amount, 16px));
 		padding-bottom: 2vh;
+		position: fixed;
+		transition: backdrop-filter 0.1s ease-out;
 	}
 
-	.loader-container img {
-		object-fit: cover;
-		width: 100%;
-	}
 	@media (max-width: 768px) {
 		.loader-container {
 			height: 100vh;
 			width: 100%;
 			display: grid;
 			place-items: center;
-			backdrop-filter: blur(10px);
+			backdrop-filter: blur(var(--blur-amount, 10px));
 			padding-bottom: 1vh;
+			transition: backdrop-filter 0.1s ease-out;
 		}
 	}
 </style>
