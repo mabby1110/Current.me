@@ -31,7 +31,11 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-
+.liquid-glass-card-by-mabby {
+	background-color: var(--glass-color);
+	backdrop-filter: blur(16px);
+	border-radius: 16px;
+}
 /* Tamaños de fuente */
 p,
 li,

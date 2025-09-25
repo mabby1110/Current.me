@@ -62,7 +62,7 @@
 
 <!-- Barra de navegación -->
 <div class="navbar" on:click={openNav}>
-	<h1 in:fade={{ duration: 800, delay: 600 }}>CURRENT.ME</h1>
+	<h1 in:fade>CURRENT.ME</h1>
 </div>
 
 <!-- Pantalla de navegación -->
@@ -352,13 +352,16 @@
 	.navbar {
 		z-index: 1;
 		width: 100%;
-		height: 8vh;
+		height: 4rem;
 		max-height: 80px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
 		box-sizing: border-box;
+	}
+	.navbar h1{
+		font-size: 3rem;
 	}
 	.hidden {
 		opacity: 0;

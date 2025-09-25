@@ -75,7 +75,7 @@
 
 <DevelopmentBanner
 	showBanner={true}
-	message="🚧 This page is under development. Close to see instructions"
+	message="🚧 En Desarrollo"
 />
 
 <style>

@@ -19,10 +19,10 @@
 
 	$: if ($infoStore.scrollY <= 38) {
 		// 50% del viewport height
-		$infoStore.info = 'press logo or scroll to continue';
+		$infoStore.info = 'Continua deslizando';
 		$sceneNumber = 0;
 	} else if ($infoStore.scrollY <= 50) {
-		$infoStore.info = 'Light will follow, touch or click on welcome! ';
+		$infoStore.info = 'Explora la escena. Desliza para navegar.';
 		$lightIntensity = 100;
 		$sceneNumber = 1;
 	}

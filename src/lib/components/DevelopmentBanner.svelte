@@ -21,17 +21,15 @@
   <style>
     .development-banner {
       position: fixed;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
-      background-color: #fff3cd;
-      border-bottom: 1px solid #ffeeba;
-      color: #856404;
+      background-color: #000000;
+      color: #ffffff;
       z-index: 1000;
       padding: 0.75rem;
       font-size: 0.875rem;
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
   
     .banner-content {

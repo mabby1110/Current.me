@@ -55,7 +55,7 @@
 	{/if}
 </div>
 
-<!-- <InfoBanner /> -->
+<InfoBanner />
 
 {#if $started}
 	<div class="page-container">

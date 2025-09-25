@@ -63,7 +63,7 @@ function interpolateColor(value, startColor, endColor) {
 
 export const lightControl = writable({
 	color: 0x4400ff,
-	intensity: 2,
+	intensity: 8,
 	position: { x: 0, y: 2.05, z: 0 },
 	smoothness: 0.06
 });
@@ -81,4 +81,4 @@ export function updateLightColor(value) {
 	}));
 }
 
-export const infoStore = writable({ scrollY: 0, info: 'keep pressing to start' });
+export const infoStore = writable({ scrollY: 0, info: 'Mantener presionado para iniciar' });

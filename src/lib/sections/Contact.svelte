@@ -10,10 +10,9 @@
     .container {
         position: relative;
         height: 100%;
-        padding-top: 5rem;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         overflow: hidden;
     }
@@ -21,8 +20,6 @@
         font-size: 10vw;
     }
     .contact-card {
-        position: absolute;
-        top:40vh;
         display: flex;
         flex-direction: column;
         background-color: var(--glass-color);
