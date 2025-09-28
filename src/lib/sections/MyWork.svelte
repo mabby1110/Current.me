@@ -12,23 +12,23 @@
 	let currentIndex = 0;
 	let intervalId;
 	const images: string[] = [
-		'src/lib/assets/podco/imagen1.png',
-		'src/lib/assets/podco/imagen2.png',
-		'src/lib/assets/podco/imagen3.png',
-		'src/lib/assets/podco/imagen4.png',
-		'src/lib/assets/podco/imagen5.png',
-		'src/lib/assets/podco/imagen6.png',
-		'src/lib/assets/podco/imagen7.png',
-		'src/lib/assets/podco/imagen8.png',
-		'src/lib/assets/podco/imagen9.png',
-		'src/lib/assets/podco/imagen10.png',
-		'src/lib/assets/podco/imagen11.png',
-		'src/lib/assets/podco/imagen12.png',
-		'src/lib/assets/podco/imagen13.png',
-		'src/lib/assets/podco/imagen14.png',
-		'src/lib/assets/podco/imagen15.png',
-		'src/lib/assets/podco/imagen16.png',
-		'src/lib/assets/podco/imagen17.png'
+		'/podco/Imagen1.png',
+		'/podco/Imagen2.png',
+		'/podco/Imagen3.png',
+		'/podco/Imagen4.png',
+		'/podco/Imagen5.png',
+		'/podco/Imagen6.png',
+		'/podco/Imagen7.png',
+		'/podco/Imagen8.png',
+		'/podco/Imagen9.png',
+		'/podco/Imagen10.png',
+		'/podco/Imagen11.png',
+		'/podco/Imagen12.png',
+		'/podco/Imagen13.png',
+		'/podco/Imagen14.png',
+		'/podco/Imagen15.png',
+		'/podco/Imagen16.png',
+		'/podco/Imagen17.png'
 	];
 	onMount(() => {
 		intervalId = setInterval(() => {
