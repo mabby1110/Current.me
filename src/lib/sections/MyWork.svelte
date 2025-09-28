@@ -78,15 +78,14 @@
 	class="hero {backgroundAnimate ? 'background-cover-out' : 'background-cover-in'}"
 	in:fade={{ duration: 500 }}
 >
-	{#if !pre}
-		<span class="space-jam" transition:slide>:)</span>
-	{/if}
-	{#if pre}
-		<div class="subtitle">
+	<div class="subtitle">
+		{#if !pre}
+			<p class="space-jam" out:slide>:)</p>
+		{:else}
 			<h2 in:fade={{ delay: 400 }}>PODCO</h2>
 			<p in:slide={{ delay: 800, axis: 'x' }}>por Bernardo Márquez</p>
-		</div>
-	{/if}
+		{/if}
+	</div>
 	<div class="title" use:longpress on:contextmenu|preventDefault={() => console.log('?')}>
 		{#if !pre}
 			<h1 class="liquid-glass-card-by-mabby" in:slide>PODCO</h1>

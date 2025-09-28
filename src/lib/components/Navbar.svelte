@@ -370,7 +370,6 @@
 	.navbar {
 		z-index: 1;
 		width: 100%;
-		height: 4rem;
 		max-height: 80px;
 		display: flex;
 		align-items: center;
