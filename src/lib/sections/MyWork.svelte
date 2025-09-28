@@ -4,13 +4,32 @@
 	import { infoStore } from '$lib/writables';
 	import { lightIntensity } from '$lib/threeStores';
 	import { started } from '$lib/writables';
+	import ImageCarrousel from '$lib/components/ImageCarrousel.svelte';
 
 	$: pre = $infoStore.scrollY <= 7;
 	$: backgroundAnimate = $infoStore.scrollY >= 18;
 	let heroMessage = ['Web', 'IA', 'SaaS', 'e-commerce', 'POS'];
 	let currentIndex = 0;
 	let intervalId;
-
+	const images: string[] = [
+		'src/lib/assets/podco/imagen1.png',
+		'src/lib/assets/podco/imagen2.png',
+		'src/lib/assets/podco/imagen3.png',
+		'src/lib/assets/podco/imagen4.png',
+		'src/lib/assets/podco/imagen5.png',
+		'src/lib/assets/podco/imagen6.png',
+		'src/lib/assets/podco/imagen7.png',
+		'src/lib/assets/podco/imagen8.png',
+		'src/lib/assets/podco/imagen9.png',
+		'src/lib/assets/podco/imagen10.png',
+		'src/lib/assets/podco/imagen11.png',
+		'src/lib/assets/podco/imagen12.png',
+		'src/lib/assets/podco/imagen13.png',
+		'src/lib/assets/podco/imagen14.png',
+		'src/lib/assets/podco/imagen15.png',
+		'src/lib/assets/podco/imagen16.png',
+		'src/lib/assets/podco/imagen17.png'
+	];
 	onMount(() => {
 		intervalId = setInterval(() => {
 			currentIndex = (currentIndex + 1) % heroMessage.length;
@@ -59,10 +78,9 @@
 	class="hero {backgroundAnimate ? 'background-cover-out' : 'background-cover-in'}"
 	in:fade={{ duration: 500 }}
 >
-{#if !pre}
-<span class="space-jam" transition:slide>:)</span>
-	
-{/if}
+	{#if !pre}
+		<span class="space-jam" transition:slide>:)</span>
+	{/if}
 	{#if pre}
 		<div class="subtitle">
 			<h2 in:fade={{ delay: 400 }}>PODCO</h2>
@@ -71,7 +89,7 @@
 	{/if}
 	<div class="title" use:longpress on:contextmenu|preventDefault={() => console.log('?')}>
 		{#if !pre}
-			<h1 class="liquid-glass-card-by-mabby" transition:slide>PODCO</h1>
+			<h1 class="liquid-glass-card-by-mabby" in:slide>PODCO</h1>
 		{/if}
 	</div>
 
@@ -83,9 +101,11 @@
 		</p>
 	</div>
 
-	<div class="media">
-		<img src="" alt="" />
-	</div>
+	{#if !pre}
+		<div class="media">
+			<ImageCarrousel {images} centerScale={1} sideScale={1} />
+		</div>
+	{/if}
 </section>
 
 <style>
@@ -115,7 +135,8 @@
 		max-width: 600px;
 	}
 	.media {
-		max-width: 600px;
+		width: 100%;
+		height: 100%;
 	}
 	h2 {
 		user-select: none;
