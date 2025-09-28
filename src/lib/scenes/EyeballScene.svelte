@@ -77,7 +77,6 @@
 		let lastInteractionPos = new THREE.Vector3();
 
 		function moveLightToPointer(event: MouseEvent | TouchEvent) {
-			if ($sceneNumber != 1) return;
 
 			let clientX, clientY;
 			if (event instanceof MouseEvent) {

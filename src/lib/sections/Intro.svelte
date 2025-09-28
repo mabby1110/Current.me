@@ -5,8 +5,8 @@
 	import { lightIntensity } from '$lib/threeStores';
 	import { started } from '$lib/writables';
 
-	$: pre = $infoStore.scrollY <= 7;
-	$: backgroundAnimate = $infoStore.scrollY >= 38;
+	$: pre = $infoStore.scrollY <= 0;
+	$: backgroundAnimate = $infoStore.scrollY >= 18;
 	let heroMessage = ['Web', 'IA', 'SaaS', 'e-commerce', 'POS'];
 	let currentIndex = 0;
 	let intervalId;

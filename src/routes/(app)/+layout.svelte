@@ -4,7 +4,6 @@
 
 	import { infoStore, started } from '$lib/writables';
 	import Loader from '$lib/components/Loader.svelte';
-	import { fade } from 'svelte/transition';
 	import EyeballScene from '$lib/scenes/EyeballScene.svelte';
 	import InfoBanner from '$lib/components/InfoBanner.svelte';
 	import { page } from '$app/state';
@@ -12,10 +11,11 @@
 	import Contact from '$lib/sections/Contact.svelte';
 	import { onMount } from 'svelte';
 
+	$: ended = false;
 	$: currentPage = page.url.pathname;
 	$: console.log(currentPage);
 
-	$: backgroundAnimate = ($infoStore.scrollY >= 38 && $started);
+	$: backgroundAnimate = $infoStore.scrollY >= 28 && $started;
 	$: console.log(backgroundAnimate);
 	let footer: HTMLElement;
 	let isFooterSnapped = false;
@@ -64,23 +64,25 @@
 	{#if !$started}
 		<Loader />
 	{/if}
-	<div class="space-jam  {$started ? 'background-cover-in':'background-cover-out'}"></div>
-	<nav class="{$started ? 'background-cover-in':'background-cover-out'}">
+	<div class="space-jam {$started ? 'background-cover-in' : 'background-cover-out'}"></div>
+	<nav class={$started ? 'background-cover-in' : 'background-cover-out'}>
 		<Navbar />
 	</nav>
 	{#if $started}
 		<main>
 			<slot />
 		</main>
-		<footer bind:this={footer} class={isFooterSnapped ? 'hide' : ''}>
-			<Contact />
-		</footer>
+		{#if ended}
+			<footer id="contact" bind:this={footer} class={isFooterSnapped ? 'hide' : ''}>
+				<Contact />
+			</footer>
+		{/if}
 	{/if}
 </div>
 
 <style>
 	.space-jam {
-		height: 40vh;
+		height: 30vh;
 		user-select: none;
 		scroll-snap-align: center;
 		scroll-snap-stop: normal;
@@ -101,7 +103,6 @@
 		height: fit-content;
 		z-index: 88;
 		background-color: black;
-
 	}
 
 	main {
@@ -109,6 +110,7 @@
 		flex-grow: 1;
 		scroll-snap-align: center;
 		scroll-snap-stop: normal;
+		overflow-x: scroll;
 	}
 	footer {
 		flex-grow: 1;

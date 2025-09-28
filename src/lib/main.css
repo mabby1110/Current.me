@@ -16,7 +16,7 @@ html {
 	forced-color-adjust: none;
 	width: 100vw;
 	height: 100vh;
-	scroll-snap-type: y mandatory;
+	scroll-snap-type: both mandatory;
 	scroll-behavior: smooth;
 }
 body {
